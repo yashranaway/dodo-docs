@@ -20,6 +20,7 @@
       "to": "#07C983"
     }
   },
+  "layout":"sidenav",
   "background": {
     "style": "windows"
   },
@@ -37,6 +38,10 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "How to Guides",
+      "url": "guides"
     }
   ],
 
@@ -48,61 +53,81 @@
     {
       "group": "Our Features",
       "pages": [
-        "overview/overview",
+        "features/overview",
         {
           "group": "Product Catalogue",
           "pages": [
-            "overview/product-catalog/overview",
-            "overview/product-catalog/one-time-payment-products",
-            "overview/product-catalog/subscription"
+            "features/product-catalog/overview",
+            "features/product-catalog/one-time-payment-products",
+            "features/product-catalog/subscription"
           ]
         },
         {
           "group": "Payouts",
           "pages": [
-            "overview/payouts/overview",
-            "overview/payouts/link-bank-account",
-            "overview/payouts/compliance",
-            "overview/payouts/payout-structure"
+            "features/payouts/overview",
+            "features/payouts/link-bank-account",
+            "features/payouts/compliance",
+            "features/payouts/payout-structure"
           ]
         },
         {
           "group": "Transactions",
           "pages": [
-            "overview/transactions/payments",
-            "overview/transactions/refunds",
-            "overview/transactions/disputes"
+            "features/transactions/payments",
+            "features/transactions/refunds",
+            "features/transactions/disputes"
           ]
         },
-        "overview/invoice-generation",
-        "overview/analytics-and-reporting",
-        "overview/customers",
-        "overview/fraud-detection",
-        "overview/webhooks",
-        "overview/api-keys"
+        "features/invoice-generation",
+        "features/analytics-and-reporting",
+        "features/customers",
+        "features/fraud-detection",
+        "features/webhooks",
+        "features/api-keys"
       ]
     },
     {
-      "group": "Guides",
+      "group": "Acesss",
+
+      "pages": ["guides/login-guide"]
+    },
+    {
+      "group": "Verification",
+
+      "pages": ["guides/identity-verification", "guides/business-verification"]
+    },
+    {
+      "group": "Product Catalog",
+
+      "pages": ["guides/one-time-product", "guides/subscription-product"]
+    },
+    {
+      "group": "Transactions",
+
       "pages": [
-        "guides/login-guide",
-        "guides/one-time-product",
-        "guides/subscription-product",
-        "guides/identity-verification",
-        "guides/business-verification",
-        "guides/bank-account",
-        "guides/payout-compliance",
-        "guides/api-key-generation",
-        "guides/webhook-setup",
-        "guides/refund-guide",
-        "guides/reports",
         "guides/payment-links-guide",
         "guides/payments-guide",
+        "guides/refund-guide",
         "guides/disputes-guide",
-        "guides/business-profile",
-        "guides/user-profile"
+        "guides/reports"
       ]
     },
+    {
+      "group": "Payout",
+      "pages": ["guides/bank-account", "guides/payout-compliance"]
+    },
+    {
+      "group": "Technical",
+
+      "pages": ["guides/api-key-generation", "guides/webhook-setup"]
+    },
+    {
+      "group": "Account",
+
+      "pages": ["guides/business-profile", "guides/user-profile"]
+    },
+
     {
       "group": "Miscellaneous",
       "pages": [
@@ -111,8 +136,7 @@
         "miscellaneous/verification-process",
         "miscellaneous/pricing-and-fee-structure",
         "miscellaneous/accounts",
-        "miscellaneous/test-mode-vs-live-mode",
-        "miscellaneous/user-access-and-management"
+        "miscellaneous/test-mode-vs-live-mode"
       ]
     },
     {
