@@ -20,7 +20,7 @@
       "to": "#07C983"
     }
   },
-  "layout":"sidenav",
+
   "background": {
     "style": "windows"
   },
@@ -42,6 +42,10 @@
     {
       "name": "How to Guides",
       "url": "guides"
+    },
+    {
+      "name": "Changelog",
+      "url": "changelog"
     }
   ],
 
@@ -49,6 +53,15 @@
     {
       "group": "Get Started",
       "pages": ["introduction", "quickstart"]
+    },
+    {
+      "group": "Important Links",
+
+      "pages": [
+        "miscellaneous/verification-process",
+        "miscellaneous/pricing-and-fee-structure",
+        "miscellaneous/test-mode-vs-live-mode"
+      ]
     },
     {
       "group": "Our Features",
@@ -88,7 +101,7 @@
       ]
     },
     {
-      "group": "Acesss",
+      "group": "Access",
 
       "pages": ["guides/login-guide"]
     },
@@ -127,17 +140,14 @@
 
       "pages": ["guides/business-profile", "guides/user-profile"]
     },
-
+   
     {
       "group": "Miscellaneous",
-      "pages": [
-        "miscellaneous/taxation",
-        "miscellaneous/faq",
-        "miscellaneous/verification-process",
-        "miscellaneous/pricing-and-fee-structure",
-        "miscellaneous/accounts",
-        "miscellaneous/test-mode-vs-live-mode"
-      ]
+      "pages": ["miscellaneous/faq", "miscellaneous/accounts"]
+    },
+    {
+      "group": "Changelog",
+      "pages": ["changelog/overview"]
     },
     {
       "group": "API Documentation",
