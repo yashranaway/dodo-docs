@@ -5,43 +5,54 @@ description: The Payout process will be via Bank Transfer or Paypal transfer as 
 
 ## **Payout Process**
 
-- **Payout Schedule**
-    1. Payouts cycle will be monthly. It will start from the 1st of every month to the end of the month. Even if the merchant is onboarded on any date, billing period will still be the same
-    2. Payouts will be processed on or before the 15th of every month for the previous month's billing cycle
-- **Payout Currency**
-    1. Payout currency will be USD by default
-    2. If merchant makes a request for a different currency we will take it up on a case to case basis
-- **Payout Threshold**
-    1. The min Payout threshold will be 100$ for payout eligibility
-    2. If the payout does not meet the threshold it will carry forward to the next payout cycle
-- **Payout Deductions**
-    1. Taxes : All applicable taxes as per the Tax Calculator will be deducted from the sales amount before payout
-    2. Dodo Payment Fees and Payout Fees will be deducted before sending the payout. For details check out our [Pricing Page](/miscellaneous/pricing-and-fee-structure)
+* **Payout Schedule**
+
+  1. Payouts cycle will be monthly. It will start from the 1st of every month to the end of the month. Even if the merchant is onboarded in the middle of the month, billing period will be from onboarding date to the end of the month.
+
+  2. Payouts will be processed on or before the 15th of every month for the previous month's billing cycle. So for November billing cycle, Payouts will be processed by 15th of December&#x20;
+
+* **Payout Currency**
+
+  1. Payout currency will be USD by default
+
+  2. If merchant makes a request for a different currency we will take it up on a case to case basis
+
+* **Payout Threshold**
+
+  1. The min Payout threshold will be 100$ for payout eligibility
+
+  2. If the payout does not meet the threshold it will carry forward to the next payout cycle
+
+* **Payout Deductions**
+
+  1. Taxes : All applicable taxes as per the Tax Calculator will be deducted from the sales amount before payout
+
+  2. Dodo Payment Fees and Payout Fees will be deducted before sending the payout. For details check out our [Pricing Page](/miscellaneous/pricing-and-fee-structure)
 
 ## **Payout Status**
 
-| Payout Status | Description |
-| --- | --- |
-| Payout Not Initiated | Payout due date has not yet arrived hence it has not been initiated |
-| Payout In Progress | Payout due date has arrived and Payout is in progress |
-| Payout On Hold | Payout is put on hold by the Payout Team (By Backend until admin dashboard is available) |
-- **Payout Invoice**
-    
-    A reverse invoice will be generated to indicate the amount paid by Dodo Payments to the Merchant
-    
+| Payout Status        | Description                                                                              |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| Payout Not Initiated | Payout due date has not yet arrived hence it has not been initiated                      |
+| Payout In Progress   | Payout due date has arrived and Payout is in progress                                    |
+| Payout On Hold       | Payout is put on hold by the Payout Team (By Backend until admin dashboard is available) |
+| Payout Successful    | Payout to the merchant account is processed successfully                                 |
+| Payout Failed        | Payout to the merchant account has failed                                                |
+
+* **Payout Invoice :** A reverse invoice will be generated to indicate the amount paid by Dodo Payments to the Merchant
 
 ## Information in the invoice:
 
-| Information | Description |
-| --- | --- |
-| Invoice ID | A Unique ID of the Invoice generated |
-| Date of Issue | Datetime of the Invoice Issued |
-| Merchant Business Name | Registered Business Name of the Merchant |
-| Merchant Business Address | Registered Business Address of the Merchant |
-| Dodo Merchant Name | Registered Business Name of Dodo Payments |
-| Dodo Payments Company ID | Registered Company ID of Dodo Payments |
-| Dodo Payments Business Address | Registered Business Address of Dodo Payments |
-| Payout Name | Name given to the payout (Eg. November Payout for Digital services licensed to Dodo Payments) |
-| Payout Qty | Will be 1 |
-| Payout Unit Price | Total Amount to be paid |
-| Payout Amount | Total Amount to be paid |
+| Information                    | Description                                                                                   |
+| ------------------------------ | --------------------------------------------------------------------------------------------- |
+| Invoice ID                     | A Unique ID of the Invoice generated                                                          |
+| Date of Issue                  | Datetime of the Invoice Issued                                                                |
+| Merchant Business Name         | Registered Business Name of the Merchant                                                      |
+| Merchant Business Address      | Registered Business Address of the Merchant                                                   |
+| Dodo Merchant Name             | Registered Business Name of Dodo Payments                                                     |
+| Dodo Payments Company ID       | Registered Company ID of Dodo Payments                                                        |
+| Dodo Payments Business Address | Registered Business Address of Dodo Payments                                                  |
+| Payout Name                    | Name given to the payout (Eg. November Payout for Digital services licensed to Dodo Payments) |
+| Payout Qty                     | Will be 1                                                                                     |
+| Payout Unit Price              | Total Amount to be paid                                                                       |
+| Payout Amount                  | Total Amount to be paid                                                                       |
