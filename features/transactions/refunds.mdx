@@ -5,31 +5,37 @@ description: The Refunds section allows merchants to manage and initiate refunds
 
 ## Initiate Refund
 
-<Card title="Refunds" horizontal icon="rotate-left" href="/guides/refund-guide">Process to access refund records on the dashboard</Card>
-
 Merchants can initiate a refund by clicking the **Initiate Refund** button in the Payment Details Page. The refund will only proceed if the refund rules are met.
+
+<Card title="Refunds" horizontal icon="rotate-left" href="/guides/refund-guide">Process to access refund records on the dashboard</Card>
 
 ### Details Required for Refund
 
-- **Refund Amount**: The amount to be refunded.
-- **Refund Reason**: The reason for the refund, to be recorded in the system.
+* **Refund Amount**: The amount to be refunded.
+
+* **Refund Reason**: The reason for the refund, to be recorded in the system.
 
 ### Refund Rules
 
 1. The payment must have been successful.
-2. Refunds must be initiated within the payout period (currently 30 days).
+
+2. Refunds must be initiated within 7 days of the transaction date. Initiating refunds will not be allowed post that.
+
 3. The refund amount must be less than or equal to the original payment amount.
-4. The refund amount must be less than or equal to the merchant’s Dodo Payments account balance.
+
+4. The refund amount must be less than or equal to the merchan
+
 5. Refunds are issued to the original payment method used by the customer.
 
-If any rule is violated, the refund request will be denied.
+If any rule is violated, the refund request will be denied. Please&#x20;
 
 ## Refunds Page
 
-The **Refunds Page** provides a detailed view of all refund transactions: **Dashboard guide by Scribe/Clueso to be added**
+The **Refunds Page** provides a detailed view of all refund transactions:&#x20;
 
-- Clicking the **Associated Payment ID** will take the merchant to the **Payment Details Page** for that transaction.
-- Merchants can export the refund report in CSV format for a specified date range.
+* Clicking the **Associated Payment ID** will take the merchant to the **Payment Details Page** for that transaction.
+
+* Merchants can export the refund report in CSV format for a specified date range.
 
 ## Refund Receipt
 
@@ -38,6 +44,5 @@ Once a refund is successfully processed, a **Refund Receipt** is automatically s
 **Template:**
 
 <Frame>
- <img src="/images/transactions/refunds/refund-receipt.webp" />
+  <img src="/images/transactions/refunds/refund-receipt.webp" />
 </Frame>
-
