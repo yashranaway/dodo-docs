@@ -30,10 +30,7 @@
       "url": "mailto:support@dodopayments.com"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://app.dodopayments.com"
-  },
+
   "tabs": [
     {
       "name": "API Reference",
@@ -76,15 +73,6 @@
           ]
         },
         {
-          "group": "Payouts",
-          "pages": [
-            "features/payouts/overview",
-            "features/payouts/link-bank-account",
-            "features/payouts/compliance",
-            "features/payouts/payout-structure"
-          ]
-        },
-        {
           "group": "Transactions",
           "pages": [
             "features/transactions/payments",
@@ -93,6 +81,16 @@
           ]
         },
         "features/invoice-generation",
+        {
+          "group": "Payouts",
+          "pages": [
+            "features/payouts/overview",
+            "features/payouts/link-bank-account",
+            "features/payouts/compliance",
+            "features/payouts/payout-structure"
+          ]
+        },
+
         "features/analytics-and-reporting",
         "features/customers",
         "features/fraud-detection",
@@ -103,7 +101,7 @@
     {
       "group": "Access",
 
-      "pages": ["guides/login-guide"]
+      "pages": ["guides/login"]
     },
     {
       "group": "Verification",
@@ -120,9 +118,10 @@
 
       "pages": [
         "guides/payment-links-guide",
+        "guides/checkout-process",
         "guides/payments-guide",
         "guides/refund-guide",
-        "guides/disputes-guide",
+        "guides/disputes",
         "guides/reports"
       ]
     },
@@ -140,7 +139,7 @@
 
       "pages": ["guides/business-profile", "guides/user-profile"]
     },
-   
+
     {
       "group": "Miscellaneous",
       "pages": ["miscellaneous/faq", "miscellaneous/accounts"]
@@ -148,6 +147,10 @@
     {
       "group": "Changelog",
       "pages": ["changelog/overview"]
+    },
+    {
+      "group": "Versions",
+      "pages": ["changelog/1.0.0"]
     },
     {
       "group": "API Documentation",
