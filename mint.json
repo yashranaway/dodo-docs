@@ -155,6 +155,7 @@
     {
       "group": "API Documentation",
       "pages": ["api-reference/introduction"]
+      
     },
 
     {
@@ -219,6 +220,7 @@
   ],
   "footerSocials": {
     "x": "https://x.com/dodopayments",
-    "linkedin": "https://linkedin.com/company/dodopayments"
+    "linkedin": "https://linkedin.com/company/dodopayments",
+    "website": "https://dodopayments.com"
   }
 }

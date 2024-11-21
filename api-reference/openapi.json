@@ -62,7 +62,7 @@
             "in": "path",
             "description": "Customer Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -231,7 +231,7 @@
             "in": "path",
             "description": "Payment Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -372,7 +372,7 @@
             "in": "path",
             "description": "Product Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -395,7 +395,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
@@ -422,7 +422,7 @@
             "in": "path",
             "description": "Product Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -518,7 +518,7 @@
             "in": "path",
             "description": "Refund Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -573,7 +573,7 @@
             "in": "path",
             "description": "Subscription Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -599,7 +599,7 @@
             "in": "path",
             "description": "Subscription Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "requestBody": {
@@ -682,7 +682,7 @@
             "in": "path",
             "description": "Webhook Event Id",
             "required": true,
-            "schema": { "type": "string", "format": "uuid" }
+            "schema": { "type": "string" }
           }
         ],
         "responses": {
@@ -989,7 +989,7 @@
           "customer": {
             "$ref": "#/components/schemas/CustomerLimitedDetailsResponse"
           },
-          "payment_id": { "type": "string", "format": "uuid" },
+          "payment_id": { "type": "string" },
           "payment_link": { "type": "string", "nullable": true },
           "total_price": { "type": "integer", "format": "int32", "minimum": 0 }
         }
@@ -1007,14 +1007,14 @@
       "CreateProductResponse": {
         "type": "object",
         "required": ["product_id"],
-        "properties": { "product_id": { "type": "string", "format": "uuid" } }
+        "properties": { "product_id": { "type": "string" } }
       },
       "CreateRefundRequest": {
         "type": "object",
         "required": ["payment_id"],
         "properties": {
           "amount": { "type": "integer", "format": "int32", "nullable": true },
-          "payment_id": { "type": "string", "format": "uuid" },
+          "payment_id": { "type": "string" },
           "reason": { "type": "string", "nullable": true }
         }
       },
@@ -1025,7 +1025,7 @@
           "billing": { "$ref": "#/components/schemas/BillingAddress" },
           "customer": { "$ref": "#/components/schemas/CustomerRequest" },
           "payment_link": { "type": "boolean", "nullable": true },
-          "product_id": { "type": "string", "format": "uuid" },
+          "product_id": { "type": "string" },
           "quantity": { "type": "integer", "format": "int32", "minimum": 0 },
           "return_url": { "type": "string", "nullable": true }
         }
@@ -1044,7 +1044,7 @@
             "format": "int32",
             "minimum": 0
           },
-          "subscription_id": { "type": "string", "format": "uuid" }
+          "subscription_id": { "type": "string" }
         }
       },
       "Currency": {
@@ -1201,7 +1201,7 @@
         "type": "object",
         "required": ["customer_id", "name", "email"],
         "properties": {
-          "customer_id": { "type": "string", "format": "uuid" },
+          "customer_id": { "type": "string" },
           "email": { "type": "string" },
           "name": { "type": "string" }
         }
@@ -1225,9 +1225,9 @@
           "created_at"
         ],
         "properties": {
-          "business_id": { "type": "string", "format": "uuid" },
+          "business_id": { "type": "string" },
           "created_at": { "type": "string", "format": "date-time" },
-          "customer_id": { "type": "string", "format": "uuid" },
+          "customer_id": { "type": "string" },
           "email": { "type": "string" },
           "name": { "type": "string" },
           "phone_number": { "type": "string", "nullable": true }
@@ -1247,13 +1247,13 @@
         ],
         "properties": {
           "amount": { "type": "string" },
-          "business_id": { "type": "string", "format": "uuid" },
+          "business_id": { "type": "string" },
           "created_at": { "type": "string", "format": "date-time" },
           "currency": { "type": "string" },
           "dispute_id": { "type": "string" },
           "dispute_stage": { "$ref": "#/components/schemas/DisputeStage" },
           "dispute_status": { "$ref": "#/components/schemas/DisputeStatus" },
-          "payment_id": { "type": "string", "format": "uuid" }
+          "payment_id": { "type": "string" }
         }
       },
       "DisputeStage": {
@@ -1319,7 +1319,7 @@
           "customer": {
             "$ref": "#/components/schemas/CustomerLimitedDetailsResponse"
           },
-          "payment_id": { "type": "string", "format": "uuid" },
+          "payment_id": { "type": "string" },
           "payment_method": { "type": "string", "nullable": true },
           "payment_method_type": { "type": "string", "nullable": true },
           "status": {
@@ -1337,6 +1337,30 @@
             "type": "array",
             "items": { "$ref": "#/components/schemas/PayoutsResponse" }
           }
+        }
+      },
+      "GetProductResponse": {
+        "type": "object",
+        "required": [
+          "product_id",
+          "business_id",
+          "created_at",
+          "updated_at",
+          "is_recurring",
+          "tax_category",
+          "price"
+        ],
+        "properties": {
+          "business_id": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "description": { "type": "string", "nullable": true },
+          "image": { "type": "string", "nullable": true },
+          "is_recurring": { "type": "boolean" },
+          "name": { "type": "string", "nullable": true },
+          "price": { "$ref": "#/components/schemas/Price" },
+          "product_id": { "type": "string" },
+          "tax_category": { "$ref": "#/components/schemas/TaxCategory" },
+          "updated_at": { "type": "string", "format": "date-time" }
         }
       },
       "GetProductsListResponse": {
@@ -1362,14 +1386,14 @@
           "tax_category"
         ],
         "properties": {
-          "business_id": { "type": "string", "format": "uuid" },
+          "business_id": { "type": "string" },
           "created_at": { "type": "string", "format": "date-time" },
           "description": { "type": "string", "nullable": true },
           "image": { "type": "string", "nullable": true },
           "is_recurring": { "type": "boolean" },
           "name": { "type": "string", "nullable": true },
           "price": { "type": "integer", "format": "int32", "nullable": true },
-          "product_id": { "type": "string", "format": "uuid" },
+          "product_id": { "type": "string" },
           "tax_category": { "$ref": "#/components/schemas/TaxCategory" },
           "updated_at": { "type": "string", "format": "date-time" }
         }
@@ -1429,7 +1453,7 @@
         "type": "object",
         "required": ["product_id", "quantity"],
         "properties": {
-          "product_id": { "type": "string", "format": "uuid" },
+          "product_id": { "type": "string" },
           "quantity": { "type": "integer", "format": "int32", "minimum": 0 }
         }
       },
@@ -1460,7 +1484,7 @@
         "required": ["subscription_id", "status"],
         "properties": {
           "status": { "$ref": "#/components/schemas/SubscriptionStatus" },
-          "subscription_id": { "type": "string", "format": "uuid" }
+          "subscription_id": { "type": "string" }
         }
       },
       "PaymentResponse": {
@@ -1476,7 +1500,7 @@
           "customer"
         ],
         "properties": {
-          "business_id": { "type": "string", "format": "uuid" },
+          "business_id": { "type": "string" },
           "created_at": { "type": "string", "format": "date-time" },
           "currency": { "$ref": "#/components/schemas/Currency" },
           "customer": {
@@ -1486,7 +1510,7 @@
             "type": "array",
             "items": { "$ref": "#/components/schemas/DisputeResponse" }
           },
-          "payment_id": { "type": "string", "format": "uuid" },
+          "payment_id": { "type": "string" },
           "payment_method": { "type": "string", "nullable": true },
           "payment_method_type": { "type": "string", "nullable": true },
           "refunds": {
@@ -1527,7 +1551,7 @@
         ],
         "properties": {
           "amount": { "type": "integer", "format": "int32" },
-          "business_id": { "type": "string", "format": "uuid" },
+          "business_id": { "type": "string" },
           "chargebacks": { "type": "integer", "format": "int32" },
           "created_at": { "type": "string", "format": "date-time" },
           "currency": { "$ref": "#/components/schemas/Currency" },
@@ -1535,7 +1559,7 @@
           "name": { "type": "string", "nullable": true },
           "payment_method": { "type": "string" },
           "payout_document_url": { "type": "string", "nullable": true },
-          "payout_id": { "type": "string", "format": "uuid" },
+          "payout_id": { "type": "string" },
           "refunds": { "type": "integer", "format": "int32" },
           "remarks": { "type": "string", "nullable": true },
           "status": { "$ref": "#/components/schemas/PayoutStatus" },
@@ -1612,15 +1636,15 @@
         ],
         "properties": {
           "amount": { "type": "integer", "format": "int32", "nullable": true },
-          "business_id": { "type": "string", "format": "uuid" },
+          "business_id": { "type": "string" },
           "created_at": { "type": "string", "format": "date-time" },
           "currency": {
             "allOf": [{ "$ref": "#/components/schemas/Currency" }],
             "nullable": true
           },
-          "payment_id": { "type": "string", "format": "uuid" },
+          "payment_id": { "type": "string" },
           "reason": { "type": "string", "nullable": true },
-          "refund_id": { "type": "string", "format": "uuid" },
+          "refund_id": { "type": "string" },
           "status": { "$ref": "#/components/schemas/RefundStatus" }
         }
       },
@@ -1643,12 +1667,12 @@
         "properties": {
           "created_at": { "type": "string", "format": "date-time" },
           "currency": { "$ref": "#/components/schemas/Currency" },
-          "customer_id": { "type": "string", "format": "uuid" },
-          "product_id": { "type": "string", "format": "uuid" },
+          "customer_id": { "type": "string" },
+          "product_id": { "type": "string" },
           "quantity": { "type": "integer", "format": "int32" },
           "recurring_pre_tax_amount": { "type": "integer", "format": "int32" },
           "status": { "$ref": "#/components/schemas/SubscriptionStatus" },
-          "subscription_id": { "type": "string", "format": "uuid" }
+          "subscription_id": { "type": "string" }
         }
       },
       "SubscriptionStatus": {
@@ -1689,14 +1713,14 @@
           "object_id"
         ],
         "properties": {
-          "business_id": { "type": "string", "format": "uuid" },
+          "business_id": { "type": "string" },
           "created_at": { "type": "string", "format": "date-time" },
           "is_webhook_notified": { "type": "boolean" },
           "object_id": { "type": "string" },
           "webhook_event_category": {
             "$ref": "#/components/schemas/WebhookEventCategory"
           },
-          "webhook_event_id": { "type": "string", "format": "uuid" },
+          "webhook_event_id": { "type": "string" },
           "webhook_event_type": {
             "$ref": "#/components/schemas/WebhookEventType"
           }
