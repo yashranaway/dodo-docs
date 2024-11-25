@@ -57,7 +57,8 @@
       "pages": [
         "miscellaneous/verification-process",
         "miscellaneous/pricing-and-fee-structure",
-        "miscellaneous/test-mode-vs-live-mode"
+        "miscellaneous/test-mode-vs-live-mode",
+        "miscellaneous/taxation"
       ]
     },
     {
@@ -155,7 +156,6 @@
     {
       "group": "API Documentation",
       "pages": ["api-reference/introduction"]
-      
     },
 
     {
