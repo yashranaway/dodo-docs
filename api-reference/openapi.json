@@ -1594,26 +1594,25 @@
         "type": "string",
         "description": "Event types for Dodo events",
         "enum": [
-            "payment.succeeded",
-            "payment.failed",
-            "payment.processing",
-            "payment.cancelled",
-            "refund.succeeded",
-            "refund.failed",
-            "dispute.opened",
-            "dispute.expired",
-            "dispute.accepted",
-            "dispute.cancelled",
-            "dispute.challenged",
-            "dispute.won",
-            "dispute.lost",
-            "subscription.active",
-            "subscription.on_hold",
-            "subscription.paused",
-            "subscription.cancelled",
-            "subscription.failed",
-            "subscription.expired",
-            "invalid"
+          "payment.succeeded",
+          "payment.failed",
+          "payment.processing",
+          "payment.cancelled",
+          "refund.succeeded",
+          "refund.failed",
+          "dispute.opened",
+          "dispute.expired",
+          "dispute.accepted",
+          "dispute.cancelled",
+          "dispute.challenged",
+          "dispute.won",
+          "dispute.lost",
+          "subscription.active",
+          "subscription.on_hold",
+          "subscription.paused",
+          "subscription.cancelled",
+          "subscription.failed",
+          "subscription.expired"
         ]
       },
       "GetCustomersListResponse": {
@@ -1882,7 +1881,8 @@
           },
           "price": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "The payment amount. Amount for the payment in the lowest denomination of the currency, (i.e) in cents for USD denomination. E.g., Pass 100 to charge $1.00"
           },
           "purchasing_power_parity": {
             "type": "boolean"
@@ -2310,7 +2310,8 @@
           },
           "price": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "The payment amount. Amount for the payment in the lowest denomination of the currency, (i.e) in cents for USD denomination. E.g., Pass 100 to charge $1.00"
           },
           "purchasing_power_parity": {
             "type": "boolean"
