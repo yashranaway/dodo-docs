@@ -22,6 +22,10 @@
   "background": {
     "style": "windows"
   },
+  "topbarCtaButton": {
+    "name": "Dashboard",
+    "url": "https://app.dodopayments.com/"
+  },
   "topbarLinks": [
     {
       "name": "Support",
