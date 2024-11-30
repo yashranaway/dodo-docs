@@ -1169,7 +1169,7 @@
         "type": "object",
         "required": [
           "payment_id",
-          "total_price",
+          "total_amount",
           "client_secret",
           "customer"
         ],
@@ -1187,7 +1187,14 @@
             "type": "string",
             "nullable": true
           },
-          "total_price": {
+          "product_cart": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OneTimeProductCartItem"
+            },
+            "nullable": true
+          },
+          "total_amount": {
             "type": "integer",
             "format": "int32",
             "minimum": 0
@@ -1265,6 +1272,7 @@
           },
           "payment_link": {
             "type": "boolean",
+            "description": "False by default",
             "nullable": true
           },
           "product_id": {
@@ -1285,7 +1293,7 @@
         "type": "object",
         "required": [
           "subscription_id",
-          "recurring_price",
+          "recurring_pre_tax_amount",
           "customer"
         ],
         "properties": {
@@ -1300,7 +1308,7 @@
             "type": "string",
             "nullable": true
           },
-          "recurring_price": {
+          "recurring_pre_tax_amount": {
             "type": "integer",
             "format": "int32",
             "minimum": 0
@@ -2112,12 +2120,24 @@
           "payment_id": {
             "type": "string"
           },
+          "payment_link": {
+            "type": "string",
+            "nullable": true
+          },
           "payment_method": {
             "type": "string",
             "nullable": true
           },
           "payment_method_type": {
             "type": "string",
+            "nullable": true
+          },
+          "product_cart": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OneTimeProductCartItem"
+            },
+            "description": "Product Cart of One time payment. In case of subscription/recurring payment product id and quantity are available in Get Subscription Api",
             "nullable": true
           },
           "refunds": {
