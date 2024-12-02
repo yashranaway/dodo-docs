@@ -6,7 +6,7 @@
     "license": {
       "name": ""
     },
-    "version": "0.4.0"
+    "version": "0.6.0"
   },
   "servers": [
     {
@@ -677,6 +677,55 @@
       }
     },
     "/subscriptions": {
+      "get": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "operationId": "list_subscriptions",
+        "parameters": [
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Page size default is 10 max is 100",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "page_number",
+            "in": "query",
+            "description": "Page number default is 0",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true,
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSubscriptionsListResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "API_KEY": []
+          }
+        ]
+      },
       "post": {
         "tags": [
           "Subscriptions"
@@ -778,7 +827,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PatchSubscriptionResponse"
+                  "$ref": "#/components/schemas/SubscriptionResponse"
                 }
               }
             }
@@ -1855,6 +1904,20 @@
           }
         }
       },
+      "GetSubscriptionsListResponse": {
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubscriptionResponse"
+            }
+          }
+        }
+      },
       "IntentStatus": {
         "type": "string",
         "enum": [
@@ -2067,21 +2130,6 @@
         "properties": {
           "status": {
             "$ref": "#/components/schemas/SubscriptionStatus"
-          }
-        }
-      },
-      "PatchSubscriptionResponse": {
-        "type": "object",
-        "required": [
-          "subscription_id",
-          "status"
-        ],
-        "properties": {
-          "status": {
-            "$ref": "#/components/schemas/SubscriptionStatus"
-          },
-          "subscription_id": {
-            "type": "string"
           }
         }
       },
@@ -2410,10 +2458,16 @@
           "recurring_pre_tax_amount",
           "currency",
           "status",
-          "customer_id",
           "created_at",
           "product_id",
-          "quantity"
+          "quantity",
+          "trial_period_days",
+          "subscription_period_interval",
+          "payment_frequency_interval",
+          "subscription_period_count",
+          "payment_frequency_count",
+          "next_billing_date",
+          "customer"
         ],
         "properties": {
           "created_at": {
@@ -2423,8 +2477,19 @@
           "currency": {
             "$ref": "#/components/schemas/Currency"
           },
-          "customer_id": {
-            "type": "string"
+          "customer": {
+            "$ref": "#/components/schemas/CustomerLimitedDetailsResponse"
+          },
+          "next_billing_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "payment_frequency_count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "payment_frequency_interval": {
+            "$ref": "#/components/schemas/TimeInterval"
           },
           "product_id": {
             "type": "string"
@@ -2442,6 +2507,17 @@
           },
           "subscription_id": {
             "type": "string"
+          },
+          "subscription_period_count": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "subscription_period_interval": {
+            "$ref": "#/components/schemas/TimeInterval"
+          },
+          "trial_period_days": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
