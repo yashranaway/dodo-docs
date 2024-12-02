@@ -226,6 +226,7 @@
     {
       "group": "Subscriptions",
       "pages": [
+        "api-reference/subscriptions/get-subscriptions-1.mdx",
         "api-reference/subscriptions/post-subscriptions",
         "api-reference/subscriptions/get-subscriptions",
         "api-reference/subscriptions/patch-subscriptions"
