@@ -233,9 +233,10 @@
       ]
     },
     {
-      "group": "Outgoing Webhooks",
+      "group": "Miscellaneous",
       "pages": [
-        "api-reference/outgoing-webhooks/post-your-webhook-url"
+        "api-reference/misc/supported-countries",
+        "api-reference/misc/outgoing-webhooks"
       ]
     }
   ],

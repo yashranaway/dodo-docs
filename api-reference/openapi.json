@@ -6,7 +6,7 @@
     "license": {
       "name": ""
     },
-    "version": "0.6.0"
+    "version": "0.7.0"
   },
   "servers": [
     {
@@ -19,6 +19,29 @@
     }
   ],
   "paths": {
+    "/checkout/supported_countries": {
+      "get": {
+        "tags": [
+          "Checkout"
+        ],
+        "operationId": "get_supported_countries_proxy",
+        "responses": {
+          "200": {
+            "description": "Currently Supported Countries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountryCodeAlpha2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/customers": {
       "get": {
         "tags": [
@@ -2023,49 +2046,8 @@
                   }
                 }
               }
-            ]
-          },
-          {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/RefundResponse"
-              },
-              {
-                "type": "object",
-                "required": [
-                  "payload_type"
-                ],
-                "properties": {
-                  "payload_type": {
-                    "type": "string",
-                    "enum": [
-                      "Refund"
-                    ]
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/DisputeResponse"
-              },
-              {
-                "type": "object",
-                "required": [
-                  "payload_type"
-                ],
-                "properties": {
-                  "payload_type": {
-                    "type": "string",
-                    "enum": [
-                      "Dispute"
-                    ]
-                  }
-                }
-              }
-            ]
+            ],
+            "title": "Payment"
           },
           {
             "allOf": [
@@ -2086,7 +2068,52 @@
                   }
                 }
               }
-            ]
+            ],
+            "title": "Subscription"
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RefundResponse"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "payload_type"
+                ],
+                "properties": {
+                  "payload_type": {
+                    "type": "string",
+                    "enum": [
+                      "Refund"
+                    ]
+                  }
+                }
+              }
+            ],
+            "title": "Refund"
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DisputeResponse"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "payload_type"
+                ],
+                "properties": {
+                  "payload_type": {
+                    "type": "string",
+                    "enum": [
+                      "Dispute"
+                    ]
+                  }
+                }
+              }
+            ],
+            "title": "Dispute"
           }
         ],
         "discriminator": {
@@ -2206,9 +2233,16 @@
             "type": "string",
             "nullable": true
           },
+          "tax": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Tax collected in this transaction",
+            "nullable": true
+          },
           "total_amount": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Total amount taken from the customer including tax"
           },
           "updated_at": {
             "type": "string",
@@ -2538,7 +2572,8 @@
         "description": "Represents the different categories of taxation applicable to various products and services.",
         "enum": [
           "digital_products",
-          "saas"
+          "saas",
+          "e_book"
         ]
       },
       "TimeInterval": {
@@ -2590,6 +2625,9 @@
     },
     {
       "name": "Outgoing Webhooks"
+    },
+    {
+      "name": "Checkout"
     }
   ]
 }
