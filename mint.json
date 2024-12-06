@@ -162,13 +162,14 @@
     {
       "group": "Changelog",
       "pages": [
-        "changelog/overview"
+        "changelog/introduction"
       ]
     },
     {
       "group": "Versions",
       "pages": [
-        "changelog/1.0.0"
+        "changelog/v0.10.0",
+        "changelog/v0.1.0"
       ]
     },
     {
