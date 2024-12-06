@@ -48,6 +48,24 @@ https://checkout.dodopayments.com/buy/{productid}?quantity=1?redirect_url={your 
 This link will accept the following query parameters:
 - `quantity`: The quantity of the product to be purchased. The default is 1.
 - `redirect_url`: The URL to redirect the customer to after the payment is completed.
+- `firstName`: The first name of the customer.
+- `lastName`: The last name of the customer.
+- `email`: The email address of the customer.
+- `country`: The country of the customer.
+- `addressLine`: The address of the customer.
+- `city`: The city of the customer.
+- `zipCode`: The postal/ZIP code of the customer.
+
+**Optional Disable Flags**
+
+The following flags can be used to disable specific fields in the form:
+- `disableFirstName`: Set to true to disable the firstName field.
+- `disableLastName`: Set to true to disable the lastName field.
+- `disableEmail`: Set to true to disable the email field.
+- `disableCountry`: Set to true to disable the country field.
+- `disableAddressLine`: Set to true to disable the addressLine field.
+- `disableCity`: Set to true to disable the city field.
+- `disableZipCode`: Set to true to disable the zipCode field.
 
 You can directly use this link to redirect your customers to the checkout page from your website.
 
