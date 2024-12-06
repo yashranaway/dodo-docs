@@ -48,7 +48,7 @@ To verify a webhook came from DodoPayments:
 
 1. Compute the HMAC SHA256 of this string using your webhook secret key obtained from the DodoPayments Dashboard
 2. Concatenate the `webhook-id`, `webhook-timestamp`, and stringified `payload` values from the webhook with periods (`.`)  
-The respective payloads for outgoing webhooks can be found in the [API Reference](/api-reference/misc/outgoing-webhooks).
+The respective payloads for outgoing webhooks can be found in the [API Reference](/api-reference/webhooks/outgoing-webhooks).
 
 3. Compare the computed signature to the received `webhook-signature` header value. If they match, the webhook is authentic.
 

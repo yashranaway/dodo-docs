@@ -234,10 +234,17 @@
       ]
     },
     {
+      "group": "Webhooks",
+      "pages": [
+        "api-reference/webhooks/get-webhook_events",
+        "api-reference/webhooks/get-webhook_event-detail",
+        "api-reference/webhooks/outgoing-webhooks"
+      ]
+    },
+    {
       "group": "Miscellaneous",
       "pages": [
-        "api-reference/misc/supported-countries",
-        "api-reference/misc/outgoing-webhooks"
+        "api-reference/misc/supported-countries"
       ]
     }
   ],
