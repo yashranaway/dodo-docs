@@ -54,8 +54,6 @@ The respective payloads for outgoing webhooks can be found in the [API Reference
 
 Since we follow the Standard Webhooks specification, you can use one of their libraries to verify the signature: https://github.com/standard-webhooks/standard-webhooks/tree/main/libraries
 
-> **Note**: When using the Standard Webhooks libraries, they expect your secret to be **encoded in Base64 first**.
-
 ### Responding to Webhooks
 - Your webhook handler must return a `2xx status code` to acknowledge receipt of the event.
 - Any other response will be treated as a failure, and the webhook will be retried.
