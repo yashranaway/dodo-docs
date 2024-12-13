@@ -142,7 +142,8 @@
       "group": "Technical",
       "pages": [
         "guides/api-key-generation",
-        "guides/webhook-setup"
+        "guides/webhook-setup",
+        "guides/License"
       ]
     },
     {
