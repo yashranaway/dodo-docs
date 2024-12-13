@@ -143,7 +143,7 @@
       "pages": [
         "guides/api-key-generation",
         "guides/webhook-setup",
-        "guides/License"
+        "guides/license"
       ]
     },
     {
@@ -169,6 +169,7 @@
     {
       "group": "Versions",
       "pages": [
+        "changelog/v0.11.0",
         "changelog/v0.10.0",
         "changelog/v0.1.0"
       ]
