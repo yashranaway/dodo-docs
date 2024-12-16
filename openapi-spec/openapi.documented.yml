@@ -1,0 +1,3224 @@
+openapi: 3.0.3
+info:
+  title: public
+  description: ''
+  license:
+    name: ''
+  version: 0.11.1
+servers:
+  - url: https://test.dodopayments.com/
+    description: Test Mode Server Host
+  - url: https://live.dodopayments.com/
+    description: Live Mode Server Host
+paths:
+  /checkout/supported_countries:
+    get:
+      tags:
+        - Checkout
+      operationId: get_supported_countries_proxy
+      responses:
+        '200':
+          description: Currently Supported Countries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CountryCodeAlpha2'
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const countryCodes = await client.misc.supportedCountries.list();
+
+              console.log(countryCodes);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            country_codes = client.misc.supported_countries.list()
+            print(country_codes)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              countryCodes, err := client.Misc.SupportedCountries.List(context.TODO())
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", countryCodes)
+            }
+  /customers:
+    get:
+      tags:
+        - Customers
+      operationId: list_customers
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: Customers List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCustomersListResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const customer of client.customers.list()) {
+                console.log(customer.business_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.customers.list()
+            page = page.items[0]
+            print(page.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              page, err := client.Customers.List(context.TODO(), dodopayments.CustomerListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+  /customers/{customer_id}:
+    get:
+      tags:
+        - Customers
+      operationId: get_customer
+      parameters:
+        - name: customer_id
+          in: path
+          description: Customer Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const customer = await client.customers.retrieve('customer_id');
+
+              console.log(customer.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            customer = client.customers.retrieve(
+                "customer_id",
+            )
+            print(customer.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              customer, err := client.Customers.Get(context.TODO(), "customer_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", customer.BusinessID)
+            }
+  /disputes:
+    get:
+      tags:
+        - Disputes
+      operationId: list_disputes
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDisputesListResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const dispute of client.disputes.list()) {
+                console.log(dispute.business_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.disputes.list()
+            page = page.items[0]
+            print(page.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              page, err := client.Disputes.List(context.TODO(), dodopayments.DisputeListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+  /disputes/{dispute_id}:
+    get:
+      tags:
+        - Disputes
+      operationId: get_dispute_handler
+      parameters:
+        - name: dispute_id
+          in: path
+          description: Dispute Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisputeResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const dispute = await client.disputes.retrieve('dispute_id');
+
+              console.log(dispute.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            dispute = client.disputes.retrieve(
+                "dispute_id",
+            )
+            print(dispute.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              dispute, err := client.Disputes.Get(context.TODO(), "dispute_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", dispute.BusinessID)
+            }
+  /payments:
+    get:
+      tags:
+        - Payments
+      operationId: list_payments
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentsListResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const paymentListResponse of client.payments.list()) {
+                console.log(paymentListResponse.payment_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.payments.list()
+            page = page.items[0]
+            print(page.payment_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              page, err := client.Payments.List(context.TODO(), dodopayments.PaymentListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+    post:
+      tags:
+        - Payments
+      operationId: create_one_time_payment_handler
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOneTimePaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: One Time payment successfully initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOneTimePaymentResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const payment = await client.payments.create({
+                billing: { city: 'city', country: 'AF', state: 'state', street: 'street', zipcode: 0 },
+                customer: { email: 'email', name: 'name' },
+                product_cart: [{ product_id: 'product_id', quantity: 0 }],
+              });
+
+              console.log(payment.payment_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            payment = client.payments.create(
+                billing={
+                    "city": "city",
+                    "country": "AF",
+                    "state": "state",
+                    "street": "street",
+                    "zipcode": 0,
+                },
+                customer={
+                    "email": "email",
+                    "name": "name",
+                },
+                product_cart=[{
+                    "product_id": "product_id",
+                    "quantity": 0,
+                }],
+            )
+            print(payment.payment_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              payment, err := client.Payments.New(context.TODO(), dodopayments.PaymentNewParams{
+                Billing: dodopayments.F(dodopayments.PaymentNewParamsBilling{
+                  City: dodopayments.F("city"),
+                  Country: dodopayments.F(dodopayments.CountryCodeAf),
+                  State: dodopayments.F("state"),
+                  Street: dodopayments.F("street"),
+                  Zipcode: dodopayments.F(int64(0)),
+                }),
+                Customer: dodopayments.F(dodopayments.PaymentNewParamsCustomer{
+                  Email: dodopayments.F("email"),
+                  Name: dodopayments.F("name"),
+                }),
+                ProductCart: dodopayments.F([]dodopayments.PaymentNewParamsProductCart{dodopayments.PaymentNewParamsProductCart{
+                  ProductID: dodopayments.F("product_id"),
+                  Quantity: dodopayments.F(int64(0)),
+                }}),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", payment.PaymentID)
+            }
+  /payments/{payment_id}:
+    get:
+      tags:
+        - Payments
+      operationId: get_payment_handler
+      parameters:
+        - name: payment_id
+          in: path
+          description: Payment Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const payment = await client.payments.retrieve('payment_id');
+
+              console.log(payment.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            payment = client.payments.retrieve(
+                "payment_id",
+            )
+            print(payment.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              payment, err := client.Payments.Get(context.TODO(), "payment_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", payment.BusinessID)
+            }
+  /payouts:
+    get:
+      tags:
+        - Payouts
+      operationId: list_payouts
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: Payouts List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPayoutsResponseList'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const payoutListResponse of client.payouts.list()) {
+                console.log(payoutListResponse.business_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.payouts.list()
+            page = page.items[0]
+            print(page.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              page, err := client.Payouts.List(context.TODO(), dodopayments.PayoutListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+  /products:
+    get:
+      tags:
+        - Products
+      operationId: list_products
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: Products List
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductsListResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const productListResponse of client.products.list()) {
+                console.log(productListResponse.business_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.products.list()
+            page = page.items[0]
+            print(page.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              page, err := client.Products.List(context.TODO(), dodopayments.ProductListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+    post:
+      tags:
+        - Products
+      operationId: create_product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+        required: true
+      responses:
+        '200':
+          description: Product Created Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProductResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const product = await client.products.create({
+                price: { currency: 'AED', discount: 0, price: 0, purchasing_power_parity: true, type: 'one_time_price' },
+                tax_category: 'digital_products',
+              });
+
+              console.log(product.product_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            product = client.products.create(
+                price={
+                    "currency": "AED",
+                    "discount": 0,
+                    "price": 0,
+                    "purchasing_power_parity": True,
+                    "type": "one_time_price",
+                },
+                tax_category="digital_products",
+            )
+            print(product.product_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              product, err := client.Products.New(context.TODO(), dodopayments.ProductNewParams{
+                Price: dodopayments.F[dodopayments.ProductNewParamsPriceUnion](dodopayments.ProductNewParamsPriceOneTimePrice{
+                  Currency: dodopayments.F(dodopayments.ProductNewParamsPriceOneTimePriceCurrencyAed),
+                  Discount: dodopayments.F(0.000000),
+                  Price: dodopayments.F(int64(0)),
+                  PurchasingPowerParity: dodopayments.F(true),
+                  Type: dodopayments.F(dodopayments.ProductNewParamsPriceOneTimePriceTypeOneTimePrice),
+                }),
+                TaxCategory: dodopayments.F(dodopayments.ProductNewParamsTaxCategoryDigitalProducts),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", product.ProductID)
+            }
+  /products/{id}:
+    get:
+      tags:
+        - Products
+      operationId: get_product
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product Details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const product = await client.products.retrieve('id');
+
+              console.log(product.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            product = client.products.retrieve(
+                "id",
+            )
+            print(product.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              product, err := client.Products.Get(context.TODO(), "id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", product.BusinessID)
+            }
+    patch:
+      tags:
+        - Products
+      operationId: patch_product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchProductRequest'
+        required: true
+      responses:
+        '200':
+          description: Product Updated Succesfully
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              await client.products.update('id');
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            client.products.update(
+                id="id",
+            )
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              err := client.Products.Update(
+                context.TODO(),
+                "id",
+                dodopayments.ProductUpdateParams{
+
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+            }
+  /products/{id}/images:
+    put:
+      tags:
+        - Products
+      operationId: update_product_image
+      parameters:
+        - name: id
+          in: path
+          description: Product Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Aws s3 presigned URL. Upload image to this URL withing 60s
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProductImageResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const image = await client.products.images.update('id');
+
+              console.log(image.url);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            image = client.products.images.update(
+                "id",
+            )
+            print(image.url)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              image, err := client.Products.Images.Update(context.TODO(), "id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", image.URL)
+            }
+  /refunds:
+    get:
+      tags:
+        - Refunds
+      operationId: list_refunds
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRefundsListResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const refund of client.refunds.list()) {
+                console.log(refund.business_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.refunds.list()
+            page = page.items[0]
+            print(page.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              page, err := client.Refunds.List(context.TODO(), dodopayments.RefundListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+    post:
+      tags:
+        - Refunds
+      operationId: create_refund
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRefundRequest'
+        required: true
+      responses:
+        '200':
+          description: Refund successfully initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const refund = await client.refunds.create({ payment_id: 'payment_id' });
+
+              console.log(refund.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            refund = client.refunds.create(
+                payment_id="payment_id",
+            )
+            print(refund.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              refund, err := client.Refunds.New(context.TODO(), dodopayments.RefundNewParams{
+                PaymentID: dodopayments.F("payment_id"),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", refund.BusinessID)
+            }
+  /refunds/{refund_id}:
+    get:
+      tags:
+        - Refunds
+      operationId: get_refund_handler
+      parameters:
+        - name: refund_id
+          in: path
+          description: Refund Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const refund = await client.refunds.retrieve('refund_id');
+
+              console.log(refund.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            refund = client.refunds.retrieve(
+                "refund_id",
+            )
+            print(refund.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              refund, err := client.Refunds.Get(context.TODO(), "refund_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", refund.BusinessID)
+            }
+  /subscriptions:
+    get:
+      tags:
+        - Subscriptions
+      operationId: list_subscriptions
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSubscriptionsListResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const subscription of client.subscriptions.list()) {
+                console.log(subscription.product_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.subscriptions.list()
+            page = page.items[0]
+            print(page.product_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              page, err := client.Subscriptions.List(context.TODO(), dodopayments.SubscriptionListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+    post:
+      tags:
+        - Subscriptions
+      operationId: create_subscription_handler
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubscriptionRequest'
+        required: true
+      responses:
+        '200':
+          description: Subscription successfully initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSubscriptionResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const subscription = await client.subscriptions.create({
+                billing: { city: 'city', country: 'AF', state: 'state', street: 'street', zipcode: 0 },
+                customer: { email: 'email', name: 'name' },
+                product_id: 'product_id',
+                quantity: 0,
+              });
+
+              console.log(subscription.subscription_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            subscription = client.subscriptions.create(
+                billing={
+                    "city": "city",
+                    "country": "AF",
+                    "state": "state",
+                    "street": "street",
+                    "zipcode": 0,
+                },
+                customer={
+                    "email": "email",
+                    "name": "name",
+                },
+                product_id="product_id",
+                quantity=0,
+            )
+            print(subscription.subscription_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              subscription, err := client.Subscriptions.New(context.TODO(), dodopayments.SubscriptionNewParams{
+                Billing: dodopayments.F(dodopayments.SubscriptionNewParamsBilling{
+                  City: dodopayments.F("city"),
+                  Country: dodopayments.F(dodopayments.CountryCodeAf),
+                  State: dodopayments.F("state"),
+                  Street: dodopayments.F("street"),
+                  Zipcode: dodopayments.F(int64(0)),
+                }),
+                Customer: dodopayments.F(dodopayments.SubscriptionNewParamsCustomer{
+                  Email: dodopayments.F("email"),
+                  Name: dodopayments.F("name"),
+                }),
+                ProductID: dodopayments.F("product_id"),
+                Quantity: dodopayments.F(int64(0)),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", subscription.SubscriptionID)
+            }
+  /subscriptions/{subscription_id}:
+    get:
+      tags:
+        - Subscriptions
+      operationId: get_subscription_handler
+      parameters:
+        - name: subscription_id
+          in: path
+          description: Subscription Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const subscription = await client.subscriptions.retrieve('subscription_id');
+
+              console.log(subscription.product_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            subscription = client.subscriptions.retrieve(
+                "subscription_id",
+            )
+            print(subscription.product_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              subscription, err := client.Subscriptions.Get(context.TODO(), "subscription_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", subscription.ProductID)
+            }
+    patch:
+      tags:
+        - Subscriptions
+      operationId: patch_subscription
+      parameters:
+        - name: subscription_id
+          in: path
+          description: Subscription Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchSubscriptionRequest'
+        required: true
+      responses:
+        '200':
+          description: Subscription successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const subscription = await client.subscriptions.update('subscription_id', { status: 'pending' });
+
+              console.log(subscription.product_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            subscription = client.subscriptions.update(
+                subscription_id="subscription_id",
+                status="pending",
+            )
+            print(subscription.product_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              subscription, err := client.Subscriptions.Update(
+                context.TODO(),
+                "subscription_id",
+                dodopayments.SubscriptionUpdateParams{
+                  Status: dodopayments.F(dodopayments.SubscriptionUpdateParamsStatusPending),
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", subscription.ProductID)
+            }
+  /webhook_events:
+    get:
+      tags:
+        - Webhook Events
+      operationId: list_webhook_events
+      parameters:
+        - name: created_at_gte
+          in: query
+          description: Get events after this created time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+        - name: limit
+          in: query
+          description: 'Min : 1, Max : 100, default 10'
+          required: false
+          schema:
+            type: integer
+            format: int64
+            nullable: true
+        - name: object_id
+          in: query
+          description: Get events history of a specific object like payment/subscription/refund/dispute
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWebhookEventsResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const webhookEvent = await client.webhookEvents.list();
+
+              console.log(webhookEvent.items);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            webhook_event = client.webhook_events.list()
+            print(webhook_event.items)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              webhookEvent, err := client.WebhookEvents.List(context.TODO(), dodopayments.WebhookEventListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", webhookEvent.Items)
+            }
+  /webhook_events/{webhook_event_id}:
+    get:
+      tags:
+        - Webhook Events
+      operationId: get_webhook_event
+      parameters:
+        - name: webhook_event_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookEventLogResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const webhookEvent = await client.webhookEvents.retrieve('webhook_event_id');
+
+              console.log(webhookEvent.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            webhook_event = client.webhook_events.retrieve(
+                "webhook_event_id",
+            )
+            print(webhook_event.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              webhookEvent, err := client.WebhookEvents.Get(context.TODO(), "webhook_event_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", webhookEvent.BusinessID)
+            }
+  /your-webhook-url:
+    post:
+      tags:
+        - Outgoing Webhooks
+      operationId: dummy_handler_for_outgoing_webhook_docs
+      parameters:
+        - name: webhook-id
+          in: header
+          description: Unique identifier for the webhook
+          required: true
+          schema:
+            type: string
+        - name: webhook-signature
+          in: header
+          description: Signature of the Webhook
+          required: true
+          schema:
+            type: string
+        - name: webhook-timestamp
+          in: header
+          description: Unix timestamp when the webhook was sent
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OutgoingWebhook'
+        required: true
+      responses:
+        '200':
+          description: Webhook processed successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+components:
+  schemas:
+    BillingAddress:
+      type: object
+      required:
+        - country
+        - state
+        - city
+        - street
+        - zipcode
+      properties:
+        city:
+          type: string
+        country:
+          $ref: '#/components/schemas/CountryCodeAlpha2'
+        state:
+          type: string
+        street:
+          type: string
+        zipcode:
+          type: integer
+          format: int32
+    CountryCodeAlpha2:
+      type: string
+      description: ISO country code alpha2 variant
+      enum:
+        - AF
+        - AX
+        - AL
+        - DZ
+        - AS
+        - AD
+        - AO
+        - AI
+        - AQ
+        - AG
+        - AR
+        - AM
+        - AW
+        - AU
+        - AT
+        - AZ
+        - BS
+        - BH
+        - BD
+        - BB
+        - BY
+        - BE
+        - BZ
+        - BJ
+        - BM
+        - BT
+        - BO
+        - BQ
+        - BA
+        - BW
+        - BV
+        - BR
+        - IO
+        - BN
+        - BG
+        - BF
+        - BI
+        - KH
+        - CM
+        - CA
+        - CV
+        - KY
+        - CF
+        - TD
+        - CL
+        - CN
+        - CX
+        - CC
+        - CO
+        - KM
+        - CG
+        - CD
+        - CK
+        - CR
+        - CI
+        - HR
+        - CU
+        - CW
+        - CY
+        - CZ
+        - DK
+        - DJ
+        - DM
+        - DO
+        - EC
+        - EG
+        - SV
+        - GQ
+        - ER
+        - EE
+        - ET
+        - FK
+        - FO
+        - FJ
+        - FI
+        - FR
+        - GF
+        - PF
+        - TF
+        - GA
+        - GM
+        - GE
+        - DE
+        - GH
+        - GI
+        - GR
+        - GL
+        - GD
+        - GP
+        - GU
+        - GT
+        - GG
+        - GN
+        - GW
+        - GY
+        - HT
+        - HM
+        - VA
+        - HN
+        - HK
+        - HU
+        - IS
+        - IN
+        - ID
+        - IR
+        - IQ
+        - IE
+        - IM
+        - IL
+        - IT
+        - JM
+        - JP
+        - JE
+        - JO
+        - KZ
+        - KE
+        - KI
+        - KP
+        - KR
+        - KW
+        - KG
+        - LA
+        - LV
+        - LB
+        - LS
+        - LR
+        - LY
+        - LI
+        - LT
+        - LU
+        - MO
+        - MK
+        - MG
+        - MW
+        - MY
+        - MV
+        - ML
+        - MT
+        - MH
+        - MQ
+        - MR
+        - MU
+        - YT
+        - MX
+        - FM
+        - MD
+        - MC
+        - MN
+        - ME
+        - MS
+        - MA
+        - MZ
+        - MM
+        - NA
+        - NR
+        - NP
+        - NL
+        - NC
+        - NZ
+        - NI
+        - NE
+        - NG
+        - NU
+        - NF
+        - MP
+        - 'NO'
+        - OM
+        - PK
+        - PW
+        - PS
+        - PA
+        - PG
+        - PY
+        - PE
+        - PH
+        - PN
+        - PL
+        - PT
+        - PR
+        - QA
+        - RE
+        - RO
+        - RU
+        - RW
+        - BL
+        - SH
+        - KN
+        - LC
+        - MF
+        - PM
+        - VC
+        - WS
+        - SM
+        - ST
+        - SA
+        - SN
+        - RS
+        - SC
+        - SL
+        - SG
+        - SX
+        - SK
+        - SI
+        - SB
+        - SO
+        - ZA
+        - GS
+        - SS
+        - ES
+        - LK
+        - SD
+        - SR
+        - SJ
+        - SZ
+        - SE
+        - CH
+        - SY
+        - TW
+        - TJ
+        - TZ
+        - TH
+        - TL
+        - TG
+        - TK
+        - TO
+        - TT
+        - TN
+        - TR
+        - TM
+        - TC
+        - TV
+        - UG
+        - UA
+        - AE
+        - GB
+        - UM
+        - US
+        - UY
+        - UZ
+        - VU
+        - VE
+        - VN
+        - VG
+        - VI
+        - WF
+        - EH
+        - YE
+        - ZM
+        - ZW
+    CreateOneTimePaymentRequest:
+      type: object
+      required:
+        - product_cart
+        - customer
+        - billing
+      properties:
+        billing:
+          $ref: '#/components/schemas/BillingAddress'
+        customer:
+          $ref: '#/components/schemas/CustomerRequest'
+        payment_link:
+          type: boolean
+          nullable: true
+        product_cart:
+          type: array
+          items:
+            $ref: '#/components/schemas/OneTimeProductCartItem'
+        return_url:
+          type: string
+          nullable: true
+    CreateOneTimePaymentResponse:
+      type: object
+      required:
+        - payment_id
+        - total_amount
+        - client_secret
+        - customer
+      properties:
+        client_secret:
+          type: string
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+        payment_id:
+          type: string
+        payment_link:
+          type: string
+          nullable: true
+        product_cart:
+          type: array
+          items:
+            $ref: '#/components/schemas/OneTimeProductCartItem'
+          nullable: true
+        total_amount:
+          type: integer
+          format: int32
+          minimum: 0
+    CreateProductRequest:
+      type: object
+      required:
+        - tax_category
+        - price
+      properties:
+        description:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        price:
+          $ref: '#/components/schemas/Price'
+        tax_category:
+          $ref: '#/components/schemas/TaxCategory'
+    CreateProductResponse:
+      type: object
+      required:
+        - product_id
+      properties:
+        product_id:
+          type: string
+    CreateRefundRequest:
+      type: object
+      required:
+        - payment_id
+      properties:
+        amount:
+          type: integer
+          format: int32
+          nullable: true
+        payment_id:
+          type: string
+        reason:
+          type: string
+          nullable: true
+    CreateSubscriptionRequest:
+      type: object
+      required:
+        - product_id
+        - quantity
+        - customer
+        - billing
+      properties:
+        billing:
+          $ref: '#/components/schemas/BillingAddress'
+        customer:
+          $ref: '#/components/schemas/CustomerRequest'
+        payment_link:
+          type: boolean
+          description: False by default
+          nullable: true
+        product_id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+          minimum: 0
+        return_url:
+          type: string
+          nullable: true
+    CreateSubscriptionResponse:
+      type: object
+      required:
+        - subscription_id
+        - recurring_pre_tax_amount
+        - customer
+      properties:
+        client_secret:
+          type: string
+          nullable: true
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+        payment_link:
+          type: string
+          nullable: true
+        recurring_pre_tax_amount:
+          type: integer
+          format: int32
+          minimum: 0
+        subscription_id:
+          type: string
+    Currency:
+      type: string
+      enum:
+        - AED
+        - ALL
+        - AMD
+        - ANG
+        - AOA
+        - ARS
+        - AUD
+        - AWG
+        - AZN
+        - BAM
+        - BBD
+        - BDT
+        - BGN
+        - BHD
+        - BIF
+        - BMD
+        - BND
+        - BOB
+        - BRL
+        - BSD
+        - BWP
+        - BYN
+        - BZD
+        - CAD
+        - CHF
+        - CLP
+        - CNY
+        - COP
+        - CRC
+        - CUP
+        - CVE
+        - CZK
+        - DJF
+        - DKK
+        - DOP
+        - DZD
+        - EGP
+        - ETB
+        - EUR
+        - FJD
+        - FKP
+        - GBP
+        - GEL
+        - GHS
+        - GIP
+        - GMD
+        - GNF
+        - GTQ
+        - GYD
+        - HKD
+        - HNL
+        - HRK
+        - HTG
+        - HUF
+        - IDR
+        - ILS
+        - INR
+        - IQD
+        - JMD
+        - JOD
+        - JPY
+        - KES
+        - KGS
+        - KHR
+        - KMF
+        - KRW
+        - KWD
+        - KYD
+        - KZT
+        - LAK
+        - LBP
+        - LKR
+        - LRD
+        - LSL
+        - LYD
+        - MAD
+        - MDL
+        - MGA
+        - MKD
+        - MMK
+        - MNT
+        - MOP
+        - MRU
+        - MUR
+        - MVR
+        - MWK
+        - MXN
+        - MYR
+        - MZN
+        - NAD
+        - NGN
+        - NIO
+        - NOK
+        - NPR
+        - NZD
+        - OMR
+        - PAB
+        - PEN
+        - PGK
+        - PHP
+        - PKR
+        - PLN
+        - PYG
+        - QAR
+        - RON
+        - RSD
+        - RUB
+        - RWF
+        - SAR
+        - SBD
+        - SCR
+        - SEK
+        - SGD
+        - SHP
+        - SLE
+        - SLL
+        - SOS
+        - SRD
+        - SSP
+        - STN
+        - SVC
+        - SZL
+        - THB
+        - TND
+        - TOP
+        - TRY
+        - TTD
+        - TWD
+        - TZS
+        - UAH
+        - UGX
+        - USD
+        - UYU
+        - UZS
+        - VES
+        - VND
+        - VUV
+        - WST
+        - XAF
+        - XCD
+        - XOF
+        - XPF
+        - YER
+        - ZAR
+        - ZMW
+    CustomerLimitedDetailsResponse:
+      type: object
+      required:
+        - customer_id
+        - name
+        - email
+      properties:
+        customer_id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+    CustomerRequest:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        phone_number:
+          type: string
+          nullable: true
+    CustomerResponse:
+      type: object
+      required:
+        - customer_id
+        - business_id
+        - name
+        - email
+        - created_at
+      properties:
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        customer_id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        phone_number:
+          type: string
+          nullable: true
+    DisputeResponse:
+      type: object
+      required:
+        - dispute_id
+        - payment_id
+        - business_id
+        - amount
+        - currency
+        - dispute_status
+        - dispute_stage
+        - created_at
+      properties:
+        amount:
+          type: string
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          type: string
+        dispute_id:
+          type: string
+        dispute_stage:
+          $ref: '#/components/schemas/DisputeStage'
+        dispute_status:
+          $ref: '#/components/schemas/DisputeStatus'
+        payment_id:
+          type: string
+    DisputeStage:
+      type: string
+      enum:
+        - pre_dispute
+        - dispute
+        - pre_arbitration
+    DisputeStatus:
+      type: string
+      enum:
+        - dispute_opened
+        - dispute_expired
+        - dispute_accepted
+        - dispute_cancelled
+        - dispute_challenged
+        - dispute_won
+        - dispute_lost
+    EventType:
+      type: string
+      description: Event types for Dodo events
+      enum:
+        - payment.succeeded
+        - payment.failed
+        - payment.processing
+        - payment.cancelled
+        - refund.succeeded
+        - refund.failed
+        - dispute.opened
+        - dispute.expired
+        - dispute.accepted
+        - dispute.cancelled
+        - dispute.challenged
+        - dispute.won
+        - dispute.lost
+        - subscription.active
+        - subscription.on_hold
+        - subscription.paused
+        - subscription.cancelled
+        - subscription.failed
+        - subscription.expired
+    GetCustomersListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerResponse'
+    GetDisputesListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisputeResponse'
+    GetPaymentsListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetPaymentsListResponseItem'
+    GetPaymentsListResponseItem:
+      type: object
+      required:
+        - payment_id
+        - total_amount
+        - currency
+        - customer
+        - created_at
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          $ref: '#/components/schemas/Currency'
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+        payment_id:
+          type: string
+        payment_method:
+          type: string
+          nullable: true
+        payment_method_type:
+          type: string
+          nullable: true
+        status:
+          allOf:
+            - $ref: '#/components/schemas/IntentStatus'
+          nullable: true
+        subscription_id:
+          type: string
+          nullable: true
+        total_amount:
+          type: integer
+          format: int32
+    GetPayoutsResponseList:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayoutsResponse'
+    GetProductResponse:
+      type: object
+      required:
+        - product_id
+        - business_id
+        - created_at
+        - updated_at
+        - is_recurring
+        - tax_category
+        - price
+      properties:
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+        image:
+          type: string
+          nullable: true
+        is_recurring:
+          type: boolean
+        name:
+          type: string
+          nullable: true
+        price:
+          $ref: '#/components/schemas/Price'
+        product_id:
+          type: string
+        tax_category:
+          $ref: '#/components/schemas/TaxCategory'
+        updated_at:
+          type: string
+          format: date-time
+    GetProductsListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetProductsListResponseItem'
+    GetProductsListResponseItem:
+      type: object
+      required:
+        - product_id
+        - business_id
+        - created_at
+        - updated_at
+        - is_recurring
+        - tax_category
+      properties:
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+        image:
+          type: string
+          nullable: true
+        is_recurring:
+          type: boolean
+        name:
+          type: string
+          nullable: true
+        price:
+          type: integer
+          format: int32
+          nullable: true
+        product_id:
+          type: string
+        tax_category:
+          $ref: '#/components/schemas/TaxCategory'
+        updated_at:
+          type: string
+          format: date-time
+    GetRefundsListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefundResponse'
+    GetSubscriptionsListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionResponse'
+    IntentStatus:
+      type: string
+      enum:
+        - succeeded
+        - failed
+        - cancelled
+        - processing
+        - requires_customer_action
+        - requires_merchant_action
+        - requires_payment_method
+        - requires_confirmation
+        - requires_capture
+        - partially_captured
+        - partially_captured_and_capturable
+    ListWebhookEventsResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebhookEventLogResponse'
+    OneTimePrice:
+      type: object
+      required:
+        - price
+        - currency
+        - discount
+        - purchasing_power_parity
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        discount:
+          type: number
+          format: float
+        price:
+          type: integer
+          format: int32
+          description: >-
+            The payment amount. Amount for the payment in the lowest denomination of the currency, (i.e) in
+            cents for USD denomination. E.g., Pass 100 to charge $1.00
+        purchasing_power_parity:
+          type: boolean
+    OneTimeProductCartItem:
+      type: object
+      required:
+        - product_id
+        - quantity
+      properties:
+        product_id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+          minimum: 0
+    OutgoingWebhook:
+      type: object
+      required:
+        - business_id
+        - type
+        - timestamp
+        - data
+      properties:
+        business_id:
+          type: string
+        data:
+          $ref: '#/components/schemas/OutgoingWebhookData'
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp of when the event occurred (not necessarily the same of when it was delivered)
+        type:
+          $ref: '#/components/schemas/EventType'
+    OutgoingWebhookData:
+      oneOf:
+        - allOf:
+            - $ref: '#/components/schemas/PaymentResponse'
+            - type: object
+              required:
+                - payload_type
+              properties:
+                payload_type:
+                  type: string
+                  enum:
+                    - Payment
+          title: Payment
+        - allOf:
+            - $ref: '#/components/schemas/SubscriptionResponse'
+            - type: object
+              required:
+                - payload_type
+              properties:
+                payload_type:
+                  type: string
+                  enum:
+                    - Subscription
+          title: Subscription
+        - allOf:
+            - $ref: '#/components/schemas/RefundResponse'
+            - type: object
+              required:
+                - payload_type
+              properties:
+                payload_type:
+                  type: string
+                  enum:
+                    - Refund
+          title: Refund
+        - allOf:
+            - $ref: '#/components/schemas/DisputeResponse'
+            - type: object
+              required:
+                - payload_type
+              properties:
+                payload_type:
+                  type: string
+                  enum:
+                    - Dispute
+          title: Dispute
+      discriminator:
+        propertyName: payload_type
+    PatchProductRequest:
+      type: object
+      properties:
+        description:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        price:
+          allOf:
+            - $ref: '#/components/schemas/Price'
+          nullable: true
+        tax_category:
+          allOf:
+            - $ref: '#/components/schemas/TaxCategory'
+          nullable: true
+    PatchSubscriptionRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/SubscriptionStatus'
+    PaymentResponse:
+      type: object
+      required:
+        - payment_id
+        - business_id
+        - total_amount
+        - currency
+        - created_at
+        - disputes
+        - refunds
+        - customer
+      properties:
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          $ref: '#/components/schemas/Currency'
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+        disputes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisputeResponse'
+        payment_id:
+          type: string
+        payment_link:
+          type: string
+          nullable: true
+        payment_method:
+          type: string
+          nullable: true
+        payment_method_type:
+          type: string
+          nullable: true
+        product_cart:
+          type: array
+          items:
+            $ref: '#/components/schemas/OneTimeProductCartItem'
+          description: >-
+            Product Cart of One time payment. In case of subscription/recurring payment product id and
+            quantity are available in Get Subscription Api
+          nullable: true
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefundResponse'
+        status:
+          allOf:
+            - $ref: '#/components/schemas/IntentStatus'
+          nullable: true
+        subscription_id:
+          type: string
+          nullable: true
+        tax:
+          type: integer
+          format: int32
+          description: Tax collected in this transaction
+          nullable: true
+        total_amount:
+          type: integer
+          format: int32
+          description: Total amount taken from the customer including tax
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+    PayoutStatus:
+      type: string
+      enum:
+        - in_progress
+        - failed
+        - success
+    PayoutsResponse:
+      type: object
+      required:
+        - payout_id
+        - business_id
+        - payment_method
+        - status
+        - fee
+        - tax
+        - amount
+        - created_at
+        - updated_at
+        - currency
+        - refunds
+        - chargebacks
+      properties:
+        amount:
+          type: integer
+          format: int32
+        business_id:
+          type: string
+        chargebacks:
+          type: integer
+          format: int32
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          $ref: '#/components/schemas/Currency'
+        fee:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        payment_method:
+          type: string
+        payout_document_url:
+          type: string
+          nullable: true
+        payout_id:
+          type: string
+        refunds:
+          type: integer
+          format: int32
+        remarks:
+          type: string
+          nullable: true
+        status:
+          $ref: '#/components/schemas/PayoutStatus'
+        tax:
+          type: integer
+          format: int32
+        updated_at:
+          type: string
+          format: date-time
+    Price:
+      oneOf:
+        - allOf:
+            - $ref: '#/components/schemas/OneTimePrice'
+            - type: object
+              required:
+                - type
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - one_time_price
+        - allOf:
+            - $ref: '#/components/schemas/RecurringPrice'
+            - type: object
+              required:
+                - type
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - recurring_price
+      discriminator:
+        propertyName: type
+    RecurringPrice:
+      type: object
+      required:
+        - price
+        - currency
+        - discount
+        - purchasing_power_parity
+        - payment_frequency_count
+        - payment_frequency_interval
+        - subscription_period_count
+        - subscription_period_interval
+        - trial_period_days
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        discount:
+          type: number
+          format: float
+        payment_frequency_count:
+          type: integer
+          format: int32
+        payment_frequency_interval:
+          $ref: '#/components/schemas/TimeInterval'
+        price:
+          type: integer
+          format: int32
+          description: >-
+            The payment amount. Amount for the payment in the lowest denomination of the currency, (i.e) in
+            cents for USD denomination. E.g., Pass 100 to charge $1.00
+        purchasing_power_parity:
+          type: boolean
+        subscription_period_count:
+          type: integer
+          format: int32
+        subscription_period_interval:
+          $ref: '#/components/schemas/TimeInterval'
+        trial_period_days:
+          type: integer
+          format: int32
+    RefundResponse:
+      type: object
+      required:
+        - refund_id
+        - payment_id
+        - business_id
+        - status
+        - created_at
+      properties:
+        amount:
+          type: integer
+          format: int32
+          nullable: true
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          allOf:
+            - $ref: '#/components/schemas/Currency'
+          nullable: true
+        payment_id:
+          type: string
+        reason:
+          type: string
+          nullable: true
+        refund_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/RefundStatus'
+    RefundStatus:
+      type: string
+      enum:
+        - succeeded
+        - failed
+        - pending
+        - review
+    SubscriptionResponse:
+      type: object
+      required:
+        - subscription_id
+        - recurring_pre_tax_amount
+        - currency
+        - status
+        - created_at
+        - product_id
+        - quantity
+        - trial_period_days
+        - subscription_period_interval
+        - payment_frequency_interval
+        - subscription_period_count
+        - payment_frequency_count
+        - next_billing_date
+        - customer
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          $ref: '#/components/schemas/Currency'
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+        next_billing_date:
+          type: string
+          format: date-time
+        payment_frequency_count:
+          type: integer
+          format: int32
+        payment_frequency_interval:
+          $ref: '#/components/schemas/TimeInterval'
+        product_id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        recurring_pre_tax_amount:
+          type: integer
+          format: int32
+        status:
+          $ref: '#/components/schemas/SubscriptionStatus'
+        subscription_id:
+          type: string
+        subscription_period_count:
+          type: integer
+          format: int32
+        subscription_period_interval:
+          $ref: '#/components/schemas/TimeInterval'
+        trial_period_days:
+          type: integer
+          format: int32
+    SubscriptionStatus:
+      type: string
+      enum:
+        - pending
+        - active
+        - on_hold
+        - paused
+        - cancelled
+        - failed
+        - expired
+    TaxCategory:
+      type: string
+      description: Represents the different categories of taxation applicable to various products and services.
+      enum:
+        - digital_products
+        - saas
+        - e_book
+    TimeInterval:
+      type: string
+      enum:
+        - Day
+        - Week
+        - Month
+        - Year
+    UpdateProductImageResponse:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+    WebhookEventLogResponse:
+      type: object
+      required:
+        - event_id
+        - business_id
+        - event_type
+        - object_id
+        - created_at
+      properties:
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        event_id:
+          type: string
+        event_type:
+          type: string
+        latest_attempted_at:
+          type: string
+          format: date-time
+          nullable: true
+        object_id:
+          type: string
+        request:
+          type: string
+          nullable: true
+        response:
+          type: string
+          nullable: true
+  securitySchemes:
+    API_KEY:
+      type: http
+      scheme: bearer
+tags:
+  - name: Products
+  - name: Payments
+  - name: Subscriptions
+  - name: Customers
+  - name: Refunds
+  - name: Disputes
+  - name: Outgoing Webhooks
+  - name: Checkout
+  - name: Webhook Events
