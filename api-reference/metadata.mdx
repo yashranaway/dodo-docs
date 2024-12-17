@@ -1,0 +1,109 @@
+---
+title: 'Metadata'
+description: 'Learn how to use metadata to store additional information about your Dodo Payments objects'
+---
+
+## Introduction
+
+Metadata allows you to store additional, structured information about your objects in Dodo Payments. You can attach metadata to most Dodo Payments objects, including payments, subscriptions, and more.
+
+## Overview
+
+- Metadata keys can be up to 40 characters long
+- Metadata values can be up to 500 characters long
+- You can have up to 50 metadata key-value pairs per object
+- Keys should only contain alphanumeric characters, dashes, and underscores
+- Metadata is not searchable using our API but is returned in API responses and webhooks
+
+## Use Cases
+
+Metadata is useful for:
+
+- Storing external IDs or references
+- Adding internal annotations
+- Linking Dodo Payments objects to your system
+- Categorizing transactions
+- Adding custom attributes for reporting
+
+## Adding Metadata
+
+You can add metadata when creating or updating objects:
+
+```javascript
+// Adding metadata when creating a payment
+const payment = await client.payments.create({
+    billing: { city: 'city', country: 'AF', state: 'state', street: 'street', zipcode: 0 },
+    customer: { customer_id: 'customer_id' },
+    product_cart: [{ product_id: 'product_id', quantity: 0 }],
+    metadata:{order_id: 'ORD-123', customer_notes: 'Customer notes'}
+  });
+```
+
+## Retrieving Metadata
+
+Metadata is included in API responses when retrieving objects:
+
+```javascript
+const payment = await client.payments.retrieve('pay_123');
+console.log(payment.metadata.order_id); // '6735'
+```
+
+## Searching and Filtering
+
+While metadata is not directly searchable via our API, you can:
+
+1. Store important identifiers in metadata
+2. Retrieve objects using their primary IDs
+3. Filter the results in your application code
+
+```javascript
+// Example: Find a payment using your order ID
+const payments = await client.payments.list({
+  limit: 100
+});
+
+const matchingPayment = payments.data.find(
+  payment => payment.metadata.order_id === '6735'
+);
+```
+
+## Best Practices
+
+### Do:
+- Use consistent naming conventions for metadata keys
+- Document your metadata schema internally
+- Keep values short and meaningful
+- Use metadata for static data only
+- Consider using prefixes for different systems (e.g., `crm_id`, `inventory_sku`)
+
+### Don't:
+- Store sensitive data in metadata
+- Use metadata for frequently changing values
+- Rely on metadata for critical business logic
+- Store duplicate information that's available elsewhere in the object
+- Use special characters in metadata keys
+
+## Supported Objects
+
+Metadata is supported on the following objects:
+
+| Object Type | Support |
+|------------|---------|
+| Payments | ✓ |
+| Subscriptions | ✓ |
+
+## Webhooks and Metadata
+
+Metadata is included in webhook events, making it easy to handle notifications with your custom data:
+
+```javascript
+// Example webhook handler
+app.post('/webhook', (req, res) => {
+  const event = req.body;
+
+  if (event.type === 'payment.succeeded') {
+    const orderId = event.data.object.metadata.order_id;
+    // Process order using your internal order ID
+  }
+});
+```

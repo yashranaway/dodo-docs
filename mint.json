@@ -179,21 +179,8 @@
       "pages": [
         "api-reference/introduction",
         "api-reference/dodo-payments-sdks",
-        "api-reference/integration-guide"
-      ]
-    },
-    {
-      "group": "Customers",
-      "pages": [
-        "api-reference/customers/get-customers",
-        "api-reference/customers/get-customers-1"
-      ]
-    },
-    {
-      "group": "Disputes",
-      "pages": [
-        "api-reference/disputes/get-disputes",
-        "api-reference/disputes/get-disputes-1"
+        "api-reference/integration-guide",
+        "api-reference/metadata"
       ]
     },
     {
@@ -205,9 +192,29 @@
       ]
     },
     {
-      "group": "Payouts",
+      "group": "Subscriptions",
       "pages": [
-        "api-reference/payouts/get-payouts"
+        "api-reference/subscriptions/get-subscriptions-1",
+        "api-reference/subscriptions/post-subscriptions",
+        "api-reference/subscriptions/get-subscriptions",
+        "api-reference/subscriptions/patch-subscriptions"
+      ]
+    },
+    {
+      "group": "Customers",
+      "pages": [
+        "api-reference/customers/create-customer",
+        "api-reference/customers/get-customers",
+        "api-reference/customers/get-customers-1",
+        "api-reference/customers/patch-customer"
+      ]
+    },
+    {
+      "group": "Webhooks",
+      "pages": [
+        "api-reference/webhooks/get-webhook_events",
+        "api-reference/webhooks/get-webhook_event-detail",
+        "api-reference/webhooks/outgoing-webhooks"
       ]
     },
     {
@@ -229,20 +236,16 @@
       ]
     },
     {
-      "group": "Subscriptions",
+      "group": "Disputes",
       "pages": [
-        "api-reference/subscriptions/get-subscriptions-1",
-        "api-reference/subscriptions/post-subscriptions",
-        "api-reference/subscriptions/get-subscriptions",
-        "api-reference/subscriptions/patch-subscriptions"
+        "api-reference/disputes/get-disputes",
+        "api-reference/disputes/get-disputes-1"
       ]
     },
     {
-      "group": "Webhooks",
+      "group": "Payouts",
       "pages": [
-        "api-reference/webhooks/get-webhook_events",
-        "api-reference/webhooks/get-webhook_event-detail",
-        "api-reference/webhooks/outgoing-webhooks"
+        "api-reference/payouts/get-payouts"
       ]
     },
     {
