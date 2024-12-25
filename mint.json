@@ -203,6 +203,20 @@
       ]
     },
     {
+      "group": "Licenses",
+      "pages": [
+        "api-reference/licenses/activate-license",
+        "api-reference/licenses/deactivate-license",
+        "api-reference/licenses/validate-license",
+        "api-reference/licenses/get-license-keys",
+        "api-reference/licenses/get-license-key",
+        "api-reference/licenses/update-license-key",
+        "api-reference/licenses/get-license-key-instances",
+        "api-reference/licenses/get-license-key-instance",
+        "api-reference/licenses/update-license-key-instance"
+      ]
+    },
+    {
       "group": "Customers",
       "pages": [
         "api-reference/customers/create-customer",
