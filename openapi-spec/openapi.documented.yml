@@ -4,11 +4,12 @@ info:
   description: ''
   license:
     name: ''
-  version: 0.11.1
-servers: [
-  { "url": "https://test.dodopayments.com/", "description": "Test Mode Server Host" },
-  { "url": "https://live.dodopayments.com/", "description": "Live Mode Server Host" }
-]
+  version: 0.13.2
+servers:
+  - url: https://test.dodopayments.com/
+    description: Test Mode Server Host
+  - url: https://live.dodopayments.com/
+    description: Live Mode Server Host
 paths:
   /checkout/supported_countries:
     get:
@@ -235,7 +236,7 @@ paths:
     get:
       tags:
         - Customers
-      operationId: get_customer
+      operationId: get_customer_handler
       parameters:
         - name: customer_id
           in: path
@@ -540,6 +541,748 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", dispute.BusinessID)
+            }
+  /license_key_instances:
+    get:
+      tags:
+        - License Keys
+      operationId: list_license_key_instances
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: license_key_id
+          in: query
+          description: Filter by license key ID
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListLicenseKeyInstancesResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const licenseKeyInstances = await client.licenseKeyInstances.list();
+
+              console.log(licenseKeyInstances);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            license_key_instances = client.license_key_instances.list()
+            print(license_key_instances)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              licenseKeyInstances, err := client.LicenseKeyInstances.List(context.TODO(), dodopayments.LicenseKeyInstanceListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", licenseKeyInstances)
+            }
+  /license_key_instances/{id}:
+    get:
+      tags:
+        - License Keys
+      operationId: get_license_key_instance
+      parameters:
+        - name: id
+          in: path
+          description: License key instance ID
+          required: true
+          schema:
+            type: string
+          example: lki_123
+      responses:
+        '200':
+          description: License key instance found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseKeyInstanceResponse'
+        '404':
+          description: License key instance not found
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const licenseKeyInstance = await client.licenseKeyInstances.retrieve('lki_123');
+
+              console.log(licenseKeyInstance.id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            license_key_instance = client.license_key_instances.retrieve(
+                "id",
+            )
+            print(license_key_instance.id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              licenseKeyInstance, err := client.LicenseKeyInstances.Get(context.TODO(), "lki_123")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", licenseKeyInstance.ID)
+            }
+    patch:
+      tags:
+        - License Keys
+      operationId: update_license_key_instance
+      parameters:
+        - name: id
+          in: path
+          description: License key instance ID
+          required: true
+          schema:
+            type: string
+          example: lki_123
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchLicenseKeyInstanceRequest'
+        required: true
+      responses:
+        '200':
+          description: License key instance updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseKeyInstanceResponse'
+        '404':
+          description: License key instance not found
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const licenseKeyInstance = await client.licenseKeyInstances.update('lki_123', { name: 'name' });
+
+              console.log(licenseKeyInstance.id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            license_key_instance = client.license_key_instances.update(
+                id="lki_123",
+                name="name",
+            )
+            print(license_key_instance.id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              licenseKeyInstance, err := client.LicenseKeyInstances.Update(
+                context.TODO(),
+                "lki_123",
+                dodopayments.LicenseKeyInstanceUpdateParams{
+                  Name: dodopayments.F("name"),
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", licenseKeyInstance.ID)
+            }
+  /license_keys:
+    get:
+      tags:
+        - License Keys
+      operationId: list_license_keys
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: customer_id
+          in: query
+          description: Filter by customer ID
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: status
+          in: query
+          description: Filter by license key status
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/LicenseKeyStatus'
+            nullable: true
+        - name: product_id
+          in: query
+          description: Filter by product ID
+          required: false
+          schema:
+            type: string
+            nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListLicenseKeysResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const licenseKeys = await client.licenseKeys.list();
+
+              console.log(licenseKeys);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            license_keys = client.license_keys.list()
+            print(license_keys)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              licenseKeys, err := client.LicenseKeys.List(context.TODO(), dodopayments.LicenseKeyListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", licenseKeys)
+            }
+  /license_keys/{id}:
+    get:
+      tags:
+        - License Keys
+      operationId: get_license_key_handler
+      parameters:
+        - name: id
+          in: path
+          description: License key ID
+          required: true
+          schema:
+            type: string
+          example: lic_123
+      responses:
+        '200':
+          description: License key found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseKeyResponse'
+        '404':
+          description: License key not found
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const licenseKey = await client.licenseKeys.retrieve('lic_123');
+
+              console.log(licenseKey.id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            license_key = client.license_keys.retrieve(
+                "id",
+            )
+            print(license_key.id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              licenseKey, err := client.LicenseKeys.Get(context.TODO(), "lic_123")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", licenseKey.ID)
+            }
+    patch:
+      tags:
+        - License Keys
+      operationId: update_license_key
+      parameters:
+        - name: id
+          in: path
+          description: License key ID
+          required: true
+          schema:
+            type: string
+          example: lic_123
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchLicenseKeyRequest'
+        required: true
+      responses:
+        '200':
+          description: License key updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseKeyResponse'
+        '400':
+          description: Cannot set expiry for subscription-based license
+        '404':
+          description: License key not found
+        '422':
+          description: New activation limit is less than current instances count
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const licenseKey = await client.licenseKeys.update('lic_123');
+
+              console.log(licenseKey.id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            license_key = client.license_keys.update(
+                id="lic_123",
+            )
+            print(license_key.id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              licenseKey, err := client.LicenseKeys.Update(
+                context.TODO(),
+                "lic_123",
+                dodopayments.LicenseKeyUpdateParams{
+
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", licenseKey.ID)
+            }
+  /licenses/activate:
+    post:
+      tags:
+        - Licenses
+      operationId: activate_license_key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivateLicenseKeyRequest'
+        required: true
+      responses:
+        '201':
+          description: License key instance created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseKeyInstanceResponse'
+        '403':
+          description: License key cannot be activated (inactive)
+        '404':
+          description: License key not found
+        '422':
+          description: License key activation limit reached
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const licenseKeyInstance = await client.licenses.activate({ license_key: 'license_key', name: 'name' });
+
+              console.log(licenseKeyInstance.id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            license_key_instance = client.licenses.activate(
+                license_key="license_key",
+                name="name",
+            )
+            print(license_key_instance.id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              licenseKeyInstance, err := client.Licenses.Activate(context.TODO(), dodopayments.LicenseActivateParams{
+                LicenseKey: dodopayments.F("license_key"),
+                Name: dodopayments.F("name"),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", licenseKeyInstance.ID)
+            }
+  /licenses/deactivate:
+    post:
+      tags:
+        - Licenses
+      operationId: deactivate_license_key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeactivateLicenseKeyRequest'
+        required: true
+      responses:
+        '200':
+          description: License key instance deactivated successfully
+        '403':
+          description: License key instance not found or does not belong to this license key
+        '404':
+          description: License key not found
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              await client.licenses.deactivate({
+                license_key: 'license_key',
+                license_key_instance_id: 'license_key_instance_id',
+              });
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            client.licenses.deactivate(
+                license_key="license_key",
+                license_key_instance_id="license_key_instance_id",
+            )
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              err := client.Licenses.Deactivate(context.TODO(), dodopayments.LicenseDeactivateParams{
+                LicenseKey: dodopayments.F("license_key"),
+                LicenseKeyInstanceID: dodopayments.F("license_key_instance_id"),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+            }
+  /licenses/validate:
+    post:
+      tags:
+        - Licenses
+      operationId: validate_license_key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateLicenseKeyRequest'
+        required: true
+      responses:
+        '200':
+          description: License key validation result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateLicenseKeyResponse'
+        '422':
+          description: Invalid request format
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DOOD_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const response = await client.licenses.validate({ license_key: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43' });
+
+              console.log(response.valid);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DOOD_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            response = client.licenses.validate(
+                license_key="2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43",
+            )
+            print(response.valid)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DOOD_PAYMENTS_API_KEY")
+              )
+              response, err := client.Licenses.Validate(context.TODO(), dodopayments.LicenseValidateParams{
+                LicenseKey: dodopayments.F("2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43"),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", response.Valid)
             }
   /payments:
     get:
@@ -984,7 +1727,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateProductResponse'
+                $ref: '#/components/schemas/GetProductResponse'
       security:
         - API_KEY: []
       x-codeSamples:
@@ -1002,7 +1745,7 @@ paths:
                 tax_category: 'digital_products',
               });
 
-              console.log(product.product_id);
+              console.log(product.business_id);
             }
 
             main();
@@ -1024,7 +1767,7 @@ paths:
                 },
                 tax_category="digital_products",
             )
-            print(product.product_id)
+            print(product.business_id)
         - lang: Go
           source: |
             package main
@@ -1054,13 +1797,13 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", product.ProductID)
+              fmt.Printf("%+v\n", product.BusinessID)
             }
   /products/{id}:
     get:
       tags:
         - Products
-      operationId: get_product
+      operationId: get_product_handler
       parameters:
         - name: id
           in: path
@@ -2058,6 +2801,16 @@ paths:
           description: Invalid webhook signature
 components:
   schemas:
+    ActivateLicenseKeyRequest:
+      type: object
+      required:
+        - name
+        - license_key
+      properties:
+        license_key:
+          type: string
+        name:
+          type: string
     AttachExistingCustomer:
       type: object
       title: Attach Existing Customer
@@ -2427,6 +3180,22 @@ components:
         description:
           type: string
           nullable: true
+        license_key_activation_message:
+          type: string
+          nullable: true
+        license_key_activations_limit:
+          type: integer
+          format: int32
+          description: The number of times the license key can be activated
+          nullable: true
+        license_key_duration:
+          allOf:
+            - $ref: '#/components/schemas/LicenseKeyDuration'
+          nullable: true
+        license_key_enabled:
+          type: boolean
+          description: Put true to generate and send license key to your customer. Default is false
+          nullable: true
         name:
           type: string
           nullable: true
@@ -2434,13 +3203,6 @@ components:
           $ref: '#/components/schemas/Price'
         tax_category:
           $ref: '#/components/schemas/TaxCategory'
-    CreateProductResponse:
-      type: object
-      required:
-        - product_id
-      properties:
-        product_id:
-          type: string
     CreateRefundRequest:
       type: object
       required:
@@ -2694,6 +3456,16 @@ components:
         phone_number:
           type: string
           nullable: true
+    DeactivateLicenseKeyRequest:
+      type: object
+      required:
+        - license_key
+        - license_key_instance_id
+      properties:
+        license_key:
+          type: string
+        license_key_instance_id:
+          type: string
     DisputeResponse:
       type: object
       required:
@@ -2762,6 +3534,7 @@ components:
         - subscription.cancelled
         - subscription.failed
         - subscription.expired
+        - license_key.created
     GetCustomersListResponse:
       type: object
       required:
@@ -2845,6 +3618,7 @@ components:
         - is_recurring
         - tax_category
         - price
+        - license_key_enabled
       properties:
         business_id:
           type: string
@@ -2858,6 +3632,19 @@ components:
           type: string
           nullable: true
         is_recurring:
+          type: boolean
+        license_key_activation_message:
+          type: string
+          nullable: true
+        license_key_activations_limit:
+          type: integer
+          format: int32
+          nullable: true
+        license_key_duration:
+          allOf:
+            - $ref: '#/components/schemas/LicenseKeyDuration'
+          nullable: true
+        license_key_enabled:
           type: boolean
         name:
           type: string
@@ -2949,6 +3736,114 @@ components:
         - requires_capture
         - partially_captured
         - partially_captured_and_capturable
+    LicenseKeyDuration:
+      type: object
+      required:
+        - count
+        - interval
+      properties:
+        count:
+          type: integer
+          format: int32
+        interval:
+          $ref: '#/components/schemas/TimeInterval'
+    LicenseKeyInstanceResponse:
+      type: object
+      required:
+        - id
+        - business_id
+        - name
+        - license_key_id
+        - created_at
+      properties:
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          example: '2024-01-01T00:00:00Z'
+        id:
+          type: string
+          example: lki_123
+        license_key_id:
+          type: string
+          example: lic_123
+        name:
+          type: string
+          example: Production Server 1
+    LicenseKeyResponse:
+      type: object
+      required:
+        - id
+        - business_id
+        - key
+        - status
+        - customer_id
+        - product_id
+        - payment_id
+        - instances_count
+        - created_at
+      properties:
+        activations_limit:
+          type: integer
+          format: int32
+          example: 5
+          nullable: true
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          example: '2024-01-01T00:00:00Z'
+        customer_id:
+          type: string
+          example: cus_123
+        expires_at:
+          type: string
+          format: date-time
+          example: '2024-12-31T23:59:59Z'
+          nullable: true
+        id:
+          type: string
+          example: lic_123
+        instances_count:
+          type: integer
+          format: int32
+        key:
+          type: string
+        payment_id:
+          type: string
+        product_id:
+          type: string
+        status:
+          $ref: '#/components/schemas/LicenseKeyStatus'
+        subscription_id:
+          type: string
+          nullable: true
+    LicenseKeyStatus:
+      type: string
+      enum:
+        - active
+        - expired
+        - disabled
+    ListLicenseKeyInstancesResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseKeyInstanceResponse'
+    ListLicenseKeysResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseKeyResponse'
     ListWebhookEventsResponse:
       type: object
       required:
@@ -3059,6 +3954,17 @@ components:
                   enum:
                     - Dispute
           title: Dispute
+        - allOf:
+            - $ref: '#/components/schemas/LicenseKeyResponse'
+            - type: object
+              required:
+                - payload_type
+              properties:
+                payload_type:
+                  type: string
+                  enum:
+                    - LicenseKey
+          title: License Key
       discriminator:
         propertyName: payload_type
     PatchCustomerRequest:
@@ -3070,11 +3976,46 @@ components:
         phone_number:
           type: string
           nullable: true
+    PatchLicenseKeyInstanceRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    PatchLicenseKeyRequest:
+      type: object
+      properties:
+        activations_limit:
+          type: integer
+          format: int32
+          nullable: true
+        disabled:
+          type: boolean
+          nullable: true
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
     PatchProductRequest:
       type: object
       properties:
         description:
           type: string
+          nullable: true
+        license_key_activation_message:
+          type: string
+          nullable: true
+        license_key_activations_limit:
+          type: integer
+          format: int32
+          nullable: true
+        license_key_duration:
+          allOf:
+            - $ref: '#/components/schemas/LicenseKeyDuration'
+          nullable: true
+        license_key_enabled:
+          type: boolean
           nullable: true
         name:
           type: string
@@ -3419,6 +4360,26 @@ components:
       properties:
         url:
           type: string
+    ValidateLicenseKeyRequest:
+      type: object
+      required:
+        - license_key
+      properties:
+        license_key:
+          type: string
+          example: 2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43
+        license_key_instance_id:
+          type: string
+          example: lki_123
+          nullable: true
+    ValidateLicenseKeyResponse:
+      type: object
+      required:
+        - valid
+      properties:
+        valid:
+          type: boolean
+          example: true
     WebhookEventLogResponse:
       type: object
       required:
@@ -3460,6 +4421,8 @@ tags:
   - name: Customers
   - name: Refunds
   - name: Disputes
+  - name: License Keys
+  - name: Licenses
   - name: Outgoing Webhooks
   - name: Checkout
   - name: Webhook Events
