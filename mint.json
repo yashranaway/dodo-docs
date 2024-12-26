@@ -83,6 +83,7 @@
             "features/transactions/disputes"
           ]
         },
+        "features/license-keys",
         "features/invoice-generation",
         {
           "group": "Payouts",
@@ -142,8 +143,7 @@
       "group": "Technical",
       "pages": [
         "guides/api-key-generation",
-        "guides/webhook-setup",
-        "guides/license"
+        "guides/webhook-setup"
       ]
     },
     {
@@ -169,6 +169,7 @@
     {
       "group": "Versions",
       "pages": [
+        "changelog/v0.14.0",
         "changelog/v0.13.2",
         "changelog/v0.12.0",
         "changelog/v0.11.0",
@@ -284,5 +285,11 @@
   },
   "integrations": {
     "intercom": "m45dl8k9"
-  }
+  },
+  "redirects": [
+    {
+      "source": "/guides/license",
+      "destination": "/features/license-keys"
+    }
+  ]
 }

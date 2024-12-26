@@ -1,0 +1,147 @@
+---
+title: License Keys
+description: The License Key Management feature is designed to help merchants secure their digital products and services by generating, managing, and tracking unique license keys. This feature ensures only authorized users access your products and provides merchants with full control over their license key usage and distribution. Ideal for SaaS businesses and digital product vendors, the tool also includes advanced tracking and revocation capabilities for enhanced security.
+---
+
+<iframe
+  className="w-full aspect-video rounded-md"
+  src="https://www.youtube.com/embed/BNuLTXok8dQ"
+  title="License Keys | Dodo Payments"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
+## How to Create License Keys?
+
+Creating license keys is a simple process:
+
+1. **Access the License Key Section**:
+    - Log in to your Dodo Payments dashboard.
+    - Navigate to the **Products** tab and select a **Product**
+2. **Click on `License Key`**:
+    - Click on License Key section in the selected product
+3. **Configure the License Key Settings**:
+    Provide the following details:
+    - **License Key Expiry Date**: Define the validity period of the license key. It will be never expire by default which means the license key will always be valid
+    - **Activation Limit**: Set the total number of activations allowed per key. It will unlimited by default which means unlimited activations will be allowed
+    - **Activation Instructions**: Add clear instructions to guide customers through the activation process. This will be sent along with the license key email.
+        
+<img src="/images/license-keys/1.webp"/>
+        
+4. **Preview and Save**:
+    - Review the license key settings to ensure accuracy.
+    - Click **Save** to create the license key.
+5. **Automatic Delivery**:
+    - The license key is delivered to the customer via email upon successful transaction along with the activation instructions
+
+## **Understanding License Key Configuration**
+
+Here’s a detailed explanation of each configuration field:
+
+### **License Key Expiry Date**
+
+- **What It Does**: Defines the duration for which the license key remains active.
+- **Example**: A key can be set to expire after 30 days, 1 year, or no expiry (perpetual).
+- **Purpose**: Ideal for subscription services or time-limited products.
+
+### **Activation Limit**
+
+- **What It Does**: Sets the maximum number of times a key can be activated.
+- **Example**: A single-user license may allow 1 activation, while a team license may allow 5 activations.
+- **Purpose**: Prevents overuse or unauthorized sharing.
+
+### **Activation Instructions**
+
+- **What It Does**: Guides customers on how to activate their license key.
+- **Example**:
+    - “Enter your license key in the software activation field.”
+    - “Use the key to unlock premium features in your account settings.”
+- **Purpose**: Simplifies the activation process and reduces customer queries.
+
+## License Keys Section
+
+The **License Keys Section** provides a comprehensive view of all license key activity and enables merchants to manage and monitor their licenses effectively. This section includes the following features:
+
+### **Information Available**:
+
+<img src="/images/license-keys/3.webp"/>
+
+1. **Key Details**:
+    - License key value.
+    - Associated product name.
+    - Customer details (e.g., customer_id)
+    - Purchase date.
+2. **Usage Activity**:
+    - Number of activations.
+    - Activation dates and times.
+    - Status (active, expired, disabled)
+3. **Expiry and Limits**:
+    - Key expiry date.
+    - Remaining activation count
+    - Current activation instances
+
+### **Actions Available**:
+
+<img src="/images/license-keys/2.webp"/>
+
+1. **Disable License Key**:
+    - Immediately disable a key to prevent further usage.
+2. **Enable Key**:
+    - Enable a previously disabled license key.
+3. **View Activation Instances**:
+    - View all associated activation instances for a particular license key
+
+### **Benefits of License Key information** :
+
+- Enables merchants to track license key activity in real-time.
+- Identifies potential misuse or unauthorized activations.
+- Simplifies customer support by providing detailed usage records in case of discrepancy.
+
+## Technical Integration
+
+This section provides details on how to integrate and utilize the License Key Management feature using the available APIs.
+
+### **1. License Key Action APIs**
+
+<Card title="POST: Activate License" icon="link" href="/api-reference/licenses/activate-license" horizontal>
+    Activates a license key instance to grant customer access to the associated product.
+</Card>
+
+<Card title="POST: Deactivate License" icon="link" href="/api-reference/licenses/deactivate-license" horizontal>
+    Deactivates a previously activated license key instance, freeing it for reuse or managing activation limits.
+</Card>
+
+<Card title="POST: Validate License" icon="link" href="/api-reference/licenses/validate-license" horizontal>
+    Validates a license key to confirm its authenticity, validity, and compliance with set parameters.
+</Card>
+
+### **2. License Key Management and Query APIs**
+
+<Card title="GET: Get License Keys" icon="link" href="/api-reference/licenses/get-license-keys" horizontal>
+    Retrieves a list of all license keys for a merchant, including their status and usage details.
+</Card>
+
+<Card title="GET: Get License Key" icon="link" href="/api-reference/licenses/get-license-key" horizontal>
+    Fetches details of a specific license key, including expiry, usage limits, and activation history.
+</Card>
+
+<Card title="PATCH: Update License Key" icon="link" href="/api-reference/licenses/update-license-key" horizontal>
+    Modifies details of an existing license key, such as expiry date, activation limits, enabling or disabling a license key.
+</Card>
+
+### **3. License Key Instance APIs**
+
+<Card title="GET: Get License Key Instances" icon="link" href="/api-reference/licenses/get-license-key-instances" horizontal>
+    Retrieves all instances of activations for a specific license key.
+</Card>
+
+<Card title="GET: Get License Key Instance" icon="link" href="/api-reference/licenses/get-license-key-instance" horizontal>
+    Fetches details of a specific license key activation instance, such as device information and activation timestamp.
+</Card>
+
+<Card title="PATCH: Update License Key Instance" icon="link" href="/api-reference/licenses/update-license-key-instance" horizontal>
+    Updates details of a specific license key activation instance, such as revoking access or modifying device information.
+</Card>
+
+By utilizing these APIs, merchants can seamlessly manage license key creation, validation, and monitoring. These endpoints enable complete automation for tracking and securing digital products, ensuring a robust and scalable solution.
