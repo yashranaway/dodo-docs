@@ -156,6 +156,7 @@
     {
       "group": "Miscellaneous",
       "pages": [
+        "miscellaneous/help-support",
         "miscellaneous/faq",
         "miscellaneous/accounts"
       ]
