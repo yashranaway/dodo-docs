@@ -98,7 +98,8 @@
         "features/analytics-and-reporting",
         "features/customers",
         "features/fraud-detection",
-        "features/api-keys"
+        "features/api-keys",
+        "features/feature-request"
       ]
     },
     {
