@@ -97,6 +97,7 @@
         },
         "features/webhooks",
         "features/analytics-and-reporting",
+        "features/account-summary-payout-wallet",
         "features/customers",
         "features/fraud-detection",
         "features/api-keys",
