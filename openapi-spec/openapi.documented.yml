@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 0.16.0
+  version: 0.16.1
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -392,6 +392,22 @@ paths:
         - Disputes
       operationId: list_disputes
       parameters:
+        - name: created_at_gte
+          in: query
+          description: Get events after this created time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+        - name: created_at_lte
+          in: query
+          description: Get events created before this time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
         - name: page_size
           in: query
           description: Page size default is 10 max is 100
@@ -410,6 +426,22 @@ paths:
             format: int32
             nullable: true
             minimum: 0
+        - name: dispute_status
+          in: query
+          description: Filter by dispute status
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DisputeStatus'
+            nullable: true
+        - name: dispute_stage
+          in: query
+          description: Filter by dispute stage
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/DisputeStage'
+            nullable: true
       responses:
         '200':
           description: ''
@@ -1349,6 +1381,22 @@ paths:
         - Payments
       operationId: list_payments
       parameters:
+        - name: created_at_gte
+          in: query
+          description: Get events after this created time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+        - name: created_at_lte
+          in: query
+          description: Get events created before this time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
         - name: page_size
           in: query
           description: Page size default is 10 max is 100
@@ -1367,6 +1415,21 @@ paths:
             format: int32
             nullable: true
             minimum: 0
+        - name: customer_id
+          in: query
+          description: Filter by customer id
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: status
+          in: query
+          description: Filter by status
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/IntentStatus'
+            nullable: true
       responses:
         '200':
           description: ''
@@ -2078,6 +2141,22 @@ paths:
         - Refunds
       operationId: list_refunds
       parameters:
+        - name: created_at_gte
+          in: query
+          description: Get events after this created time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+        - name: created_at_lte
+          in: query
+          description: Get events created before this time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
         - name: page_size
           in: query
           description: Page size default is 10 max is 100
@@ -2096,6 +2175,14 @@ paths:
             format: int32
             nullable: true
             minimum: 0
+        - name: status
+          in: query
+          description: Filter by status
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/RefundStatus'
+            nullable: true
       responses:
         '200':
           description: ''
@@ -2305,6 +2392,22 @@ paths:
         - Subscriptions
       operationId: list_subscriptions
       parameters:
+        - name: created_at_gte
+          in: query
+          description: Get events after this created time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
+        - name: created_at_lte
+          in: query
+          description: Get events created before this time
+          required: false
+          schema:
+            type: string
+            format: date-time
+            nullable: true
         - name: page_size
           in: query
           description: Page size default is 10 max is 100
@@ -2323,6 +2426,21 @@ paths:
             format: int32
             nullable: true
             minimum: 0
+        - name: customer_id
+          in: query
+          description: Filter by customer id
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: status
+          in: query
+          description: Filter by status
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SubscriptionStatus'
+            nullable: true
       responses:
         '200':
           description: ''
@@ -4023,7 +4141,6 @@ components:
       additionalProperties:
         type: string
     OneTimePrice:
-      title: One-time Product Price
       type: object
       required:
         - price
@@ -4421,7 +4538,6 @@ components:
       discriminator:
         propertyName: type
     RecurringPrice:
-      title: Subcription Product Price
       type: object
       required:
         - price
