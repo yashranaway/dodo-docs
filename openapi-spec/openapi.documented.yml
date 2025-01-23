@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 0.17.0
+  version: 0.19.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -1772,6 +1772,12 @@ paths:
             format: int32
             nullable: true
             minimum: 0
+        - name: archived
+          in: query
+          description: List archived products
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: Products List
@@ -2007,6 +2013,51 @@ paths:
           description: Product Delected Succesfully
       security:
         - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              await client.products.delete('id');
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            client.products.delete(
+                "id",
+            )
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              err := client.Products.Delete(context.TODO(), "id")
+              if err != nil {
+                panic(err.Error())
+              }
+            }
     patch:
       tags:
         - Products
@@ -2149,6 +2200,67 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", image.URL)
+            }
+  /products/{id}/unarchive:
+    post:
+      tags:
+        - Products
+      operationId: undelete_product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product Delected Succesfully
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              await client.products.unarchive('id');
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            client.products.unarchive(
+                "id",
+            )
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              err := client.Products.Unarchive(context.TODO(), "id")
+              if err != nil {
+                panic(err.Error())
+              }
             }
   /refunds:
     get:
@@ -3310,7 +3422,8 @@ components:
         create_new_customer:
           type: boolean
           description: |-
-            When true, the most recently created customer object with the given email is used if exists.
+            When false, the most recently created customer object with the given email is used if exists.
+            When true, a new customer object is always created
             False by default
         email:
           type: string
@@ -3986,6 +4099,10 @@ components:
 
             This ensures precision and avoids floating-point rounding errors.
           nullable: true
+        price_detail:
+          allOf:
+            - $ref: '#/components/schemas/Price'
+          nullable: true
         product_id:
           type: string
           description: Unique identifier for the product.
@@ -3993,6 +4110,7 @@ components:
           $ref: '#/components/schemas/TaxCategory'
         tax_inclusive:
           type: boolean
+          description: Indicates if the price is tax inclusive
           nullable: true
         updated_at:
           type: string

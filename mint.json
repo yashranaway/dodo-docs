@@ -270,7 +270,8 @@
         "api-reference/products/get-products-1",
         "api-reference/products/patch-products",
         "api-reference/products/put-products-images",
-        "api-reference/products/archive-product"
+        "api-reference/products/archive-product",
+        "api-reference/products/unarchive-product"
       ]
     },
     {
