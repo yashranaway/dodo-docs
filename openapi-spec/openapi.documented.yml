@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 0.19.0
+  version: 0.20.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -3452,7 +3452,7 @@ components:
         product_cart:
           type: array
           items:
-            $ref: '#/components/schemas/OneTimeProductCartItem'
+            $ref: '#/components/schemas/OneTimeProductCartItemReq'
           description: List of products in the cart. Must contain at least 1 and at most 100 items.
         return_url:
           type: string
@@ -3488,7 +3488,7 @@ components:
         product_cart:
           type: array
           items:
-            $ref: '#/components/schemas/OneTimeProductCartItem'
+            $ref: '#/components/schemas/OneTimeProductCartItemReq'
           description: Optional list of products included in the payment
           nullable: true
         total_amount:
@@ -4294,22 +4294,54 @@ components:
           type: number
           format: float
           description: Discount applied to the price, represented as a percentage (0 to 100).
+        pay_what_you_want:
+          type: boolean
+          description: |-
+            Indicates whether the customer can pay any amount they choose.
+            If set to `true`, the [`price`](Self::price) field is the minimum amount.
         price:
           type: integer
           format: int32
           description: |-
-            The payment amount. Represented in the lowest denomination of the currency (e.g., cents for USD).
+            The payment amount, in the smallest denomination of the currency (e.g., cents for USD).
             For example, to charge $1.00, pass `100`.
+
+            If [`pay_what_you_want`](Self::pay_what_you_want) is set to `true`, this field represents
+            the **minimum** amount the customer must pay.
         purchasing_power_parity:
           type: boolean
           description: |-
             Indicates if purchasing power parity adjustments are applied to the price.
-            Purchasing power parity feature is not available as of now
+            Purchasing power parity feature is not available as of now.
+        suggested_price:
+          type: integer
+          format: int32
+          description: |-
+            A suggested price for the user to pay. This value is only considered if
+            [`pay_what_you_want`](Self::pay_what_you_want) is `true`. Otherwise, it is ignored.
+          nullable: true
         tax_inclusive:
           type: boolean
-          description: Indicates if the price is tax inclusive
+          description: Indicates if the price is tax inclusive.
           nullable: true
-    OneTimeProductCartItem:
+    OneTimeProductCartItemReq:
+      type: object
+      required:
+        - product_id
+        - quantity
+      properties:
+        amount:
+          type: integer
+          format: int32
+          description: Amount the customer pays if pay_what_you_want is enabled. If disabled then amount will be ignored
+          nullable: true
+        product_id:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+          minimum: 0
+    OneTimeProductCartItemResponse:
       type: object
       required:
         - product_id
@@ -4550,7 +4582,7 @@ components:
         product_cart:
           type: array
           items:
-            $ref: '#/components/schemas/OneTimeProductCartItem'
+            $ref: '#/components/schemas/OneTimeProductCartItemResponse'
           description: List of products purchased in a one-time payment
           nullable: true
         refunds:
