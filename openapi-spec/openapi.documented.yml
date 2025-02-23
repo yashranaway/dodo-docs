@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 0.23.2
+  version: 1.0.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -386,6 +386,30 @@ paths:
               }
               fmt.Printf("%+v\n", customer.BusinessID)
             }
+  /customers/{customer_id}/customer-portal/session:
+    post:
+      tags:
+        - Customers
+      operationId: create_customer_portal_session
+      parameters:
+        - name: send_email
+          in: query
+          description: If true, will send link to user.
+          required: false
+          schema:
+            type: boolean
+            nullable: true
+        - name: customer_id
+          in: path
+          description: Customer Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully send email to customer (if they exist)
+      security:
+        - API_KEY: []
   /discounts:
     get:
       tags:
@@ -420,6 +444,58 @@ paths:
                 $ref: '#/components/schemas/GetDiscountsListResponse'
       security:
         - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              // Automatically fetches more pages as needed.
+              for await (const discount of client.discounts.list()) {
+                console.log(discount.business_id);
+              }
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            page = client.discounts.list()
+            page = page.items[0]
+            print(page.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              page, err := client.Discounts.List(context.TODO(), dodopayments.DiscountListParams{
+
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
     post:
       tags:
         - Discounts
@@ -441,6 +517,60 @@ paths:
                 $ref: '#/components/schemas/DiscountResponse'
       security:
         - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const discount = await client.discounts.create({ amount: 0, type: 'percentage' });
+
+              console.log(discount.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            discount = client.discounts.create(
+                amount=0,
+                type="percentage",
+            )
+            print(discount.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              discount, err := client.Discounts.New(context.TODO(), dodopayments.DiscountNewParams{
+                Amount: dodopayments.F(int64(0)),
+                Type: dodopayments.F(dodopayments.DiscountNewParamsTypePercentage),
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", discount.BusinessID)
+            }
   /discounts/{discount_id}:
     get:
       tags:
@@ -465,6 +595,56 @@ paths:
           description: Not found / or soft-deleted
       security:
         - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const discount = await client.discounts.retrieve('discount_id');
+
+              console.log(discount.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            discount = client.discounts.retrieve(
+                "discount_id",
+            )
+            print(discount.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              discount, err := client.Discounts.Get(context.TODO(), "discount_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", discount.BusinessID)
+            }
     delete:
       tags:
         - Discounts
@@ -484,6 +664,51 @@ paths:
           description: Discount not found or already deleted
       security:
         - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              await client.discounts.delete('discount_id');
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            client.discounts.delete(
+                "discount_id",
+            )
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              err := client.Discounts.Delete(context.TODO(), "discount_id")
+              if err != nil {
+                panic(err.Error())
+              }
+            }
     patch:
       tags:
         - Discounts
@@ -513,6 +738,62 @@ paths:
           description: Discount not found or soft-deleted
       security:
         - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              const discount = await client.discounts.update('discount_id');
+
+              console.log(discount.business_id);
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            discount = client.discounts.update(
+                discount_id="discount_id",
+            )
+            print(discount.business_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              discount, err := client.Discounts.Update(
+                context.TODO(),
+                "discount_id",
+                dodopayments.DiscountUpdateParams{
+
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", discount.BusinessID)
+            }
   /disputes:
     get:
       tags:
@@ -1016,7 +1297,7 @@ paths:
     get:
       tags:
         - License Keys
-      operationId: list_license_keys
+      operationId: list_license_keys_handler
       parameters:
         - name: page_size
           in: query
@@ -1506,7 +1787,7 @@ paths:
     get:
       tags:
         - Payments
-      operationId: list_payments
+      operationId: list_payments_handler
       parameters:
         - name: created_at_gte
           in: query
@@ -2656,7 +2937,7 @@ paths:
     get:
       tags:
         - Subscriptions
-      operationId: list_subscriptions
+      operationId: list_subscriptions_handler
       parameters:
         - name: created_at_gte
           in: query
@@ -2940,7 +3221,7 @@ paths:
     patch:
       tags:
         - Subscriptions
-      operationId: patch_subscription
+      operationId: patch_subscription_handler
       parameters:
         - name: subscription_id
           in: path
@@ -3538,6 +3819,13 @@ components:
         - YE
         - ZM
         - ZW
+    CreateCustomerPortalSessionResponse:
+      type: object
+      required:
+        - link
+      properties:
+        link:
+          type: string
     CreateCustomerRequest:
       type: object
       required:

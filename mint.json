@@ -288,7 +288,8 @@
         "api-reference/customers/create-customer",
         "api-reference/customers/get-customers",
         "api-reference/customers/get-customers-1",
-        "api-reference/customers/patch-customer"
+        "api-reference/customers/patch-customer",
+        "api-reference/customers/create-customer-portal-session"
       ]
     },
     {
