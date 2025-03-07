@@ -4,13 +4,133 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.0.0
+  version: 1.4.3
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
   - url: https://live.dodopayments.com/
     description: Live Mode Server Host
 paths:
+  /addons:
+    get:
+      tags:
+        - Addons
+      operationId: list_addons
+      parameters:
+        - name: page_size
+          in: query
+          description: Page size default is 10 max is 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+        - name: page_number
+          in: query
+          description: Page number default is 0
+          required: false
+          schema:
+            type: integer
+            format: int32
+            nullable: true
+            minimum: 0
+      responses:
+        '200':
+          description: List all addons
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddonsListResponse'
+      security:
+        - API_KEY: []
+    post:
+      tags:
+        - Addons
+      operationId: create_addon
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAddonRequest'
+        required: true
+      responses:
+        '200':
+          description: Create a new addon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddonResponse'
+      security:
+        - API_KEY: []
+  /addons/{id}:
+    get:
+      tags:
+        - Addons
+      operationId: get_addon_handler
+      parameters:
+        - name: id
+          in: path
+          description: Addon Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retrieve a specific addon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddonResponse'
+      security:
+        - API_KEY: []
+    patch:
+      tags:
+        - Addons
+      operationId: patch_addon
+      parameters:
+        - name: id
+          in: path
+          description: Addon Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchAddonRequest'
+        required: true
+      responses:
+        '200':
+          description: Patch update an addon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddonResponse'
+      security:
+        - API_KEY: []
+  /addons/{id}/images:
+    put:
+      tags:
+        - Addons
+      operationId: update_addon_image
+      parameters:
+        - name: id
+          in: path
+          description: Addon Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generate presigned upload URL for addon image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAddonImageResponse'
+      security:
+        - API_KEY: []
   /checkout/supported_countries:
     get:
       tags:
@@ -410,6 +530,57 @@ paths:
           description: Successfully send email to customer (if they exist)
       security:
         - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              await client.customers.customerPortal.session.create('customer_id');
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            client.customers.customer_portal.session.create(
+                customer_id="customer_id",
+            )
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              err := client.Customers.CustomerPortal.Session.New(
+                context.TODO(),
+                "customer_id",
+                dodopayments.CustomerCustomerPortalSessionNewParams{
+
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+            }
   /discounts:
     get:
       tags:
@@ -1830,6 +2001,13 @@ paths:
           schema:
             type: string
             nullable: true
+        - name: subscription_id
+          in: query
+          description: Filter by subscription id
+          required: false
+          schema:
+            type: string
+            nullable: true
         - name: status
           in: query
           description: Filter by status
@@ -2160,7 +2338,7 @@ paths:
     get:
       tags:
         - Products
-      operationId: list_products
+      operationId: list_products_handler
       parameters:
         - name: page_size
           in: query
@@ -2186,6 +2364,17 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: recurring
+          in: query
+          description: |-
+            Filter products by pricing type:
+            - `true`: Show only recurring pricing products (e.g. subscriptions)
+            - `false`: Show only one-time price products
+            - `null` or absent: Show both types of products
+          required: false
+          schema:
+            type: boolean
+            nullable: true
       responses:
         '200':
           description: Products List
@@ -2794,7 +2983,7 @@ paths:
     post:
       tags:
         - Refunds
-      operationId: create_refund
+      operationId: create_refund_handler
       requestBody:
         content:
           application/json:
@@ -3535,6 +3724,60 @@ components:
           type: string
         name:
           type: string
+    AddonResponse:
+      type: object
+      required:
+        - id
+        - business_id
+        - name
+        - tax_category
+        - price
+        - currency
+        - created_at
+        - updated_at
+      properties:
+        business_id:
+          type: string
+          description: Unique identifier for the business to which the addon belongs.
+        created_at:
+          type: string
+          format: date-time
+          description: Created time
+        currency:
+          $ref: '#/components/schemas/Currency'
+        description:
+          type: string
+          description: Optional description of the Addon
+          nullable: true
+        id:
+          type: string
+          description: id of the Addon
+        image:
+          type: string
+          description: Image of the Addon
+          nullable: true
+        name:
+          type: string
+          description: Name of the Addon
+        price:
+          type: integer
+          format: int32
+          description: Amount of the addon
+        tax_category:
+          $ref: '#/components/schemas/TaxCategory'
+        updated_at:
+          type: string
+          format: date-time
+          description: Updated time
+    AddonsListResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddonResponse'
     AttachExistingCustomer:
       title: Attach Existing Customer
       type: object
@@ -3819,6 +4062,29 @@ components:
         - YE
         - ZM
         - ZW
+    CreateAddonRequest:
+      type: object
+      required:
+        - name
+        - tax_category
+        - price
+        - currency
+      properties:
+        currency:
+          $ref: '#/components/schemas/Currency'
+        description:
+          type: string
+          description: Optional description of the Addon
+          nullable: true
+        name:
+          type: string
+          description: Name of the Addon
+        price:
+          type: integer
+          format: int32
+          description: Amount of the addon
+        tax_category:
+          $ref: '#/components/schemas/TaxCategory'
     CreateCustomerPortalSessionResponse:
       type: object
       required:
@@ -5011,6 +5277,35 @@ components:
           title: License Key
       discriminator:
         propertyName: payload_type
+    PatchAddonRequest:
+      type: object
+      properties:
+        currency:
+          allOf:
+            - $ref: '#/components/schemas/Currency'
+          nullable: true
+        description:
+          type: string
+          description: Description of the Addon, optional and must be at most 1000 characters.
+          nullable: true
+        image_id:
+          type: string
+          format: uuid
+          description: Addon image id after its uploaded to S3
+          nullable: true
+        name:
+          type: string
+          description: Name of the Addon, optional and must be at most 100 characters.
+          nullable: true
+        price:
+          type: integer
+          format: int32
+          description: Amount of the addon
+          nullable: true
+        tax_category:
+          allOf:
+            - $ref: '#/components/schemas/TaxCategory'
+          nullable: true
     PatchCustomerRequest:
       type: object
       properties:
@@ -5543,6 +5838,7 @@ components:
         - digital_products
         - saas
         - e_book
+        - edtech
     TimeInterval:
       type: string
       enum:
@@ -5550,6 +5846,17 @@ components:
         - Week
         - Month
         - Year
+    UpdateAddonImageResponse:
+      type: object
+      required:
+        - url
+        - image_id
+      properties:
+        image_id:
+          type: string
+          format: uuid
+        url:
+          type: string
     UpdateProductImageResponse:
       type: object
       required:
@@ -5619,6 +5926,7 @@ tags:
   - name: Products
   - name: Payments
   - name: Subscriptions
+  - name: Addons
   - name: Customers
   - name: Refunds
   - name: Disputes
