@@ -1,0 +1,82 @@
+---
+title: Testing Payment Methods
+description: A comprehensive guide to testing various payment methods with Dodo Payments.
+---
+
+<iframe 
+    className="w-full aspect-video rounded-md" 
+    src="https://www.youtube.com/embed/5CcUSE4L_cg"
+    title="Test Transaction | Dodo Payments" 
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+></iframe>
+
+## Test Card Details
+
+Dodo Payments provides a set of Test Card numbers that you can use to simulate various payment scenarios. You can use these test card numbers to create simulated payments in test mode without processing actual payments or charges.
+
+Test card numbers are only valid in test mode. Don’t use them for real payments.
+
+### Successful Payments (International)
+
+| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
+| ---------------- | ----------------------- | ----------- |
+| 4242424242424242 | 06/32                   | 123         |
+
+### Successful Payments (India)
+
+| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
+| ---------------- | ----------------------- | ----------- |
+| 6074825972083818 | 06/32                   | 123         |
+
+### Declined Payment (International)
+
+| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
+| ---------------- | ----------------------- | ----------- |
+| 4000000000000002 | 06/32                   | 123         |
+
+### Declined Payment (India)
+
+| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
+| ---------------- | ----------------------- | ----------- |
+| 4000000000000127 | 06/32                   | 123         |
+
+For complete information on various test cards for different scenarios visit the link below:
+
+[https://docs.stripe.com/testing#cards](https://docs.stripe.com/testing#cards)
+
+## Test UPI Details
+[Know what UPI is here.](/features/upi)
+
+|    **Status**    |  **UPI ID**   |
+|------------------| --------------|
+|     SUCCESS      | success@upi   |
+|     FAILURE      | failure@upi   |
+
+## Test Klarna Details
+
+| **Status** | **Date of Birth** | **First Name** | **Last Name** | **Email**                     | **Street**     | **House Number** | **City**   | **State** | **Postal Code** | **Phone**         |
+|------------|-------------------|----------------|---------------|------------------------------|----------------|------------------|------------|-----------|-----------------|-------------------|
+| APPROVED   | 07-10-1970        | Test           | Person-us     | customer@email.us            | Amsterdam Ave  | 509              | New York   | New York  | 10024-3941      | +13106683312      |
+| DENIED     | 07-10-1970        | Test           | Person-us     | customer+denied@email.us     | Amsterdam Ave  | 509              | New York   | New York  | 10024-3941      | +13106354386      |
+
+**Note**: The minimum amount required for Klarna transactions is $50.
+
+## Test Affirm Details
+
+When testing your Checkout integration, select Affirm as the payment method and click the Pay button.
+
+### Successful Payment
+- **SSN**: Use `0000` or `5678` for the last four digits of your SSN.
+
+### Failed Authentication
+- To test the case where the user fails to authenticate, use your test API keys and view the redirect page. On the redirect page, close the Affirm modal window and verify that payment failed. The PaymentIntent transitions from `requires_action` to `requires_payment_method`.
+
+**Note**: The minimum amount required for Affirm transactions is $50.
+
+For manual capture PaymentIntents in test mode, the uncaptured PaymentIntent auto-expires 10 minutes after successful authorization.
+
+## Other Payment Methods
+
+To test other payment methods like Amazon Pay and Cash App, follow the usual testing procedures. Please note that Apple Pay and Google Pay won't work in test mode.
