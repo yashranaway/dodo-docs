@@ -201,6 +201,7 @@
     {
       "group": "Versions",
       "pages": [
+        "changelog/v1.7.0",
         "changelog/v1.5.0",
         "changelog/v1.4.0",
         "changelog/v1.3.2",
