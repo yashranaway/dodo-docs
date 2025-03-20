@@ -3,33 +3,58 @@ title: Payout Process
 description: The Payout process will be via Bank Transfer or Paypal transfer as per merchant preference
 ---
 
-## **Payout Process**
+## Payout Cycles
 
-* **Payout Schedule**
+We support the following Payout cycles: 
 
-  1. Payouts cycle will be monthly. It will start from the 1st of every month to the end of the month. Even if the merchant is onboarded in the middle of the month, billing period will be from onboarding date to the end of the month.
+1. **Monthly**
+    - **Billing Period:** 1st to the end of the month
+    - **Payout Date:** 11th of the following month
+2. **Bi-Monthly (Default)**
+    - **Billing Period 1:** 1st to 15th of the month
+    - **Payout Date 1:** 18th of the same month
+    - **Billing Period 2:** 16th to the end of the month
+    - **Payout Date 2:** 4th of the following month
+3. **Weekly**
+    - **Billing Period 1:** 1st to 7th
+        - **Payout Date 1:** 11th of the same month
+    - **Billing Period 2:** 8th to 14th
+        - **Payout Date 2:** 18th of the same month
+    - **Billing Period 3:** 15th to 21st
+        - **Payout Date 3:** 25th of the same month
+    - **Billing Period 4:** 22nd to the End of the month
+        - **Payout Date 4:** 4th of the following month
 
-  2. Payouts will be processed on or before the 15th of every month for the previous month's billing cycle. So for November billing cycle, Payouts will be processed by 15th of December&#x20;
+> **Note:**
+> 
+> - Payouts will only be initiated if all verifications are successful and Payout Threshold is crossed in the billing period.
+> - The default payout cycle for all merchants is **bi-monthly**.
+> - Merchants with higher transaction volumes may request **weekly** payouts by contacting support@dodopayments.com.
+> - Certain high-risk merchants may be placed on a **monthly** payout cycle at our discretion.
 
-Note: If the payout processing date falls on weekends/bank holidays for a given month then there may be a slight delay for the amount to reach your bank account.
+## Payout Processing and Bank Timelines
 
-* **Payout Currency**
+1. The dates provided above are the **initiation dates** for payouts.
+2. It typically takes **1-2 business days** for the amount to appear in your bank account.
+3. Delays may occur if payout processing dates fall on weekends or bank holidays.
 
-  1. Payout currency will be USD by default
+## Payout Currency
 
-  2. If merchant makes a request for a different currency we will take it up on a case to case basis
+1. The default payout currency is **USD**.
+2. For **Indian merchants**, the payout currency for domestic transactions only is **INR**. You can see the bifurcation on your dashboard in the Payouts section.
+3. For custom currency requirements, please reach out to our team at support@dodopayments.com.
 
-* **Payout Threshold**
+## Minimum Payout Threshold
 
-  1. The min Payout threshold will be 100$ for payout eligibility
+1. **USD Payouts:** $100
+2. **INR Payouts (India):** INR 1000
 
-  2. If the payout does not meet the threshold it will carry forward to the next payout cycle
+If your balance does not meet the threshold, it will carry forward to the next payout cycle.
 
-* **Payout Deductions**
+## Payout Deductions
 
-  1. Taxes : All applicable taxes as per the Tax Calculator will be deducted from the sales amount before payout
-
-  2. Dodo Payment Fees and Payout Fees will be deducted before sending the payout. For details check out our [Pricing Page](/miscellaneous/pricing-and-fee-structure)
+1. **Taxes** : All applicable taxes as per the Tax Calculator will be deducted from the sales amount before payout
+2. **Dodo Payment Fees and Payout Fees** will be deducted before sending the payout. For details check out our [**Pricing Page**](https://docs.dodopayments.com/miscellaneous/pricing-and-fee-structure)
 
 ## **Payout Status**
 
@@ -41,7 +66,6 @@ Note: If the payout processing date falls on weekends/bank holidays for a given 
 | Payout Successful    | Payout to the merchant account is processed successfully                                 |
 | Payout Failed        | Payout to the merchant account has failed                                                |
 
-*
 
 ## Payout Invoice
 
