@@ -1,0 +1,25 @@
+---
+title: v1.10.1 (21 March 2025)
+description: Introduced Checkout 2.0, configurable payment methods, dynamic tax calculation, and on-demand subscriptions.
+---
+
+## New Features 🚀
+
+- **Checkout 2.0**: Introducing a completely redesigned checkout experience featuring:
+    - Streamlined, modern interface for improved user experience
+    - New Query Collector System that stores parameters in session storage with unique IDs (e.g., `sess_1a2b3c4d`)
+    - Persistent data availability throughout the entire checkout flow
+    - More enhancements planned for future releases!
+  
+    <Frame><img src="/images/changelog/checkout_2.png" alt="Checkout 2.0"/></Frame>
+
+- **Configurable Payment Methods**: New `allowed_payment_methods` configuration enables merchants to customize available payment options during checkout. See the [Allowed Payment Methods](/api-reference/allowed-payment-methods) documentation for implementation details.
+
+- **Dynamic Tax Calculation**: Real-time calculation of tax rates based on customer billing addresses for more accurate pricing on the static payment links.
+
+- **On-Demand Subscriptions**: New API endpoints for flexible subscription billing (available for select merchants). Learn more in the [On-Demand Subscriptions](/api-reference/on-demand-subscriptions) guide.
+
+- **Additional Updates**:
+    - Performance optimizations
+    - Bug fixes
+    - General system improvements

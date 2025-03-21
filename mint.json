@@ -201,6 +201,7 @@
     {
       "group": "Versions",
       "pages": [
+        "changelog/v1.10.1",
         "changelog/v1.7.0",
         "changelog/v1.5.0",
         "changelog/v1.4.0",
@@ -229,6 +230,7 @@
         "api-reference/dodo-payments-sdks",
         "api-reference/integration-guide",
         "api-reference/subscription-integration-guide",
+        "api-reference/on-demand-subscriptions",
         {
           "group": "Webhooks Details",
           "pages": [
@@ -247,6 +249,7 @@
         },
         "api-reference/managing-products",
         "api-reference/metadata",
+        "api-reference/allowed-payment-methods",
         "api-reference/technical-faqs"
       ]
     },
@@ -346,7 +349,8 @@
     {
       "group": "Miscellaneous",
       "pages": [
-        "api-reference/misc/supported-countries"
+        "api-reference/misc/supported-countries",
+        "api-reference/misc/charge-subscriptions"
       ]
     }
   ],
