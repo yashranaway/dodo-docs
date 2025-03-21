@@ -48,37 +48,47 @@ Simple to create by appending your product ID to the base URL:
 ```
 https://checkout.dodopayments.com/buy/{productid}?quantity=1&redirect_url={your website return_url}
 ```
-This link will accept the following query parameters:
-- `quantity`: The quantity of the product to be purchased. The default is 1.
-- `redirect_url`: The URL to redirect the customer to after the payment is completed.
+This link accepts query parameters that are processed through our Query Collector System. When parameters are provided, they are stored in session storage with a unique ID (e.g., `sess_1a2b3c4d`) and made available throughout the checkout flow.
 
-    **Note:** Dodo will also attach the payment id and status as query params when redirecting the customer to this URL.
-    For example, If the redirect url provided is https://example.com then the below would be the redirected URL for a Successful payment.
+The supported query parameters are:
+
+**Core Parameters:**
+- `quantity`: The quantity of the product to be purchased. Default is 1.
+- `redirect_url`: URL to redirect after payment completion.
   
-    ```https://example.com/?payment_id=pay_ts2ySpzg07phGeBZqePbH&status=succeeded```
-- `firstName`: The first name of the customer.
-- `lastName`: The last name of the customer.
-- `email`: The email address of the customer.
-- `country`: The country of the customer.
-- `addressLine`: The address of the customer.
-- `city`: The city of the customer.
-- `zipCode`: The postal/ZIP code of the customer.
-- `state`: The state of the customer.
+    **Note:** The redirect URL will include payment details as query parameters:
+    ```
+    https://example.com/?payment_id=pay_ts2ySpzg07phGeBZqePbH&status=succeeded
+    ```
 
-**Note**: We also support metadata fields in the query parameters. Just use the prefix `metadata_` for any field that you want to pass in the metadata. For example, `metadata_orderId` or `metadata_customerNote`.
+**Customer Information:**
+- `fullName`: Customer's full name (ignored if firstName or lastName is provided)
+- `firstName`: Customer's first name
+- `lastName`: Customer's last name
+- `email`: Customer's email address
+- `country`: Customer's country
+- `addressLine`: Customer's street address
+- `city`: Customer's city
+- `state`: Customer's state/province
+- `zipCode`: Customer's postal/ZIP code
 
-**Optional Disable Flags**
+**Form Field Controls:**
+The following flags can disable form fields, but only take effect when the associated field data is also provided:
+- `disableFullName`: Disables fullName field (requires fullName parameter)
+- `disableFirstName`: Disables fullName field (requires fullName parameter)
+- `disableLastName`: Disables fullName field (requires fullName parameter)
+- `disableEmail`: Disables email field (requires email parameter)
+- `disableCountry`: Disables country field (requires country parameter)
+- `disableAddressLine`: Disables address field (requires addressLine parameter)
+- `disableCity`: Disables city field (requires city parameter)
+- `disableState`: Disables state field (requires state parameter)
+- `disableZipCode`: Disables ZIP code field (requires zipCode parameter)
 
-The following flags can be used to disable specific fields in the form:
-- `disableFirstName`: Set to true to disable the firstName field.
-- `disableLastName`: Set to true to disable the lastName field.
-- `disableEmail`: Set to true to disable the email field.
-- `disableCountry`: Set to true to disable the country field.
-- `disableAddressLine`: Set to true to disable the addressLine field.
-- `disableCity`: Set to true to disable the city field.
-- `disableZipCode`: Set to true to disable the zipCode field.
+**Custom Data:**
+- Metadata fields can be passed using the `metadata_` prefix
+  Example: `metadata_orderId=123` or `metadata_customerNote=Special instructions`
 
-You can directly use this link to redirect your customers to the checkout page from your website.
+When a customer visits the payment link, all query parameters are collected and stored with a session ID. The URL is then simplified to include just the session parameter (e.g., `?session=sess_1a2b3c4d`). The stored information persists through page refreshes and is accessible throughout the checkout process.
 
 #### 2. Dynamic Payment Links
 Created via API call or our sdk with customer details. Here's an example:
