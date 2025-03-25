@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.9.1
+  version: 1.10.1
 servers: []
 paths:
   /addons:
@@ -524,6 +524,10 @@ paths:
       responses:
         '200':
           description: Successfully send email to customer (if they exist)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerPortalSessionResponse'
       security:
         - API_KEY: []
       x-codeSamples:
@@ -536,7 +540,9 @@ paths:
             });
 
             async function main() {
-              await client.customers.customerPortal.create('customer_id');
+              const customerPortalSession = await client.customers.customerPortal.create('customer_id');
+
+              console.log(customerPortalSession.link);
             }
 
             main();
@@ -548,15 +554,17 @@ paths:
             client = DodoPayments(
                 bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
             )
-            client.customers.customer_portal.create(
+            customer_portal_session = client.customers.customer_portal.create(
                 customer_id="customer_id",
             )
+            print(customer_portal_session.link)
         - lang: Go
           source: |
             package main
 
             import (
               "context"
+              "fmt"
 
               "github.com/dodopayments/dodopayments-go"
               "github.com/dodopayments/dodopayments-go/option"
@@ -566,7 +574,7 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
               )
-              err := client.Customers.CustomerPortal.New(
+              customerPortalSession, err := client.Customers.CustomerPortal.New(
                 context.TODO(),
                 "customer_id",
                 dodopayments.CustomerCustomerPortalNewParams{
@@ -576,6 +584,7 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+              fmt.Printf("%+v\n", customerPortalSession.Link)
             }
   /discounts:
     get:
@@ -4436,6 +4445,9 @@ components:
         product_price:
           type: integer
           format: int32
+          description: |-
+            The product price. Represented in the lowest denomination of the currency (e.g., cents for USD).
+            For example, to charge $1.00, pass `100`.
     CreateSubscriptionChargeResponse:
       type: object
       required:
@@ -5292,6 +5304,8 @@ components:
           description: |-
             Product price for the initial charge to customer
             If not specified the stored price of the product will be used
+            Represented in the lowest denomination of the currency (e.g., cents for USD).
+            For example, to charge $1.00, pass `100`.
           nullable: true
     OneTimePrice:
       type: object
@@ -5346,7 +5360,10 @@ components:
         amount:
           type: integer
           format: int32
-          description: Amount the customer pays if pay_what_you_want is enabled. If disabled then amount will be ignored
+          description: |-
+            Amount the customer pays if pay_what_you_want is enabled. If disabled then amount will be ignored
+            Represented in the lowest denomination of the currency (e.g., cents for USD).
+            For example, to charge $1.00, pass `100`.
           nullable: true
         product_id:
           type: string
