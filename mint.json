@@ -189,7 +189,8 @@
         "miscellaneous/help-support",
         "miscellaneous/faq",
         "miscellaneous/accounts", 
-        "miscellaneous/security-policy"
+        "miscellaneous/security-policy",
+        "miscellaneous/migration-guide"
       ]
     },
     {
