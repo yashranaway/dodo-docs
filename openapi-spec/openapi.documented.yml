@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.10.1
+  version: 1.11.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -4310,6 +4310,10 @@ components:
           nullable: true
         billing:
           $ref: '#/components/schemas/BillingAddress'
+        billing_currency:
+          allOf:
+            - $ref: '#/components/schemas/Currency'
+          nullable: true
         customer:
           $ref: '#/components/schemas/CustomerRequest'
         discount_code:
@@ -4333,6 +4337,11 @@ components:
             Optional URL to redirect the customer after payment.
             Must be a valid URL if provided.
           nullable: true
+        show_saved_payment_methods:
+          type: boolean
+          description: |-
+            Display saved payment methods of a returning customer
+            False by default
         tax_id:
           type: string
           description: Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
@@ -4486,6 +4495,10 @@ components:
           nullable: true
         billing:
           $ref: '#/components/schemas/BillingAddress'
+        billing_currency:
+          allOf:
+            - $ref: '#/components/schemas/Currency'
+          nullable: true
         customer:
           $ref: '#/components/schemas/CustomerRequest'
         discount_code:
@@ -4516,6 +4529,11 @@ components:
           type: string
           description: Optional URL to redirect after successful subscription creation
           nullable: true
+        show_saved_payment_methods:
+          type: boolean
+          description: |-
+            Display saved payment methods of a returning customer
+            False by default
         tax_id:
           type: string
           description: Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
