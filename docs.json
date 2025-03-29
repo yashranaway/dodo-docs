@@ -1,0 +1,393 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Dodo Payments Documentation",
+  "colors": {
+    "primary": "#81B700",
+    "light": "#C6FE1E",
+    "dark": "#0D0D0D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Important Links",
+            "pages": [
+              "miscellaneous/no-code",
+              "miscellaneous/verification-process",
+              "miscellaneous/pricing-and-fee-structure",
+              "miscellaneous/test-mode-vs-live-mode",
+              "miscellaneous/testing-process",
+              "miscellaneous/list-of-countries-we-accept-payments-from",
+              "miscellaneous/tax-forms"
+            ]
+          },
+          {
+            "group": "Our Features",
+            "pages": [
+              "features/overview",
+              {
+                "group": "Product Catalogue",
+                "pages": [
+                  "features/product-catalog/overview",
+                  "features/product-catalog/one-time-payment-products",
+                  "features/product-catalog/subscription",
+                  "features/product-catalog/pricing"
+                ]
+              },
+              {
+                "group": "Transactions",
+                "pages": [
+                  "features/transactions/payments",
+                  "features/transactions/refunds",
+                  "features/transactions/disputes"
+                ]
+              },
+              "features/license-keys",
+              "features/invoice-generation",
+              {
+                "group": "Payouts",
+                "pages": [
+                  "features/payouts/overview",
+                  "features/payouts/link-bank-account",
+                  "features/payouts/compliance",
+                  "features/payouts/payout-structure"
+                ]
+              },
+              "features/storefront",
+              "features/team",
+              "features/discount-codes",
+              "features/webhooks",
+              "features/analytics-and-reporting",
+              "features/account-summary-payout-wallet",
+              "features/b2b-payments",
+              "features/customers",
+              "features/fraud-detection",
+              "features/api-keys",
+              "features/atlas-demo-website",
+              {
+                "group": "Payment Methods",
+                "pages": [
+                  "features/upi"
+                ]
+              },
+              {
+                "group": "GTM Tools",
+                "pages": [
+                  "features/gtm-tools/saas-pricing-calculator",
+                  "features/gtm-tools/saas-revenue-and-profit-growth",
+                  "features/gtm-tools/saas-kpi-measurement",
+                  "features/gtm-tools/freemium-model",
+                  "features/gtm-tools/feature-prioritization-tool"
+                ]
+              },
+              "features/feature-request"
+            ]
+          },
+          {
+            "group": "Miscellaneous",
+            "pages": [
+              "miscellaneous/help-support",
+              "miscellaneous/faq",
+              "miscellaneous/accounts",
+              "miscellaneous/security-policy",
+              "miscellaneous/migration-guide"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation & SDKs",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/integration-tutorial",
+              "api-reference/dodo-payments-sdks",
+              "api-reference/integration-guide",
+              "api-reference/subscription-integration-guide",
+              "api-reference/on-demand-subscriptions",
+              {
+                "group": "Webhooks Details",
+                "pages": [
+                  "api-reference/webhooks/intents/webhook-events-guide",
+                  {
+                    "group": "Webhook Payloads",
+                    "pages": [
+                      "api-reference/webhooks/intents/payment",
+                      "api-reference/webhooks/intents/subscription",
+                      "api-reference/webhooks/intents/refund",
+                      "api-reference/webhooks/intents/dispute",
+                      "api-reference/webhooks/intents/license-key"
+                    ]
+                  }
+                ]
+              },
+              "api-reference/managing-products",
+              "api-reference/metadata",
+              "api-reference/allowed-payment-methods",
+              "api-reference/technical-faqs"
+            ]
+          },
+          {
+            "group": "Payments",
+            "pages": [
+              "api-reference/payments/get-payments",
+              "api-reference/payments/post-payments",
+              "api-reference/payments/get-payments-1",
+              "api-reference/payments/get-invoice"
+            ]
+          },
+          {
+            "group": "Subscriptions",
+            "pages": [
+              "api-reference/subscriptions/get-subscriptions-1",
+              "api-reference/subscriptions/post-subscriptions",
+              "api-reference/subscriptions/get-subscriptions",
+              "api-reference/subscriptions/patch-subscriptions",
+              "api-reference/subscriptions/create-charge"
+            ]
+          },
+          {
+            "group": "Discounts",
+            "pages": [
+              "api-reference/discounts/list-discounts",
+              "api-reference/discounts/create-discount",
+              "api-reference/discounts/validate-discount",
+              "api-reference/discounts/update-discount",
+              "api-reference/discounts/delete-discount"
+            ]
+          },
+          {
+            "group": "Licenses",
+            "pages": [
+              "api-reference/licenses/activate-license",
+              "api-reference/licenses/deactivate-license",
+              "api-reference/licenses/validate-license",
+              "api-reference/licenses/get-license-keys",
+              "api-reference/licenses/get-license-key",
+              "api-reference/licenses/update-license-key",
+              "api-reference/licenses/get-license-key-instances",
+              "api-reference/licenses/get-license-key-instance",
+              "api-reference/licenses/update-license-key-instance"
+            ]
+          },
+          {
+            "group": "Customers",
+            "pages": [
+              "api-reference/customers/create-customer",
+              "api-reference/customers/get-customers",
+              "api-reference/customers/get-customers-1",
+              "api-reference/customers/patch-customer",
+              "api-reference/customers/create-customer-portal-session"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/webhooks/get-webhook_events",
+              "api-reference/webhooks/get-webhook_event-detail",
+              "api-reference/webhooks/outgoing-webhooks"
+            ]
+          },
+          {
+            "group": "Products",
+            "pages": [
+              "api-reference/products/get-products",
+              "api-reference/products/post-products",
+              "api-reference/products/get-products-1",
+              "api-reference/products/patch-products",
+              "api-reference/products/put-products-images",
+              "api-reference/products/archive-product",
+              "api-reference/products/unarchive-product"
+            ]
+          },
+          {
+            "group": "Refunds",
+            "pages": [
+              "api-reference/refunds/get-refunds",
+              "api-reference/refunds/post-refunds",
+              "api-reference/refunds/get-refunds-1"
+            ]
+          },
+          {
+            "group": "Disputes",
+            "pages": [
+              "api-reference/disputes/get-disputes",
+              "api-reference/disputes/get-disputes-1"
+            ]
+          },
+          {
+            "group": "Payouts",
+            "pages": [
+              "api-reference/payouts/get-payouts"
+            ]
+          },
+          {
+            "group": "Miscellaneous",
+            "pages": [
+              "api-reference/misc/supported-countries",
+              "api-reference/misc/charge-subscriptions"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "How to Guides",
+        "groups": [
+          {
+            "group": "Access",
+            "pages": [
+              "guides/login"
+            ]
+          },
+          {
+            "group": "Verification",
+            "pages": [
+              "guides/identity-verification",
+              "guides/business-verification"
+            ]
+          },
+          {
+            "group": "Product Catalog",
+            "pages": [
+              "guides/one-time-product",
+              "guides/subscription-product"
+            ]
+          },
+          {
+            "group": "Transactions",
+            "pages": [
+              "guides/payment-links-guide",
+              "guides/checkout-process",
+              "guides/payments-guide",
+              "guides/refund-guide",
+              "guides/disputes",
+              "guides/reports"
+            ]
+          },
+          {
+            "group": "Payout",
+            "pages": [
+              "guides/bank-account",
+              "guides/payout-compliance"
+            ]
+          },
+          {
+            "group": "Technical",
+            "pages": [
+              "guides/api-key-generation",
+              "guides/webhook-setup"
+            ]
+          },
+          {
+            "group": "Account",
+            "pages": [
+              "guides/business-profile",
+              "guides/user-profile"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": [
+              "changelog/introduction"
+            ]
+          },
+          {
+            "group": "Versions",
+            "pages": [
+              "changelog/v1.11.0",
+              "changelog/v1.10.1",
+              "changelog/v1.7.0",
+              "changelog/v1.5.0",
+              "changelog/v1.4.0",
+              "changelog/v1.3.2",
+              "changelog/v1.0.0",
+              "changelog/v0.24.0",
+              "changelog/v0.22.0",
+              "changelog/v0.20.1",
+              "changelog/v0.19.0",
+              "changelog/v0.18.0",
+              "changelog/v0.16.1",
+              "changelog/v0.15.1",
+              "changelog/v0.14.0",
+              "changelog/v0.13.2",
+              "changelog/v0.12.0",
+              "changelog/v0.11.0",
+              "changelog/v0.10.0",
+              "changelog/v0.1.0"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "background": {
+    "decoration": "windows",
+    "color": {
+      "light": "#ffffff",
+      "dark": "#0D0D0D"
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Community",
+        "href": "https://discord.gg/bYqAp4ayYh"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.dodopayments.com/"
+    }
+  },
+  "seo": {
+    "metatags": {
+      "og:image": "/images/cover-images/DodoPayments.webp"
+    },
+    "indexing": "navigable"
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/dodopayments",
+      "linkedin": "https://linkedin.com/company/dodopayments",
+      "website": "https://dodopayments.com"
+    }
+  },
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_PKmKZdTXTQAMSPrUW8GYilHH21CLw9qXJKZzUYen12W",
+      "apiHost": "https://pineapple.dodopayments.com"
+    },
+    "intercom": {
+      "appId": "m45dl8k9"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/guides/license",
+      "destination": "/features/license-keys"
+    }
+  ]
+}
