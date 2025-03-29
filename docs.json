@@ -384,6 +384,9 @@
       "appId": "m45dl8k9"
     }
   },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude"]
+  },
   "redirects": [
     {
       "source": "/guides/license",
