@@ -1,0 +1,207 @@
+---
+title: MCP Server
+description: The DodoPayments MCP (Model Context Protocol) Server provides a standardized interface for AI models to interact with the DodoPayments API.
+---
+
+## Quick Start
+
+### Installation Options
+
+#### 1. Direct Installation
+
+Run the MCP Server directly using `npx`:
+
+```bash
+# Set your API key
+export DODO_PAYMENTS_API_KEY="My Bearer Token"
+
+# Run the server
+npx -y dodopayments-mcp
+```
+
+#### 2. MCP Client Integration
+
+For existing MCP clients (listed at [modelcontextprotocol.io](https://modelcontextprotocol.io/clients)), configure the server using JSON:
+
+```json
+{
+  "mcpServers": {
+    "dodopayments_api": {
+      "command": "npx",
+      "args": ["-y", "dodopayments-mcp"],
+      "env": {
+        "DODO_PAYMENTS_API_KEY": "My Bearer Token"
+      }
+    }
+  }
+}
+```
+
+## Advanced Usage
+
+### Tool Filtering
+
+The MCP Server supports various filtering options to manage tool exposure:
+
+```bash
+# Include specific tools
+--tool <tool_name>
+
+# Filter by resource
+--resource <resource_pattern>
+
+# Filter by operation type
+--operation <read|write>
+
+# List available tools
+--list
+
+# Exclude specific tools
+--no-tool <tool_name>
+```
+
+Multiple filters can be combined for precise control.
+
+### Programmatic Integration
+
+```javascript
+// Core imports
+import { server, endpoints, init } from "dodopayments-mcp/server";
+
+// Individual tool import
+import createPayments from "dodopayments-mcp/tools/payments/create-payments";
+
+// Initialize server with all endpoints
+init({ server, endpoints });
+
+// Manual server start
+const transport = new StdioServerTransport();
+await server.connect(transport);
+
+// Custom server configuration
+const myServer = new McpServer(...);
+
+// Custom endpoint definition
+const myCustomEndpoint = {
+  tool: {
+    name: 'my_custom_tool',
+    description: 'My custom tool',
+    inputSchema: zodToJsonSchema(z.object({ a_property: z.string() })),
+  },
+  handler: async (client: client, args: any) => {
+    return { myResponse: 'Hello world!' };
+  }
+};
+
+// Initialize with custom configuration
+init({ server: myServer, endpoints: [createPayments, myCustomEndpoint] });
+```
+
+## Available Tools
+
+### Payment Operations
+| Tool | Type | Description |
+|------|------|-------------|
+| `create_payments` | write | Create new payments |
+| `retrieve_payments` | read | Get payment details |
+| `list_payments` | read | List all payments |
+
+### Subscription Management
+| Tool | Type | Description |
+|------|------|-------------|
+| `create_subscriptions` | write | Create new subscriptions |
+| `retrieve_subscriptions` | read | Get subscription details |
+| `update_subscriptions` | write | Update subscription details |
+| `list_subscriptions` | read | List all subscriptions |
+| `charge_subscriptions` | write | Process subscription charges |
+
+### License Management
+| Tool | Type | Description |
+|------|------|-------------|
+| `activate_licenses` | write | Activate license keys |
+| `deactivate_licenses` | write | Deactivate license keys |
+| `validate_licenses` | write | Validate license keys |
+| `retrieve_license_keys` | read | Get license key details |
+| `update_license_keys` | write | Update license key details |
+| `list_license_keys` | read | List all license keys |
+
+### Customer Management
+| Tool | Type | Description |
+|------|------|-------------|
+| `create_customers` | write | Create new customers |
+| `retrieve_customers` | read | Get customer details |
+| `update_customers` | write | Update customer details |
+| `list_customers` | read | List all customers |
+| `create_customers_customer_portal` | write | Create customer portal sessions |
+
+### Payment Processing
+| Tool | Type | Description |
+|------|------|-------------|
+| `create_refunds` | write | Process refunds |
+| `retrieve_refunds` | read | Get refund details |
+| `list_refunds` | read | List all refunds |
+| `retrieve_disputes` | read | Get dispute details |
+| `list_disputes` | read | List all disputes |
+| `list_payouts` | read | List all payouts |
+
+### Product Management
+| Tool | Type | Description |
+|------|------|-------------|
+| `create_products` | write | Create new products |
+| `retrieve_products` | read | Get product details |
+| `update_products` | write | Update product details |
+| `list_products` | read | List all products |
+| `delete_products` | write | Delete products |
+| `unarchive_products` | write | Restore archived products |
+| `update_products_images` | write | Update product images |
+
+### Discount Management
+| Tool | Type | Description |
+|------|------|-------------|
+| `create_discounts` | write | Create new discounts (auto-generates code if omitted) |
+| `retrieve_discounts` | read | Get discount details |
+| `update_discounts` | write | Update discount details |
+| `list_discounts` | read | List all discounts |
+| `delete_discounts` | write | Delete discounts |
+
+### Other Operations
+| Tool | Type | Description |
+|------|------|-------------|
+| `retrieve_webhook_events` | read | Get webhook event details |
+| `list_webhook_events` | read | List all webhook events |
+| `list_supported_countries_misc` | read | List supported countries |
+
+## Security Considerations
+
+1. **API Key Protection**
+   - Never commit API keys to version control
+   - Use environment variables for sensitive data
+   - Rotate API keys periodically
+
+2. **Access Control**
+   - Use tool filtering to limit exposed endpoints
+   - Implement proper authentication in custom endpoints
+   - Monitor API usage and implement rate limiting
+
+## Best Practices
+
+1. **Tool Selection**
+   - Use filtering to optimize context window usage
+   - Group related operations for better organization
+   - Document custom tool implementations
+
+2. **Error Handling**
+   - Implement proper error handling in custom endpoints
+   - Log and monitor server operations
+   - Provide meaningful error messages
+
+3. **Performance**
+   - Use pagination for list operations
+   - Cache frequently accessed data
+   - Optimize custom endpoint implementations
+
+## Support
+
+For additional support:
+- Check [modelcontextprotocol.io](https://modelcontextprotocol.io/)
+- Contact DodoPayments support team 
