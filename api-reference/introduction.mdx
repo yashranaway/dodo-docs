@@ -3,32 +3,107 @@ title: Introduction
 description: Welcome to the Dodo Payments API. Our APIs makes it easy to integrate secure, scalable, and versatile payment solutions into your applications.
 ---
 
-## Key Features
+## Overview
 
-1. **Fast Integration**: Simple RESTful API with clear documentation to get you up and running quickly.
+Dodo Payments provides a comprehensive RESTful API that enables you to integrate payment processing, subscription management, and other features into your applications. This documentation will guide you through our APIs and help you implement our services effectively.
 
-2. **Flexible Payments**: Accept a wide range of payment methods including cards, digital wallets, and more, providing convenience for your customers.
+<CardGroup cols={2}>
+  <Card title="Integration Tutorial" icon="graduation-cap" href="/api-reference/integration-tutorial">
+    Step-by-step guide to integrate Dodo Payments
+  </Card>
+  <Card title="SDKs & Libraries" icon="code" href="/api-reference/dodo-payments-sdks">
+    Official SDKs and client libraries
+  </Card>
+  <Card title="Webhooks Guide" icon="bell" href="/api-reference/webhooks/intents/webhook-events-guide">
+    Real-time event notifications
+  </Card>
+  <Card title="Technical FAQs" icon="question" href="/api-reference/technical-faqs">
+    Common technical questions
+  </Card>
+</CardGroup>
 
-3. **Secure Transactions**: Industry-leading security measures are built-in to protect your transactions and customer data.
+## Authentication
 
-4. **Comprehensive Tools**: Manage payments, refunds, subscriptions, and payouts seamlessly with our robust set of tools.
+All API requests require authentication using your API keys. You can find your API keys in the [Dodo Payments Dashboard](https://dashboard.dodopayments.com/settings/api-keys).
 
-5. **Scalable Infrastructure**: Our APIs are designed to scale with your business, ensuring reliable performance even as your transaction volume grows.
+<CodeGroup>
+```bash Test Mode
+Authorization: Bearer sk_test_your_test_key
+```
 
-6. **Detailed Analytics**: Gain insights into your payment operations with detailed reporting and analytics.
+```bash Live Mode
+Authorization: Bearer sk_live_your_live_key
+```
+</CodeGroup>
 
-7. **Global Reach**: Expand your business internationally with support for multiple currencies and localized payment methods.
+<Warning>
+Never expose your secret API keys in client-side code or public repositories. Always use test keys for development and testing.
+</Warning>
 
-## Getting Started
+## Environment URLs
 
-1. **Sign Up**: Register on the Dodo Payments Dashboard.
+Use the appropriate base URL for your environment:
 
-2. **Get API Keys**: Access your test and live credentials.
+- Test Mode: [`https://test.dodopayments.com`](https://test.dodopayments.com)
+- Live Mode: [`https://live.dodopayments.com`](https://live.dodopayments.com)
 
-3. Use the correct Host names for Test mode and Live mode below:
-   Test Mode: [`https://test.dodopayments.com`](https://test.dodopayments.com)
-   Live Mode: [`https://live.dodopayments.com`](https://live.dodopayments.com)
+Learn more about [Test Mode vs Live Mode](/miscellaneous/test-mode-vs-live-mode).
 
-4. **Test & Deploy**: Use our `Test Mode` to finalize your integration before going live.
+## Core Concepts
 
-Explore the `API Reference Docs` for detailed guides and examples to start processing payments effortlessly.
+Before diving into the API, familiarize yourself with these core concepts:
+
+<CardGroup cols={2}>
+  <Card title="Products" icon="box" href="/api-reference/managing-products">
+    Create and manage your product catalog
+  </Card>
+  <Card title="Payments" icon="credit-card" href="/api-reference/integration-guide">
+    Process one-time payments
+  </Card>
+  <Card title="Subscriptions" icon="repeat" href="/api-reference/subscription-integration-guide">
+    Handle recurring payments
+  </Card>
+  <Card title="Customers" icon="users" href="/api-reference/customers/create-customer">
+    Manage customer data
+  </Card>
+</CardGroup>
+
+## Integration Steps
+
+Follow these steps to integrate Dodo Payments:
+
+<Steps>
+  1. [Set up your account](/quickstart) and get your API keys
+  2. Choose your integration method:
+     - [Follow our tutorial](/api-reference/integration-tutorial)
+     - [Use our SDKs](/api-reference/dodo-payments-sdks)
+     - [Direct API integration](/api-reference/integration-guide)
+  3. [Set up webhooks](/api-reference/webhooks/intents/webhook-events-guide) for real-time updates
+  4. [Test your integration](/miscellaneous/testing-process)
+  5. Go live!
+</Steps>
+
+## Need Help?
+
+- Check our [Technical FAQs](/api-reference/technical-faqs)
+- Contact [Developer Support](/miscellaneous/help-support)
+
+## API Status
+
+Monitor our API status and get real-time updates:
+[status.dodopayments.com](https://status.dodopayments.com)
+
+<Note>
+Our API implements rate limiting to ensure stable service for all users.
+</Note>
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card title="Quick Integration" icon="bolt" href="/api-reference/integration-tutorial">
+    Follow our step-by-step tutorial
+  </Card>
+  <Card title="API Explorer" icon="compass" href="/api-reference/payments/get-payments">
+    Browse all available endpoints
+  </Card>
+</CardGroup>
