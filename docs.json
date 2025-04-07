@@ -38,6 +38,7 @@
               "features/overview",
               {
                 "group": "Product Catalogue",
+                "icon": "box",
                 "pages": [
                   "features/product-catalog/overview",
                   "features/product-catalog/one-time-payment-products",
@@ -47,6 +48,7 @@
               },
               {
                 "group": "Transactions",
+                "icon": "credit-card",
                 "pages": [
                   "features/transactions/payments",
                   "features/transactions/refunds",
@@ -57,6 +59,7 @@
               "features/invoice-generation",
               {
                 "group": "Payouts",
+                "icon": "money-bill-transfer",
                 "pages": [
                   "features/payouts/overview",
                   "features/payouts/link-bank-account",
@@ -77,12 +80,14 @@
               "features/atlas-demo-website",
               {
                 "group": "Payment Methods",
+                "icon": "credit-card",
                 "pages": [
                   "features/upi"
                 ]
               },
               {
                 "group": "GTM Tools",
+                "icon": "chart-line",
                 "pages": [
                   "features/gtm-tools/saas-pricing-calculator",
                   "features/gtm-tools/saas-revenue-and-profit-growth",
@@ -120,10 +125,12 @@
               "api-reference/on-demand-subscriptions",
               {
                 "group": "Webhooks Details",
+                "icon": "webhook",
                 "pages": [
                   "api-reference/webhooks/intents/webhook-events-guide",
                   {
                     "group": "Webhook Payloads",
+                    "icon": "code",
                     "pages": [
                       "api-reference/webhooks/intents/payment",
                       "api-reference/webhooks/intents/subscription",
