@@ -1,0 +1,114 @@
+---
+title: Adaptive Currency
+description: "Adaptive Currency enables merchants to display prices in customers' local currencies, reducing friction at checkout and improving conversion rates by providing a localized payment experience with automatic currency detection and conversion."
+icon: "money-bill-transfer"
+---
+
+## Introduction & Highlights
+
+**What is Adaptive Currency?**
+
+Adaptive Currency allows merchants to show product prices in the **customer's local currency** rather than a fixed global currency (e.g., USD or INR). This reduces friction at checkout, improves user trust, and increases the likelihood of successful payments.
+
+**Key Benefits:**
+- ✨ **Localized Payment Experience**: Show customers prices in their local currencies
+- 🔓 **Unlock more payment methods**: Show customers more payment methods associated with their local currency 
+- 💱 **Same Currency Refunds**: Customers get refunded in the currency they paid with
+
+## How to Enable It on the Dashboard
+
+1. Log into your **Merchant Dashboard**
+2. Navigate to Business **→ Business Settings**
+3. Toggle the switch to **Enable Adaptive Pricing**
+4. You can disable it at any time
+5. Changes apply **only to future transactions**
+
+<Frame>
+  <img src="/images/our-features/adaptive_currency.png" alt="Adaptive Currency"/>
+</Frame>
+
+## Customer Flow
+
+1. 🏁 **User Begins Checkout**
+   - System detects the user's country based on billing address
+
+2. 💵 **Currency Selection**
+   - If Adaptive Pricing is enabled and the country is supported, prices are shown in the local currency by default
+   - Users can switch to global currency (USD) if preferred
+
+3. 🔄 **Conversion & Fees**
+   - Local price is calculated using the **latest exchange rate** plus an **adaptive pricing fee** (2–4%)
+   - Fees are tiered:
+     - 4% for orders under \$500
+     - 3% for \$500 to \$1,500
+     - 2% for over \$1,500
+
+4. 💳 **Payment Experience**
+   - User sees localized payment methods (where applicable)
+   - Checkout and payment are completed in the selected currency
+
+5. 📝 **Transaction Record**
+   - Merchant dashboard shows the transaction in global currency (USD) only
+   - Adaptive pricing fees and converted values are abstracted from the merchant view
+
+## Supported Currencies
+
+| Currency Code | **Currency Name**  | **Countries** | **Min Amount** |
+| --- | --- | --- | --- |
+| AED | UAE Dirham | United Arab Emirates | 2.00 AED |
+| ALL | Albanian Lek | Albania | 50 ALL |
+| AUD | Australian Dollar | Australia, Nauru | $0.50 |
+| BRL | Brazilian Real | Brazil | R$0.50 |
+| CAD | Canadian Dollar | Canada | $0.50 |
+| CHF | Swiss Franc | Switzerland, Liechtenstein | 0.50 Fr |
+| CNY | Chinese Yuan  | China | 4 Yuan |
+| CZK | Czech Koruna | Czech Republic | 15.00Kč |
+| DKK | Danish Krone | Denmark, Greenland | 2.50-kr. |
+| EUR | Euro | Austria, Belgium, Cyprus, Estonia, Finland, France, Germany, Greece, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Portugal, Slovakia, Slovenia, Spain, Andorra, San Marino, Montenegro | €0.50 |
+| GBP | Pound Sterling (British Pound) | United Kingdom | £0.30 |
+| HKD | Hong Kong Dollar | Hong Kong | $4.00 |
+| HUF | Hungarian Forint | Hungary | 175.00 Ft |
+| IDR | Indonesian Rupiah | Indonesia | 8500 IDR |
+| KRW | South Korean Won | South Korea | 730₩ |
+| MXN | Mexican Peso | Mexico | Mex$10 |
+| NOK | Norwegian Krone | Norway | 3.00-kr. |
+| PLN | Polish Zloty | Poland | 2.00 zł |
+| RON | Romanian Leu | Romania | lei2.00 |
+| RSD | Serbian Dinar | Serbia | 60 RSD |
+| SAR | Saudi Riyal | Saudi Arabia | 2 SAR |
+| SEK | Swedish Krona | Sweden | 3.00-kr. |
+| SGD | Singapore Dollar | Singapore | $0.50 |
+| TRY | Turkish Lira | Turkey | 20 TRY |
+| TWD | New Taiwan Dollar | Taiwan | 20NT$ |
+
+## Additional Details
+
+### 🔄 Refunds
+
+- ✨ Dodo Payments pays out refunds in the currency your customer pays in using the latest exchange rate
+- ⚠️ This means that you might pay more or less to cover the refund depending on how the exchange rate changes
+
+#### Example Refund
+
+We ignore Dodo Payment fees in this example for simplicity. Suppose:
+
+1. You're a US business that uses Checkout to sell a product for 100 USD and have activated Adaptive Currency
+2. A customer in Canada views your Checkout page, sees the localized price of 137 CAD at an exchange rate of 1.37 CAD per 1 USD, and completes the purchase
+3. We process the payment, converting the 137 CAD to 100 USD to pay you in your settlement currency
+4. Later, when the exchange rate has changed to 1.40 CAD per 1 USD, you issue a full refund to the customer
+5. We deduct 97.86 USD from your account, exchanging it at 1.40 CAD per 1 USD to pay out the 137 CAD refund
+
+### 📄 Invoice & Taxation
+- Invoices show only the **global currency (USD)** value
+- Taxes and platform fees are calculated based on this global amount
+- For example, a \$10 sale converted to 36 AED will still reflect as \$10 in the Dashboard and invoices
+
+### 🔢 Fee Rounding
+- All amounts are rounded according to Dodo Payments internal rounding logic
+
+### 💰 Adaptive Pricing Fees
+- Local price is calculated using the **latest exchange rate** plus an **adaptive pricing fee** (2–4%)
+- Fees are tiered:
+  - 4% for orders under \$500
+  - 3% for \$500–\$1,500
+  - 2% for over \$1,500

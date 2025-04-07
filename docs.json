@@ -73,6 +73,7 @@
               "features/webhooks",
               "features/analytics-and-reporting",
               "features/account-summary-payout-wallet",
+              "features/adaptive-currency",
               "features/b2b-payments",
               "features/customers",
               "features/fraud-detection",
