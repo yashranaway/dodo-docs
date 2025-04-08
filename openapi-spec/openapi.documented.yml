@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.11.0
+  version: 1.13.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -1265,7 +1265,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListLicenseKeyInstancesResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListLicenseKeyInstancesResponse'
       security:
         - API_KEY: []
       x-codeSamples:
@@ -1278,10 +1280,9 @@ paths:
             });
 
             async function main() {
-              // Automatically fetches more pages as needed.
-              for await (const licenseKeyInstance of client.licenseKeyInstances.list()) {
-                console.log(licenseKeyInstance.id);
-              }
+              const licenseKeyInstances = await client.licenseKeyInstances.list();
+
+              console.log(licenseKeyInstances);
             }
 
             main();
@@ -1293,9 +1294,8 @@ paths:
             client = DodoPayments(
                 bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
             )
-            page = client.license_key_instances.list()
-            page = page.items[0]
-            print(page.id)
+            license_key_instances = client.license_key_instances.list()
+            print(license_key_instances)
         - lang: Go
           source: |
             package main
@@ -1312,13 +1312,13 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
               )
-              page, err := client.LicenseKeyInstances.List(context.TODO(), dodopayments.LicenseKeyInstanceListParams{
+              licenseKeyInstances, err := client.LicenseKeyInstances.List(context.TODO(), dodopayments.LicenseKeyInstanceListParams{
 
               })
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", page)
+              fmt.Printf("%+v\n", licenseKeyInstances)
             }
   /license_key_instances/{id}:
     get:
@@ -1532,7 +1532,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListLicenseKeysResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListLicenseKeysResponse'
       security:
         - API_KEY: []
       x-codeSamples:
@@ -1545,10 +1547,9 @@ paths:
             });
 
             async function main() {
-              // Automatically fetches more pages as needed.
-              for await (const licenseKey of client.licenseKeys.list()) {
-                console.log(licenseKey.id);
-              }
+              const licenseKeys = await client.licenseKeys.list();
+
+              console.log(licenseKeys);
             }
 
             main();
@@ -1560,9 +1561,8 @@ paths:
             client = DodoPayments(
                 bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
             )
-            page = client.license_keys.list()
-            page = page.items[0]
-            print(page.id)
+            license_keys = client.license_keys.list()
+            print(license_keys)
         - lang: Go
           source: |
             package main
@@ -1579,13 +1579,13 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
               )
-              page, err := client.LicenseKeys.List(context.TODO(), dodopayments.LicenseKeyListParams{
+              licenseKeys, err := client.LicenseKeys.List(context.TODO(), dodopayments.LicenseKeyListParams{
 
               })
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", page)
+              fmt.Printf("%+v\n", licenseKeys)
             }
   /license_keys/{id}:
     get:
@@ -4436,13 +4436,6 @@ components:
       required:
         - payment_id
       properties:
-        amount:
-          type: integer
-          format: int32
-          description: |-
-            The amount to be refunded. Must be non-negative. Optional.
-            Partial refunds are currently disabled.
-          nullable: true
         payment_id:
           type: string
           description: The unique identifier of the payment to be refunded.
