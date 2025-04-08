@@ -49,7 +49,6 @@ Adaptive Currency allows merchants to show product prices in the **customer's lo
 
 5. 📝 **Transaction Record**
    - Merchant dashboard shows the transaction in global currency (USD) only
-   - Adaptive pricing fees and converted values are abstracted from the merchant view
 
 ## Supported Currencies
 
@@ -85,30 +84,22 @@ Adaptive Currency allows merchants to show product prices in the **customer's lo
 
 ### 🔄 Refunds
 
-- ✨ Dodo Payments pays out refunds in the currency your customer pays in using the latest exchange rate
-- ⚠️ This means that you might pay more or less to cover the refund depending on how the exchange rate changes
+Dodo Payments pays out refunds in the currency your customer pays in using the latest exchange rate. The global currency (USD) amount remains fixed and the same will be shown on your dashboard and invoices and the same is refunded. This means that your customer may get more or less than the original paid amount depending on how the exchange rate changes during refund transfer. Adaptive Currency fees are not refunded.
 
 #### Example Refund
 
 We ignore Dodo Payment fees in this example for simplicity. Suppose:
 
-1. You're a US business that uses Checkout to sell a product for 100 USD and have activated Adaptive Currency
-2. A customer in Canada views your Checkout page, sees the localized price of 137 CAD at an exchange rate of 1.37 CAD per 1 USD, and completes the purchase
-3. We process the payment, converting the 137 CAD to 100 USD to pay you in your settlement currency
-4. Later, when the exchange rate has changed to 1.40 CAD per 1 USD, you issue a full refund to the customer
-5. We deduct 97.86 USD from your account, exchanging it at 1.40 CAD per 1 USD to pay out the 137 CAD refund
+1. You’re a US business that uses Checkout to sell a product for 100 USD and have activated Adaptive Currency
+2. A customer in Canada views your Checkout page, sees the localized price of 137 CAD at an exchange rate of 1.37 CAD per 1 USD, and completes the purchase.
+3. We process the payment, converting the 137 CAD to 100 USD to pay you in your settlement currency.
+4. Later, when the exchange rate has changed to 1.40 CAD per 1 USD, you issue a full refund to the customer.
+5. We deduct 100 USD from your account and transfer the same to your customer. He will receive 140 CAD as the refund amount.
 
-### 📄 Invoice & Taxation
-- Invoices show only the **global currency (USD)** value
-- Taxes and platform fees are calculated based on this global amount
-- For example, a \$10 sale converted to 36 AED will still reflect as \$10 in the Dashboard and invoices
+**📄 Invoice & Taxation**
+- Invoices show only the **global currency (USD)** value.
+- Taxes and platform fees are calculated based on this global amount.
+- For example, a \$10 sale converted to 36 AED will still reflect as $10 in the Dashboard and invoices
 
-### 🔢 Fee Rounding
+**🔢 Fee Rounding**
 - All amounts are rounded according to Dodo Payments internal rounding logic
-
-### 💰 Adaptive Pricing Fees
-- Local price is calculated using the **latest exchange rate** plus an **adaptive pricing fee** (2–4%)
-- Fees are tiered:
-  - 4% for orders under \$500
-  - 3% for \$500–\$1,500
-  - 2% for over \$1,500
