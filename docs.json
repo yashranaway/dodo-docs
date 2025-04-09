@@ -321,6 +321,7 @@
           {
             "group": "Versions",
             "pages": [
+              "changelog/v1.13.0",
               "changelog/v1.11.0",
               "changelog/v1.10.1",
               "changelog/v1.7.0",
