@@ -71,6 +71,7 @@
               "features/team",
               "features/discount-codes",
               "features/webhooks",
+              "features/mobile-app",
               "features/analytics-and-reporting",
               "features/account-summary-payout-wallet",
               "features/adaptive-currency",
