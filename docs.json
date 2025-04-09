@@ -104,6 +104,7 @@
           {
             "group": "Miscellaneous",
             "pages": [
+              "features/purchasing-power-parity",
               "miscellaneous/help-support",
               "miscellaneous/faq",
               "miscellaneous/accounts",
