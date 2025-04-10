@@ -77,6 +77,7 @@
               "features/adaptive-currency",
               "features/b2b-payments",
               "features/customers",
+              "features/purchasing-power-parity",
               "features/fraud-detection",
               "features/api-keys",
               "features/atlas-demo-website",
@@ -104,7 +105,6 @@
           {
             "group": "Miscellaneous",
             "pages": [
-              "features/purchasing-power-parity",
               "miscellaneous/help-support",
               "miscellaneous/faq",
               "miscellaneous/accounts",
