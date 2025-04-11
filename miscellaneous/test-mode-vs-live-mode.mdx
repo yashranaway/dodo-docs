@@ -56,47 +56,19 @@ API Hostnames for Test Mode and Live Mode are below:
 
 3. All documents submitted for verification and Bank account details submitted will be the same in test mode and live mode. A change in this information in any environment will also change it in the other environment
 
-## Test Card Details
+## Test Cards and UPI IDs
 
-Dodo Payments provides a set of Test Card numbers that you can use to simulate various payment scenarios. You can use these test card numbers to create simulated payments in test mode without processing actual payments or charges
+For detailed information about test cards, UPI IDs, and other testing methods, please refer to our comprehensive [Testing Process](/miscellaneous/testing-process) guide.
 
-Test card numbers are only valid in test mode. Don’t use them for real payments.
+This guide includes:
+- Test card numbers for different scenarios
+- Test UPI IDs for simulating payments
+- Instructions for testing various payment outcomes
+- Best practices for testing your integration
 
-### Successful Payments (International)
-
-| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
-| ---------------- | ----------------------- | ----------- |
-| 4242424242424242 | 06/32                   | 123         |
-
-### Successful Payments (India)
-
-| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
-| ---------------- | ----------------------- | ----------- |
-| 6074825972083818 | 06/32                   | 123         |
-
-### Declined Payment (International)
-
-| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
-| ---------------- | ----------------------- | ----------- |
-| 4000000000000002 | 06/32                   | 123         |
-
-### Declined Payment (India)
-
-| **Card Number**  | **Expiry Date (MM/YY)** | **CVV/CVC** |
-| ---------------- | ----------------------- | ----------- |
-| 4000000000000127 | 06/32                   | 123         |
-
-For complete information on various test cards for different scenarios visit the link below:
-
-[https://docs.stripe.com/testing#cards](https://docs.stripe.com/testing#cards)
-
-## Test UPI Details
-[Know what UPI is here.](/features/upi)
-
-|    **Status**    |  **UPI ID**   |
-|------------------| --------------|
-|     SUCCESS      | success@upi   |
-|     FAILURE      | failure@upi   |
+<Note>
+Test payment methods are only valid in test mode. Never use them for real payments.
+</Note>
 
 ## Transaction in Test Mode - Tutorial
 
