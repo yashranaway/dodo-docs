@@ -29,7 +29,8 @@
               "miscellaneous/test-mode-vs-live-mode",
               "miscellaneous/testing-process",
               "miscellaneous/list-of-countries-we-accept-payments-from",
-              "miscellaneous/tax-forms"
+              "miscellaneous/tax-forms",
+              "features/payment-methods"
             ]
           },
           {
@@ -81,13 +82,6 @@
               "features/fraud-detection",
               "features/api-keys",
               "features/atlas-demo-website",
-              {
-                "group": "Payment Methods",
-                "icon": "credit-card",
-                "pages": [
-                  "features/upi"
-                ]
-              },
               {
                 "group": "GTM Tools",
                 "icon": "chart-line",
