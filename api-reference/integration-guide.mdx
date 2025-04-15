@@ -88,6 +88,7 @@ The following flags can disable form fields, but only take effect when the assoc
 **Custom Data:**
 - Metadata fields can be passed using the `metadata_` prefix
   Example: `metadata_orderId=123` or `metadata_customerNote=Special instructions`
+- `paymentAmount`: Specifies the payment amount in cents (e.g., $10.00 would be entered as 1000). This parameter is exclusively available for one-time payment links that use Pay What You Want (PWYW) pricing model.
 
 When a customer visits the payment link, all query parameters are collected and stored with a session ID. The URL is then simplified to include just the session parameter (e.g., `?session=sess_1a2b3c4d`). The stored information persists through page refreshes and is accessible throughout the checkout process.
 
