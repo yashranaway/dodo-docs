@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.14.3
+  version: 1.16.1
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -7457,6 +7457,7 @@ components:
         - sepa
         - ach
         - amazon_pay
+        - afterpay_clearpay
     PaymentResponse:
       type: object
       required:
