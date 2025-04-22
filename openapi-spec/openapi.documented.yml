@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.16.1
+  version: 1.17.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -227,6 +227,18 @@ paths:
 
                 val countryCodes: List<CountryCode> = client.misc().listSupportedCountries()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            country_codes = dodo_payments.misc.list_supported_countries
+
+            puts(country_codes)
   /customers:
     get:
       tags:
@@ -346,6 +358,18 @@ paths:
 
                 val page: CustomerListPage = client.customers().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.customers.list
+
+            puts(page)
     post:
       tags:
         - Customers
@@ -462,6 +486,18 @@ paths:
                     .build()
                 val customer: Customer = client.customers().create(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            customer = dodo_payments.customers.create(email: "email", name: "name")
+
+            puts(customer)
   /customers/{customer_id}:
     get:
       tags:
@@ -573,6 +609,18 @@ paths:
                     .build()
                 val customer: Customer = client.customers().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            customer = dodo_payments.customers.retrieve("customer_id")
+
+            puts(customer)
     patch:
       tags:
         - Customers
@@ -696,6 +744,18 @@ paths:
                     .build()
                 val customer: Customer = client.customers().update(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            customer = dodo_payments.customers.update("customer_id")
+
+            puts(customer)
   /customers/{customer_id}/customer-portal/session:
     post:
       tags:
@@ -820,6 +880,18 @@ paths:
                     .build()
                 val customerPortalSession: CustomerPortalSession = client.customers().customerPortal().create(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            customer_portal_session = dodo_payments.customers.customer_portal.create("customer_id")
+
+            puts(customer_portal_session)
   /discounts:
     get:
       tags:
@@ -940,6 +1012,18 @@ paths:
 
                 val page: DiscountListPage = client.discounts().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.discounts.list
+
+            puts(page)
     post:
       tags:
         - Discounts
@@ -1059,6 +1143,18 @@ paths:
                     .build()
                 val discount: Discount = client.discounts().create(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            discount = dodo_payments.discounts.create(amount: 0, type: :percentage)
+
+            puts(discount)
   /discounts/{discount_id}:
     get:
       tags:
@@ -1173,6 +1269,18 @@ paths:
                     .build()
                 val discount: Discount = client.discounts().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            discount = dodo_payments.discounts.retrieve("discount_id")
+
+            puts(discount)
     delete:
       tags:
         - Discounts
@@ -1275,6 +1383,18 @@ paths:
                     .build()
                 client.discounts().delete(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            result = dodo_payments.discounts.delete("discount_id")
+
+            puts(result)
     patch:
       tags:
         - Discounts
@@ -1400,6 +1520,18 @@ paths:
                     .build()
                 val discount: Discount = client.discounts().update(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            discount = dodo_payments.discounts.update("discount_id")
+
+            puts(discount)
   /disputes:
     get:
       tags:
@@ -1558,6 +1690,18 @@ paths:
 
                 val page: DisputeListPage = client.disputes().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.disputes.list
+
+            puts(page)
   /disputes/{dispute_id}:
     get:
       tags:
@@ -1669,6 +1813,18 @@ paths:
                     .build()
                 val dispute: Dispute = client.disputes().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            dispute = dodo_payments.disputes.retrieve("dispute_id")
+
+            puts(dispute)
   /invoices/payments/{payment_id}:
     get:
       tags:
@@ -1766,6 +1922,18 @@ paths:
                     .build()
                 client.invoices().payments().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            result = dodo_payments.invoices.payments.retrieve("payment_id")
+
+            puts(result)
   /license_key_instances:
     get:
       tags:
@@ -1892,6 +2060,18 @@ paths:
 
                 val page: LicenseKeyInstanceListPage = client.licenseKeyInstances().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.license_key_instances.list
+
+            puts(page)
   /license_key_instances/{id}:
     get:
       tags:
@@ -2006,6 +2186,18 @@ paths:
                     .build()
                 val licenseKeyInstance: LicenseKeyInstance = client.licenseKeyInstances().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            license_key_instance = dodo_payments.license_key_instances.retrieve("id")
+
+            puts(license_key_instance)
     patch:
       tags:
         - License Keys
@@ -2134,6 +2326,18 @@ paths:
                     .build()
                 val licenseKeyInstance: LicenseKeyInstance = client.licenseKeyInstances().update(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            license_key_instance = dodo_payments.license_key_instances.update("id", name: "name")
+
+            puts(license_key_instance)
   /license_keys:
     get:
       tags:
@@ -2275,6 +2479,18 @@ paths:
 
                 val page: LicenseKeyListPage = client.licenseKeys().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.license_keys.list
+
+            puts(page)
   /license_keys/{id}:
     get:
       tags:
@@ -2389,6 +2605,18 @@ paths:
                     .build()
                 val licenseKey: LicenseKey = client.licenseKeys().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            license_key = dodo_payments.license_keys.retrieve("id")
+
+            puts(license_key)
     patch:
       tags:
         - License Keys
@@ -2518,6 +2746,18 @@ paths:
                     .build()
                 val licenseKey: LicenseKey = client.licenseKeys().update(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            license_key = dodo_payments.license_keys.update("id")
+
+            puts(license_key)
   /licenses/activate:
     post:
       tags:
@@ -2638,6 +2878,18 @@ paths:
                     .build()
                 val licenseKeyInstance: LicenseKeyInstance = client.licenses().activate(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            license_key_instance = dodo_payments.licenses.activate(license_key: "license_key", name: "name")
+
+            puts(license_key_instance)
   /licenses/deactivate:
     post:
       tags:
@@ -2748,6 +3000,21 @@ paths:
                     .build()
                 client.licenses().deactivate(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            result = dodo_payments.licenses.deactivate(
+              license_key: "license_key",
+              license_key_instance_id: "license_key_instance_id"
+            )
+
+            puts(result)
   /licenses/validate:
     post:
       tags:
@@ -2860,6 +3127,18 @@ paths:
                     .build()
                 val response: LicenseValidateResponse = client.licenses().validate(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            response = dodo_payments.licenses.validate(license_key: "2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43")
+
+            puts(response)
   /payments:
     get:
       tags:
@@ -3017,6 +3296,18 @@ paths:
 
                 val page: PaymentListPage = client.payments().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.payments.list
+
+            puts(page)
     post:
       tags:
         - Payments
@@ -3192,6 +3483,22 @@ paths:
                     .build()
                 val payment: PaymentCreateResponse = client.payments().create(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            payment = dodo_payments.payments.create(
+              billing: {city: "city", country: :AF, state: "state", street: "street", zipcode: "zipcode"},
+              customer: {customer_id: "customer_id"},
+              product_cart: [{product_id: "product_id", quantity: 0}]
+            )
+
+            puts(payment)
   /payments/{payment_id}:
     get:
       tags:
@@ -3303,6 +3610,18 @@ paths:
                     .build()
                 val payment: Payment = client.payments().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            payment = dodo_payments.payments.retrieve("payment_id")
+
+            puts(payment)
   /payouts:
     get:
       tags:
@@ -3422,6 +3741,18 @@ paths:
 
                 val page: PayoutListPage = client.payouts().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.payouts.list
+
+            puts(page)
   /products:
     get:
       tags:
@@ -3558,6 +3889,18 @@ paths:
 
                 val page: ProductListPage = client.products().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.products.list
+
+            puts(page)
     post:
       tags:
         - Products
@@ -3702,6 +4045,21 @@ paths:
                     .build()
                 val product: Product = client.products().create(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            product = dodo_payments.products.create(
+              price: {currency: :AED, discount: 0, price: 0, purchasing_power_parity: true, type: :one_time_price},
+              tax_category: :digital_products
+            )
+
+            puts(product)
   /products/{id}:
     get:
       tags:
@@ -3813,6 +4171,18 @@ paths:
                     .build()
                 val product: Product = client.products().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            product = dodo_payments.products.retrieve("id")
+
+            puts(product)
     delete:
       tags:
         - Products
@@ -3911,6 +4281,18 @@ paths:
                     .build()
                 client.products().delete(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            result = dodo_payments.products.delete("id")
+
+            puts(result)
     patch:
       tags:
         - Products
@@ -4021,6 +4403,18 @@ paths:
                     .build()
                 client.products().update(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            result = dodo_payments.products.update("id")
+
+            puts(result)
   /products/{id}/images:
     put:
       tags:
@@ -4144,6 +4538,18 @@ paths:
                     .build()
                 val image: ImageUpdateResponse = client.products().images().update(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            image = dodo_payments.products.images.update("id")
+
+            puts(image)
   /products/{id}/unarchive:
     post:
       tags:
@@ -4243,6 +4649,18 @@ paths:
                     .build()
                 client.products().unarchive(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            result = dodo_payments.products.unarchive("id")
+
+            puts(result)
   /refunds:
     get:
       tags:
@@ -4393,6 +4811,18 @@ paths:
 
                 val page: RefundListPage = client.refunds().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.refunds.list
+
+            puts(page)
     post:
       tags:
         - Refunds
@@ -4504,6 +4934,18 @@ paths:
                     .build()
                 val refund: Refund = client.refunds().create(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            refund = dodo_payments.refunds.create(payment_id: "payment_id")
+
+            puts(refund)
   /refunds/{refund_id}:
     get:
       tags:
@@ -4615,6 +5057,18 @@ paths:
                     .build()
                 val refund: Refund = client.refunds().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            refund = dodo_payments.refunds.retrieve("refund_id")
+
+            puts(refund)
   /subscriptions:
     get:
       tags:
@@ -4765,6 +5219,18 @@ paths:
 
                 val page: SubscriptionListPage = client.subscriptions().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.subscriptions.list
+
+            puts(page)
     post:
       tags:
         - Subscriptions
@@ -4931,6 +5397,23 @@ paths:
                     .build()
                 val subscription: SubscriptionCreateResponse = client.subscriptions().create(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            subscription = dodo_payments.subscriptions.create(
+              billing: {city: "city", country: :AF, state: "state", street: "street", zipcode: "zipcode"},
+              customer: {customer_id: "customer_id"},
+              product_id: "product_id",
+              quantity: 0
+            )
+
+            puts(subscription)
   /subscriptions/{subscription_id}:
     get:
       tags:
@@ -5042,6 +5525,18 @@ paths:
                     .build()
                 val subscription: Subscription = client.subscriptions().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            subscription = dodo_payments.subscriptions.retrieve("subscription_id")
+
+            puts(subscription)
     patch:
       tags:
         - Subscriptions
@@ -5164,6 +5659,18 @@ paths:
                     .build()
                 val subscription: Subscription = client.subscriptions().update(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            subscription = dodo_payments.subscriptions.update("subscription_id")
+
+            puts(subscription)
   /subscriptions/{subscription_id}/charge:
     post:
       tags:
@@ -5290,6 +5797,18 @@ paths:
                     .build()
                 val response: SubscriptionChargeResponse = client.subscriptions().charge(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            response = dodo_payments.subscriptions.charge("subscription_id", product_price: 0)
+
+            puts(response)
   /webhook_events:
     get:
       tags:
@@ -5440,6 +5959,18 @@ paths:
 
                 val page: WebhookEventListPage = client.webhookEvents().list()
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.webhook_events.list
+
+            puts(page)
   /webhook_events/{webhook_event_id}:
     get:
       tags:
@@ -5550,6 +6081,18 @@ paths:
                     .build()
                 val webhookEvent: WebhookEvent = client.webhookEvents().retrieve(params)
             }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            webhook_event = dodo_payments.webhook_events.retrieve("webhook_event_id")
+
+            puts(webhook_event)
   /your-webhook-url:
     post:
       tags:
@@ -7470,6 +8013,8 @@ components:
         - refunds
         - customer
         - metadata
+        - settlement_amount
+        - settlement_currency
       properties:
         business_id:
           type: string
@@ -7523,6 +8068,16 @@ components:
           items:
             $ref: '#/components/schemas/RefundResponse'
           description: List of refunds issued for this payment
+        settlement_amount:
+          type: integer
+          format: int32
+          description: >-
+            The amount that will be credited to your Dodo balance after currency conversion and processing.
+
+            Especially relevant for adaptive pricing where the customer's payment currency differs from your
+            settlement currency.
+        settlement_currency:
+          $ref: '#/components/schemas/Currency'
         status:
           allOf:
             - $ref: '#/components/schemas/IntentStatus'
