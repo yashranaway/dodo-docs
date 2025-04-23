@@ -259,6 +259,25 @@ When a payment succeeds, you'll receive the following webhooks:
 | `type` | string | Yes | The type of event. See [Event Types](#event-types) |
 | `data` | object | Yes | The main data payload. See [Data Object](#data-object) |
 
+## Changing Subscription Plans
+
+You can upgrade or downgrade a subscription plan using the change plan API endpoint. This allows you to modify the subscription's product, quantity, and handle proration.
+
+<Card title="Change Plan API Reference" icon="arrows-rotate" href="/api-reference/subscriptions/change-plan">
+  For detailed information about changing subscription plans, please refer to our Change Plan API documentation.
+</Card>
+
+### Behavior
+
+- When you invoke this API, Dodo Payments immediately initiates a charge, which includes proration based on the new plan.
+- If the plan change is a downgrade, credits will be automatically calculated and added to the subscription's credit balance. These credits are specific to that subscription and will only be used to offset future recurring payments of the same subscription.
+- During a trial period, selecting `prorated_immediately` will immediately switch the user to the new plan, charging the customer right away.
+
+### Charge Processing
+
+- The immediate charge initiated upon plan change usually completes processing in less than 2 minutes.
+- If this immediate charge fails for any reason, the subscription is automatically placed on hold until the issue is resolved.
+
 ## Data Object
 
 The `data` object contains the following properties:
