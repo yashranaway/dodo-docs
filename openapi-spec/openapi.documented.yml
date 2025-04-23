@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.17.0
+  version: 1.18.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -5671,6 +5671,151 @@ paths:
             subscription = dodo_payments.subscriptions.update("subscription_id")
 
             puts(subscription)
+  /subscriptions/{subscription_id}/change-plan:
+    post:
+      tags:
+        - Subscriptions
+      operationId: update_subscription_plan_handler
+      parameters:
+        - name: subscription_id
+          in: path
+          description: Subscription Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSubscriptionPlanReq'
+        required: true
+      responses:
+        '200':
+          description: Subscription plan changed
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+            });
+
+            async function main() {
+              await client.subscriptions.changePlan('subscription_id', {
+                product_id: 'product_id',
+                proration_billing_mode: 'prorated_immediately',
+                quantity: 0,
+              });
+            }
+
+            main();
+        - lang: Python
+          source: |-
+            import os
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+            )
+            client.subscriptions.change_plan(
+                subscription_id="subscription_id",
+                product_id="product_id",
+                proration_billing_mode="prorated_immediately",
+                quantity=0,
+            )
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+              )
+              err := client.Subscriptions.ChangePlan(
+                context.TODO(),
+                "subscription_id",
+                dodopayments.SubscriptionChangePlanParams{
+                  ProductID: dodopayments.F("product_id"),
+                  ProrationBillingMode: dodopayments.F(dodopayments.SubscriptionChangePlanParamsProrationBillingModeProratedImmediately),
+                  Quantity: dodopayments.F(int64(0)),
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.SubscriptionChangePlanParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    SubscriptionChangePlanParams params = SubscriptionChangePlanParams.builder()
+                        .subscriptionId("subscription_id")
+                        .productId("product_id")
+                        .prorationBillingMode(SubscriptionChangePlanParams.ProrationBillingMode.PRORATED_IMMEDIATELY)
+                        .quantity(0L)
+                        .build();
+                    client.subscriptions().changePlan(params)
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.SubscriptionChangePlanParams
+
+            fun main() {
+                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: SubscriptionChangePlanParams = SubscriptionChangePlanParams.builder()
+                    .subscriptionId("subscription_id")
+                    .productId("product_id")
+                    .prorationBillingMode(SubscriptionChangePlanParams.ProrationBillingMode.PRORATED_IMMEDIATELY)
+                    .quantity(0L)
+                    .build()
+                client.subscriptions().changePlan(params)
+            }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token", # defaults to ENV["DODO_PAYMENTS_API_KEY"]
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            result = dodo_payments.subscriptions.change_plan(
+              "subscription_id",
+              product_id: "product_id",
+              proration_billing_mode: :prorated_immediately,
+              quantity: 0
+            )
+
+            puts(result)
   /subscriptions/{subscription_id}/charge:
     post:
       tags:
@@ -8203,6 +8348,10 @@ components:
           title: Recurring Price
       discriminator:
         propertyName: type
+    ProrationBillingMode:
+      type: string
+      enum:
+        - prorated_immediately
     RecurringPrice:
       type: object
       required:
@@ -8322,6 +8471,7 @@ components:
         - subscription_period_count
         - payment_frequency_count
         - next_billing_date
+        - previous_billing_date
         - customer
         - metadata
         - billing
@@ -8350,13 +8500,17 @@ components:
         next_billing_date:
           type: string
           format: date-time
-          description: Timestamp of the next scheduled billing
+          description: Timestamp of the next scheduled billing. Indicates the end of current billing period
         payment_frequency_count:
           type: integer
           format: int32
           description: Number of payment frequency intervals
         payment_frequency_interval:
           $ref: '#/components/schemas/TimeInterval'
+        previous_billing_date:
+          type: string
+          format: date-time
+          description: Timestamp of the last payment. Indicates the start of current billing period
         product_id:
           type: string
           description: Identifier of the product associated with this subscription
@@ -8433,6 +8587,23 @@ components:
           nullable: true
         url:
           type: string
+    UpdateSubscriptionPlanReq:
+      type: object
+      required:
+        - product_id
+        - quantity
+        - proration_billing_mode
+      properties:
+        product_id:
+          type: string
+          description: Unique identifier of the product to subscribe to
+        proration_billing_mode:
+          $ref: '#/components/schemas/ProrationBillingMode'
+        quantity:
+          type: integer
+          format: int32
+          description: Number of units to subscribe for. Must be at least 1.
+          minimum: 0
     ValidateLicenseKeyRequest:
       type: object
       required:
