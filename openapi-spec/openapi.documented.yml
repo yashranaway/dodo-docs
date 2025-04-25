@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.18.0
+  version: 1.18.3
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -8223,6 +8223,14 @@ components:
             settlement currency.
         settlement_currency:
           $ref: '#/components/schemas/Currency'
+        settlement_tax:
+          type: integer
+          format: int32
+          description: |-
+            This represents the portion of settlement_amount that corresponds to taxes collected.
+            Especially relevant for adaptive pricing where the tax component must be tracked separately
+            in your Dodo balance.
+          nullable: true
         status:
           allOf:
             - $ref: '#/components/schemas/IntentStatus'
