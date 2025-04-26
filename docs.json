@@ -119,6 +119,7 @@
               "api-reference/dodo-payments-sdks",
               "api-reference/integration-guide",
               "api-reference/subscription-integration-guide",
+              "api-reference/mobile-integration-guide",
               "api-reference/on-demand-subscriptions",
               {
                 "group": "Webhooks Details",
