@@ -318,6 +318,7 @@
           {
             "group": "April 2025",
             "pages": [
+              "changelog/v1.18.3",
               "changelog/v1.16.1",
               "changelog/v1.14.0",
               "changelog/v1.13.0"
