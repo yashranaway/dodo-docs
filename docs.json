@@ -82,6 +82,7 @@
               "features/purchasing-power-parity",
               "features/fraud-detection",
               "features/api-keys",
+              "features/woocommerce-plugin",
               "features/atlas-demo-website",
               {
                 "group": "GTM Tools",

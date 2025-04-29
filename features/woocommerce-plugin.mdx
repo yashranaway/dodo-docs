@@ -1,0 +1,180 @@
+---
+title: "WooCommerce Plugin"
+description: "Integrate Dodo Payments seamlessly with your WooCommerce store to accept global payments through UPI, cards, and more."
+icon: "wordpress"
+---
+
+## Introduction
+
+The Dodo Payments WooCommerce plugin provides a seamless integration with your store, enabling you to accept payments through multiple methods including UPI, cards, net banking, and digital wallets. This comprehensive guide will walk you through the installation and configuration process.
+
+## Step-by-Step Installation Guide
+
+1. Download the latest zip of the WooCommerce payment plugin.
+
+    <Card title="Download Plugin" icon="download" href="https://github.com/dodopayments/dodo-woocommerce/releases">
+    Get the latest version of our WooCommerce plugin
+    </Card>
+2. Log in to your WordPress website as an administrator (we assume you already have WooCommerce set up)
+3. Navigate to **Plugins → Add New Plugin**
+    
+    <Frame>
+        <img src="/images/woocommerce/1.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+4. Click on the **Upload Plugin** button and a file selection dialog will appear
+
+    <Frame>
+        <img src="/images/woocommerce/2.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+    <Frame>
+        <img src="/images/woocommerce/3.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+5. Click **Browse…** and select the zip file you downloaded
+6. Click the **Install Now** button to begin the installation process
+    
+    <Frame>
+        <img src="/images/woocommerce/4.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+7. After installation completes, click **Activate Plugin** or activate it from the **Installed Plugins** section
+    
+    <Frame>
+        <img src="/images/woocommerce/5.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+8. The plugin is now installed, but configuration is still required. Continue to the setup guide below.
+
+## Configuration Guide
+
+### Setting Up API Keys and Webhooks
+
+1. Navigate to **WooCommerce → Settings → Payments** or click the **Payments** button in the left sidebar below the WooCommerce menu item
+    
+    <Frame>
+        <img src="/images/woocommerce/6.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+    <Frame>
+        <img src="/images/woocommerce/7.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+2. Enable the **Dodo Payments** payment provider if not already enabled, then click **Manage** to configure the plugin
+3. You'll see various configuration options, each with helpful explanatory text. Begin by setting up your Live API Key
+    
+    <Frame>
+        <img src="/images/woocommerce/8.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+4. Log in to your Dodo Payments dashboard in **Live Mode**, then navigate to **Dodo Payments (Live Mode) > Developer > API Keys** or visit [this direct link](https://app.dodopayments.com/developer/api-keys) and click **Add API Key**
+    
+    <Frame>
+        <img src="/images/woocommerce/9.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+5. Give your API Key a descriptive name and click **Create**
+    
+    <Frame>
+        <img src="/images/woocommerce/10.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+6. Copy the generated API Key and paste it into the **Live API Key** field in your WooCommerce plugin settings
+    
+    <Frame>
+        <img src="/images/woocommerce/11.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+    <Frame>
+        <img src="/images/woocommerce/12.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+7. Next, set up the Webhook Signing Key to enable payment status synchronization between Dodo Payments and WooCommerce
+8. Scroll to the bottom of the plugin settings page and copy the webhook URL displayed there
+    
+    <Frame>
+        <img src="/images/woocommerce/13.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+9. Return to your Dodo Payments dashboard and navigate to **Dodo Payments (Live Mode) > Developer > Webhooks** and click **Add Webhook**
+    
+    <Frame>
+        <img src="/images/woocommerce/14.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+10. Paste the URL you copied in step 8 into the dialog and click **Add Webhook**
+    
+    <Frame>
+        <img src="/images/woocommerce/15.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+11. After creating the webhook, click the eye icon next to the redacted **Signing Key** to reveal and copy it
+    
+    <Frame>
+        <img src="/images/woocommerce/16.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+12. Paste the Signing Key into the **Live Webhook Signing Key** field in your plugin settings and save the changes
+    
+    <Frame>
+        <img src="/images/woocommerce/17.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+13. Review the remaining settings such as **Global Tax Category** and **All Prices are Tax Inclusive**, as these options determine how products sync from WooCommerce to Dodo Payments. Note that **Test API Key** and **Test Webhook Signing Key** are only needed if you plan to use Test Mode
+    
+    <Frame>
+        <img src="/images/woocommerce/18.webp" alt="Dodo Payments for WooCommerce Plugin" />
+    </Frame>
+    
+
+## You're All Set!
+
+Your WooCommerce store is now integrated with Dodo Payments! Customers can select Dodo Payments at checkout to access all supported payment methods.
+
+<Frame>
+    <img src="/images/woocommerce/19.webp" alt="Dodo Payments checkout option in WooCommerce" />
+</Frame>
+
+When customers choose Dodo Payments, they'll be seamlessly redirected to the Dodo Payments checkout page to complete their transaction.
+
+<Frame>
+    <img src="/images/woocommerce/20.webp" alt="Dodo Payments checkout page" />
+</Frame>
+
+## Key Features
+
+- **Seamless Checkout Experience**: Redirect customers to a secure, optimized checkout page
+- **Multiple Payment Methods**: Support for various local and international payment options
+- **Real-time Status Updates**: Instant order status synchronization via webhooks
+- **Detailed Transaction Records**: Comprehensive payment history in your WooCommerce dashboard
+- **Multi-currency Support**: Accept payments in multiple currencies
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Payment Processing Failures**
+   - Verify API keys are correctly configured
+   - Ensure webhook URL is properly set up
+   - Check that your SSL certificate is valid
+
+2. **Webhook Synchronization Problems**
+   - Confirm webhook signing key matches
+   - Review server logs for potential errors
+   - Verify your server can receive incoming webhook requests
+
+### Support Resources
+
+For additional assistance:
+- Contact us at support@dodopayments.com
+- Refer to our [comprehensive documentation](https://docs.dodopayments.com)
+
+## Maintenance Best Practices
+
+1. Regularly update the plugin for security patches and new features
+2. Test all payment flows in sandbox mode before processing live transactions
+3. Keep WordPress and WooCommerce updated to the latest versions
+4. Implement regular site backups
+5. Monitor transaction logs for any unusual activity
+6. Store API keys securely and never share them publicly
