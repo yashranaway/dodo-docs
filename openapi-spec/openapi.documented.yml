@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.18.3
+  version: 1.19.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -7230,6 +7230,14 @@ components:
           type: string
         license_key_instance_id:
           type: string
+    DisableOnDemandReq:
+      type: object
+      required:
+        - next_billing_date
+      properties:
+        next_billing_date:
+          type: string
+          format: date-time
     DiscountResponse:
       type: object
       required:
@@ -8114,6 +8122,10 @@ components:
           allOf:
             - $ref: '#/components/schemas/BillingAddress'
           nullable: true
+        disable_on_demand:
+          allOf:
+            - $ref: '#/components/schemas/DisableOnDemandReq'
+          nullable: true
         metadata:
           allOf:
             - $ref: '#/components/schemas/Metadata'
@@ -8160,7 +8172,10 @@ components:
         - metadata
         - settlement_amount
         - settlement_currency
+        - billing
       properties:
+        billing:
+          $ref: '#/components/schemas/BillingAddress'
         business_id:
           type: string
           description: Identifier of the business associated with the payment
@@ -8483,6 +8498,7 @@ components:
         - customer
         - metadata
         - billing
+        - on_demand
       properties:
         billing:
           $ref: '#/components/schemas/BillingAddress'
@@ -8509,6 +8525,9 @@ components:
           type: string
           format: date-time
           description: Timestamp of the next scheduled billing. Indicates the end of current billing period
+        on_demand:
+          type: boolean
+          description: Wether the subscription is on-demand or not
         payment_frequency_count:
           type: integer
           format: int32
