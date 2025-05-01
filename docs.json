@@ -224,6 +224,16 @@
             ]
           },
           {
+            "group": "Addons",
+            "pages": [
+              "api-reference/addons/create-addon",
+              "api-reference/addons/list-addons",
+              "api-reference/addons/get-addon",
+              "api-reference/addons/update-addon",
+              "api-reference/addons/update-addon-images"
+            ]
+          },
+          {
             "group": "Refunds",
             "pages": [
               "api-reference/refunds/get-refunds",
