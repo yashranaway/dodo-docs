@@ -62,6 +62,15 @@ For a complete developer walkthrough, refer to our [Mobile Integration Guide](ap
 ### A. In-App Browser Integration
 You can integrate Dodo Payments into your app using our hosted checkout or in-app browser solution.
 
+```mermaid
+flowchart LR
+  A[Mobile App] -->|Create Payment Link| B(Dodo API)
+  B -->|Checkout URL| A
+  A -->|Open in WebView| C[Checkout Page]
+  C -->|Redirects / Webhooks| D[Your Server]
+  D -->|Grant Access| A
+```
+
 #### Using WKWebView
 ```swift
 import WebKit
