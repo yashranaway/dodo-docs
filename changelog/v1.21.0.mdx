@@ -1,0 +1,26 @@
+---
+title: v1.21.0 (3rd May 2025)
+description: Added support for addons to subscriptions, made dispute handling more robust, and added customer billing details to payment responses.
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+- **Subscription Addons**: Introduced support for addons to subscription products. In the Products section, you'll find a new Addons tab where you can create addons such as "Seats". Once created, you can edit your subscription products to include these addons. This feature is available both on the dashboard and via API.
+  - [Create Addon](/api-reference/addons/create-addon)
+  - [List Addons](/api-reference/addons/list-addons)
+  - [Get Addon](/api-reference/addons/get-addon)
+  - [Update Addon](/api-reference/addons/update-addon)
+  - [Update Addon Images](/api-reference/addons/update-addon-images)
+
+  With addons, you unlock new billing options such as seat-based billing or variable billing per customer. Get creative with addons to design flexible billing models for your business.
+
+  <Frame>
+    <img alt="Addons" src="/images/changelog/addons.png" />
+  </Frame>
+
+- **Enhanced Dispute Management**: Improved dispute handling to be more robust and easier to manage through your Dodo Payments dashboard.
+
+- **Expanded Response Data**: Added customer billing details to payment responses, subscription responses, and webhooks.
+
+- **General Improvements**: Various minor enhancements and bug fixes to improve overall platform performance.
