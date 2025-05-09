@@ -1,0 +1,28 @@
+---
+title: v1.22.0 (9th May 2025)
+description: Added unified search to the dashboard, added support for upgrading and downgrading subscriptions with addons, and added comprehensive card information to payment responses.
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+- **Unified Dashboard Search**: We've implemented a powerful search functionality across the entire dashboard. You can now quickly find:
+  - **Identifiers**: Payment, Refund, Dispute, Customer, Discount, Product, and Addon IDs
+  - **Names**: Products, Addons, and Customers
+  - **Contact Information**: Customer Email addresses
+  - **Metadata**: Payment and Subscription metadata
+  - **Navigation**: All pages within the Dodo Payments dashboard
+
+  <Frame>
+    <img alt="Unified Dashboard Search" src="/images/changelog/search.png" />
+  </Frame>
+
+- **Addons Plan Changes**: Added support for upgrading and downgrading subscriptions that include addons.
+
+- **Expanded Payment Card Details**: Payment responses now include comprehensive card information:
+  - `card_issuing_country`: Country where the card was issued
+  - `card_last_four`: Last 4 digits of the card number
+  - `card_brand`: Card brand (Visa, Mastercard, etc.)
+  - `card_type`: Card type (credit, debit, prepaid)
+
+- **Platform Enhancements**: Various performance optimizations, bug fixes, and minor improvements across the platform.
