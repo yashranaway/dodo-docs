@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.19.0
+  version: 1.22.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -245,7 +245,7 @@ paths:
                     AddonCreateParams params = AddonCreateParams.builder()
                         .currency(Currency.AED)
                         .name("name")
-                        .price(0L)
+                        .price(0)
                         .taxCategory(TaxCategory.DIGITAL_PRODUCTS)
                         .build();
                     AddonResponse addonResponse = client.addons().create(params);
@@ -269,7 +269,7 @@ paths:
                 val params: AddonCreateParams = AddonCreateParams.builder()
                     .currency(Currency.AED)
                     .name("name")
-                    .price(0L)
+                    .price(0)
                     .taxCategory(TaxCategory.DIGITAL_PRODUCTS)
                     .build()
                 val addonResponse: AddonResponse = client.addons().create(params)
@@ -377,10 +377,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    AddonRetrieveParams params = AddonRetrieveParams.builder()
-                        .id("id")
-                        .build();
-                    AddonResponse addonResponse = client.addons().retrieve(params);
+                    AddonResponse addonResponse = client.addons().retrieve("id");
                 }
             }
         - lang: Kotlin
@@ -396,10 +393,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: AddonRetrieveParams = AddonRetrieveParams.builder()
-                    .id("id")
-                    .build()
-                val addonResponse: AddonResponse = client.addons().retrieve(params)
+                val addonResponse: AddonResponse = client.addons().retrieve("id")
             }
         - lang: Ruby
           source: |-
@@ -511,10 +505,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    AddonUpdateParams params = AddonUpdateParams.builder()
-                        .id("id")
-                        .build();
-                    AddonResponse addonResponse = client.addons().update(params);
+                    AddonResponse addonResponse = client.addons().update("id");
                 }
             }
         - lang: Kotlin
@@ -530,10 +521,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: AddonUpdateParams = AddonUpdateParams.builder()
-                    .id("id")
-                    .build()
-                val addonResponse: AddonResponse = client.addons().update(params)
+                val addonResponse: AddonResponse = client.addons().update("id")
             }
         - lang: Ruby
           source: |-
@@ -634,10 +622,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    AddonUpdateImagesParams params = AddonUpdateImagesParams.builder()
-                        .id("id")
-                        .build();
-                    AddonUpdateImagesResponse response = client.addons().updateImages(params);
+                    AddonUpdateImagesResponse response = client.addons().updateImages("id");
                 }
             }
         - lang: Kotlin
@@ -653,10 +638,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: AddonUpdateImagesParams = AddonUpdateImagesParams.builder()
-                    .id("id")
-                    .build()
-                val response: AddonUpdateImagesResponse = client.addons().updateImages(params)
+                val response: AddonUpdateImagesResponse = client.addons().updateImages("id")
             }
         - lang: Ruby
           source: |-
@@ -1124,10 +1106,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    CustomerRetrieveParams params = CustomerRetrieveParams.builder()
-                        .customerId("customer_id")
-                        .build();
-                    Customer customer = client.customers().retrieve(params);
+                    Customer customer = client.customers().retrieve("customer_id");
                 }
             }
         - lang: Kotlin
@@ -1143,10 +1122,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: CustomerRetrieveParams = CustomerRetrieveParams.builder()
-                    .customerId("customer_id")
-                    .build()
-                val customer: Customer = client.customers().retrieve(params)
+                val customer: Customer = client.customers().retrieve("customer_id")
             }
         - lang: Ruby
           source: |-
@@ -1259,10 +1235,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    CustomerUpdateParams params = CustomerUpdateParams.builder()
-                        .customerId("customer_id")
-                        .build();
-                    Customer customer = client.customers().update(params);
+                    Customer customer = client.customers().update("customer_id");
                 }
             }
         - lang: Kotlin
@@ -1278,10 +1251,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: CustomerUpdateParams = CustomerUpdateParams.builder()
-                    .customerId("customer_id")
-                    .build()
-                val customer: Customer = client.customers().update(params)
+                val customer: Customer = client.customers().update("customer_id")
             }
         - lang: Ruby
           source: |-
@@ -1395,10 +1365,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    CustomerPortalCreateParams params = CustomerPortalCreateParams.builder()
-                        .customerId("customer_id")
-                        .build();
-                    CustomerPortalSession customerPortalSession = client.customers().customerPortal().create(params);
+                    CustomerPortalSession customerPortalSession = client.customers().customerPortal().create("customer_id");
                 }
             }
         - lang: Kotlin
@@ -1414,10 +1381,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: CustomerPortalCreateParams = CustomerPortalCreateParams.builder()
-                    .customerId("customer_id")
-                    .build()
-                val customerPortalSession: CustomerPortalSession = client.customers().customerPortal().create(params)
+                val customerPortalSession: CustomerPortalSession = client.customers().customerPortal().create("customer_id")
             }
         - lang: Ruby
           source: |-
@@ -1656,7 +1620,7 @@ paths:
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     DiscountCreateParams params = DiscountCreateParams.builder()
-                        .amount(0L)
+                        .amount(0)
                         .type(DiscountType.PERCENTAGE)
                         .build();
                     Discount discount = client.discounts().create(params);
@@ -1677,7 +1641,7 @@ paths:
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: DiscountCreateParams = DiscountCreateParams.builder()
-                    .amount(0L)
+                    .amount(0)
                     .type(DiscountType.PERCENTAGE)
                     .build()
                 val discount: Discount = client.discounts().create(params)
@@ -1784,10 +1748,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    DiscountRetrieveParams params = DiscountRetrieveParams.builder()
-                        .discountId("discount_id")
-                        .build();
-                    Discount discount = client.discounts().retrieve(params);
+                    Discount discount = client.discounts().retrieve("discount_id");
                 }
             }
         - lang: Kotlin
@@ -1803,10 +1764,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: DiscountRetrieveParams = DiscountRetrieveParams.builder()
-                    .discountId("discount_id")
-                    .build()
-                val discount: Discount = client.discounts().retrieve(params)
+                val discount: Discount = client.discounts().retrieve("discount_id")
             }
         - lang: Ruby
           source: |-
@@ -1899,10 +1857,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    DiscountDeleteParams params = DiscountDeleteParams.builder()
-                        .discountId("discount_id")
-                        .build();
-                    client.discounts().delete(params);
+                    client.discounts().delete("discount_id");
                 }
             }
         - lang: Kotlin
@@ -1917,10 +1872,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: DiscountDeleteParams = DiscountDeleteParams.builder()
-                    .discountId("discount_id")
-                    .build()
-                client.discounts().delete(params)
+                client.discounts().delete("discount_id")
             }
         - lang: Ruby
           source: |-
@@ -2035,10 +1987,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    DiscountUpdateParams params = DiscountUpdateParams.builder()
-                        .discountId("discount_id")
-                        .build();
-                    Discount discount = client.discounts().update(params);
+                    Discount discount = client.discounts().update("discount_id");
                 }
             }
         - lang: Kotlin
@@ -2054,10 +2003,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: DiscountUpdateParams = DiscountUpdateParams.builder()
-                    .discountId("discount_id")
-                    .build()
-                val discount: Discount = client.discounts().update(params)
+                val discount: Discount = client.discounts().update("discount_id")
             }
         - lang: Ruby
           source: |-
@@ -2154,8 +2100,8 @@ paths:
 
             async function main() {
               // Automatically fetches more pages as needed.
-              for await (const dispute of client.disputes.list()) {
-                console.log(dispute.business_id);
+              for await (const disputeListResponse of client.disputes.list()) {
+                console.log(disputeListResponse.business_id);
               }
             }
 
@@ -2259,7 +2205,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DisputeResponse'
+                $ref: '#/components/schemas/GetDisputeResponse'
       security:
         - API_KEY: []
       x-codeSamples:
@@ -2318,8 +2264,8 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient;
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
-            import com.dodopayments.api.models.disputes.Dispute;
             import com.dodopayments.api.models.disputes.DisputeRetrieveParams;
+            import com.dodopayments.api.models.disputes.DisputeRetrieveResponse;
 
             public final class Main {
                 private Main() {}
@@ -2328,10 +2274,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    DisputeRetrieveParams params = DisputeRetrieveParams.builder()
-                        .disputeId("dispute_id")
-                        .build();
-                    Dispute dispute = client.disputes().retrieve(params);
+                    DisputeRetrieveResponse dispute = client.disputes().retrieve("dispute_id");
                 }
             }
         - lang: Kotlin
@@ -2340,17 +2283,14 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
-            import com.dodopayments.api.models.disputes.Dispute
             import com.dodopayments.api.models.disputes.DisputeRetrieveParams
+            import com.dodopayments.api.models.disputes.DisputeRetrieveResponse
 
             fun main() {
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: DisputeRetrieveParams = DisputeRetrieveParams.builder()
-                    .disputeId("dispute_id")
-                    .build()
-                val dispute: Dispute = client.disputes().retrieve(params)
+                val dispute: DisputeRetrieveResponse = client.disputes().retrieve("dispute_id")
             }
         - lang: Ruby
           source: |-
@@ -2378,6 +2318,11 @@ paths:
       responses:
         '200':
           description: PDF document
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
       x-codeSamples:
         - lang: JavaScript
           source: |-
@@ -2388,7 +2333,12 @@ paths:
             });
 
             async function main() {
-              await client.invoices.payments.retrieve('payment_id');
+              const payment = await client.invoices.payments.retrieve('payment_id');
+
+              console.log(payment);
+
+              const content = await payment.blob();
+              console.log(content);
             }
 
             main();
@@ -2400,15 +2350,19 @@ paths:
             client = DodoPayments(
                 bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
             )
-            client.invoices.payments.retrieve(
+            payment = client.invoices.payments.retrieve(
                 "payment_id",
             )
+            print(payment)
+            content = payment.read()
+            print(content)
         - lang: Go
           source: |
             package main
 
             import (
               "context"
+              "fmt"
 
               "github.com/dodopayments/dodopayments-go"
               "github.com/dodopayments/dodopayments-go/option"
@@ -2418,10 +2372,11 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
               )
-              err := client.Invoices.Payments.Get(context.TODO(), "payment_id")
+              payment, err := client.Invoices.Payments.Get(context.TODO(), "payment_id")
               if err != nil {
                 panic(err.Error())
               }
+              fmt.Printf("%+v\n", payment)
             }
         - lang: Java
           source: |-
@@ -2429,6 +2384,7 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient;
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.core.http.HttpResponse;
             import com.dodopayments.api.models.invoices.payments.PaymentRetrieveParams;
 
             public final class Main {
@@ -2438,10 +2394,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    PaymentRetrieveParams params = PaymentRetrieveParams.builder()
-                        .paymentId("payment_id")
-                        .build();
-                    client.invoices().payments().retrieve(params);
+                    HttpResponse payment = client.invoices().payments().retrieve("payment_id");
                 }
             }
         - lang: Kotlin
@@ -2450,16 +2403,14 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.core.http.HttpResponse
             import com.dodopayments.api.models.invoices.payments.PaymentRetrieveParams
 
             fun main() {
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: PaymentRetrieveParams = PaymentRetrieveParams.builder()
-                    .paymentId("payment_id")
-                    .build()
-                client.invoices().payments().retrieve(params)
+                val payment: HttpResponse = client.invoices().payments().retrieve("payment_id")
             }
         - lang: Ruby
           source: |-
@@ -2470,9 +2421,9 @@ paths:
               environment: "test_mode" # defaults to "live_mode"
             )
 
-            result = dodo_payments.invoices.payments.retrieve("payment_id")
+            payment = dodo_payments.invoices.payments.retrieve("payment_id")
 
-            puts(result)
+            puts(payment)
   /license_key_instances:
     get:
       tags:
@@ -2701,10 +2652,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    LicenseKeyInstanceRetrieveParams params = LicenseKeyInstanceRetrieveParams.builder()
-                        .id("lki_123")
-                        .build();
-                    LicenseKeyInstance licenseKeyInstance = client.licenseKeyInstances().retrieve(params);
+                    LicenseKeyInstance licenseKeyInstance = client.licenseKeyInstances().retrieve("lki_123");
                 }
             }
         - lang: Kotlin
@@ -2720,10 +2668,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: LicenseKeyInstanceRetrieveParams = LicenseKeyInstanceRetrieveParams.builder()
-                    .id("lki_123")
-                    .build()
-                val licenseKeyInstance: LicenseKeyInstance = client.licenseKeyInstances().retrieve(params)
+                val licenseKeyInstance: LicenseKeyInstance = client.licenseKeyInstances().retrieve("lki_123")
             }
         - lang: Ruby
           source: |-
@@ -3120,10 +3065,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    LicenseKeyRetrieveParams params = LicenseKeyRetrieveParams.builder()
-                        .id("lic_123")
-                        .build();
-                    LicenseKey licenseKey = client.licenseKeys().retrieve(params);
+                    LicenseKey licenseKey = client.licenseKeys().retrieve("lic_123");
                 }
             }
         - lang: Kotlin
@@ -3139,10 +3081,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: LicenseKeyRetrieveParams = LicenseKeyRetrieveParams.builder()
-                    .id("lic_123")
-                    .build()
-                val licenseKey: LicenseKey = client.licenseKeys().retrieve(params)
+                val licenseKey: LicenseKey = client.licenseKeys().retrieve("lic_123")
             }
         - lang: Ruby
           source: |-
@@ -3261,10 +3200,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    LicenseKeyUpdateParams params = LicenseKeyUpdateParams.builder()
-                        .id("lic_123")
-                        .build();
-                    LicenseKey licenseKey = client.licenseKeys().update(params);
+                    LicenseKey licenseKey = client.licenseKeys().update("lic_123");
                 }
             }
         - lang: Kotlin
@@ -3280,10 +3216,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: LicenseKeyUpdateParams = LicenseKeyUpdateParams.builder()
-                    .id("lic_123")
-                    .build()
-                val licenseKey: LicenseKey = client.licenseKeys().update(params)
+                val licenseKey: LicenseKey = client.licenseKeys().update("lic_123")
             }
         - lang: Ruby
           source: |-
@@ -3981,7 +3914,7 @@ paths:
                             .build())
                         .addProductCart(OneTimeProductCartItem.builder()
                             .productId("product_id")
-                            .quantity(0L)
+                            .quantity(0)
                             .build())
                         .build();
                     PaymentCreateResponse payment = client.payments().create(params);
@@ -4017,7 +3950,7 @@ paths:
                         .build())
                     .addProductCart(OneTimeProductCartItem.builder()
                         .productId("product_id")
-                        .quantity(0L)
+                        .quantity(0)
                         .build())
                     .build()
                 val payment: PaymentCreateResponse = client.payments().create(params)
@@ -4125,10 +4058,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    PaymentRetrieveParams params = PaymentRetrieveParams.builder()
-                        .paymentId("payment_id")
-                        .build();
-                    Payment payment = client.payments().retrieve(params);
+                    Payment payment = client.payments().retrieve("payment_id");
                 }
             }
         - lang: Kotlin
@@ -4144,10 +4074,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: PaymentRetrieveParams = PaymentRetrieveParams.builder()
-                    .paymentId("payment_id")
-                    .build()
-                val payment: Payment = client.payments().retrieve(params)
+                val payment: Payment = client.payments().retrieve("payment_id")
             }
         - lang: Ruby
           source: |-
@@ -4550,8 +4477,8 @@ paths:
                     ProductCreateParams params = ProductCreateParams.builder()
                         .price(Price.OneTimePrice.builder()
                             .currency(Currency.AED)
-                            .discount(0.0)
-                            .price(0L)
+                            .discount(0.0f)
+                            .price(0)
                             .purchasingPowerParity(true)
                             .type(Price.OneTimePrice.Type.ONE_TIME_PRICE)
                             .build())
@@ -4579,8 +4506,8 @@ paths:
                 val params: ProductCreateParams = ProductCreateParams.builder()
                     .price(Price.OneTimePrice.builder()
                         .currency(Currency.AED)
-                        .discount(0.0)
-                        .price(0L)
+                        .discount(0.0f)
+                        .price(0)
                         .purchasingPowerParity(true)
                         .type(Price.OneTimePrice.Type.ONE_TIME_PRICE)
                         .build())
@@ -4690,10 +4617,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    ProductRetrieveParams params = ProductRetrieveParams.builder()
-                        .id("id")
-                        .build();
-                    Product product = client.products().retrieve(params);
+                    Product product = client.products().retrieve("id");
                 }
             }
         - lang: Kotlin
@@ -4709,10 +4633,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: ProductRetrieveParams = ProductRetrieveParams.builder()
-                    .id("id")
-                    .build()
-                val product: Product = client.products().retrieve(params)
+                val product: Product = client.products().retrieve("id")
             }
         - lang: Ruby
           source: |-
@@ -4801,10 +4722,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    ProductDeleteParams params = ProductDeleteParams.builder()
-                        .id("id")
-                        .build();
-                    client.products().delete(params);
+                    client.products().delete("id");
                 }
             }
         - lang: Kotlin
@@ -4819,10 +4737,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: ProductDeleteParams = ProductDeleteParams.builder()
-                    .id("id")
-                    .build()
-                client.products().delete(params)
+                client.products().delete("id")
             }
         - lang: Ruby
           source: |-
@@ -4923,10 +4838,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    ProductUpdateParams params = ProductUpdateParams.builder()
-                        .id("id")
-                        .build();
-                    client.products().update(params);
+                    client.products().update("id");
                 }
             }
         - lang: Kotlin
@@ -4941,10 +4853,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: ProductUpdateParams = ProductUpdateParams.builder()
-                    .id("id")
-                    .build()
-                client.products().update(params)
+                client.products().update("id")
             }
         - lang: Ruby
           source: |-
@@ -5057,10 +4966,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    ImageUpdateParams params = ImageUpdateParams.builder()
-                        .id("id")
-                        .build();
-                    ImageUpdateResponse image = client.products().images().update(params);
+                    ImageUpdateResponse image = client.products().images().update("id");
                 }
             }
         - lang: Kotlin
@@ -5076,10 +4982,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: ImageUpdateParams = ImageUpdateParams.builder()
-                    .id("id")
-                    .build()
-                val image: ImageUpdateResponse = client.products().images().update(params)
+                val image: ImageUpdateResponse = client.products().images().update("id")
             }
         - lang: Ruby
           source: |-
@@ -5169,10 +5072,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    ProductUnarchiveParams params = ProductUnarchiveParams.builder()
-                        .id("id")
-                        .build();
-                    client.products().unarchive(params);
+                    client.products().unarchive("id");
                 }
             }
         - lang: Kotlin
@@ -5187,10 +5087,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: ProductUnarchiveParams = ProductUnarchiveParams.builder()
-                    .id("id")
-                    .build()
-                client.products().unarchive(params)
+                client.products().unarchive("id")
             }
         - lang: Ruby
           source: |-
@@ -5576,10 +5473,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    RefundRetrieveParams params = RefundRetrieveParams.builder()
-                        .refundId("refund_id")
-                        .build();
-                    Refund refund = client.refunds().retrieve(params);
+                    Refund refund = client.refunds().retrieve("refund_id");
                 }
             }
         - lang: Kotlin
@@ -5595,10 +5489,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: RefundRetrieveParams = RefundRetrieveParams.builder()
-                    .refundId("refund_id")
-                    .build()
-                val refund: Refund = client.refunds().retrieve(params)
+                val refund: Refund = client.refunds().retrieve("refund_id")
             }
         - lang: Ruby
           source: |-
@@ -5903,7 +5794,7 @@ paths:
                             .customerId("customer_id")
                             .build())
                         .productId("product_id")
-                        .quantity(0L)
+                        .quantity(0)
                         .build();
                     SubscriptionCreateResponse subscription = client.subscriptions().create(params);
                 }
@@ -5936,7 +5827,7 @@ paths:
                         .customerId("customer_id")
                         .build())
                     .productId("product_id")
-                    .quantity(0L)
+                    .quantity(0)
                     .build()
                 val subscription: SubscriptionCreateResponse = client.subscriptions().create(params)
             }
@@ -6044,10 +5935,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    SubscriptionRetrieveParams params = SubscriptionRetrieveParams.builder()
-                        .subscriptionId("subscription_id")
-                        .build();
-                    Subscription subscription = client.subscriptions().retrieve(params);
+                    Subscription subscription = client.subscriptions().retrieve("subscription_id");
                 }
             }
         - lang: Kotlin
@@ -6063,10 +5951,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: SubscriptionRetrieveParams = SubscriptionRetrieveParams.builder()
-                    .subscriptionId("subscription_id")
-                    .build()
-                val subscription: Subscription = client.subscriptions().retrieve(params)
+                val subscription: Subscription = client.subscriptions().retrieve("subscription_id")
             }
         - lang: Ruby
           source: |-
@@ -6178,10 +6063,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    SubscriptionUpdateParams params = SubscriptionUpdateParams.builder()
-                        .subscriptionId("subscription_id")
-                        .build();
-                    Subscription subscription = client.subscriptions().update(params);
+                    Subscription subscription = client.subscriptions().update("subscription_id");
                 }
             }
         - lang: Kotlin
@@ -6197,10 +6079,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: SubscriptionUpdateParams = SubscriptionUpdateParams.builder()
-                    .subscriptionId("subscription_id")
-                    .build()
-                val subscription: Subscription = client.subscriptions().update(params)
+                val subscription: Subscription = client.subscriptions().update("subscription_id")
             }
         - lang: Ruby
           source: |-
@@ -6317,7 +6196,7 @@ paths:
                         .subscriptionId("subscription_id")
                         .productId("product_id")
                         .prorationBillingMode(SubscriptionChangePlanParams.ProrationBillingMode.PRORATED_IMMEDIATELY)
-                        .quantity(0L)
+                        .quantity(0)
                         .build();
                     client.subscriptions().changePlan(params);
                 }
@@ -6338,7 +6217,7 @@ paths:
                     .subscriptionId("subscription_id")
                     .productId("product_id")
                     .prorationBillingMode(SubscriptionChangePlanParams.ProrationBillingMode.PRORATED_IMMEDIATELY)
-                    .quantity(0L)
+                    .quantity(0)
                     .build()
                 client.subscriptions().changePlan(params)
             }
@@ -6461,7 +6340,7 @@ paths:
 
                     SubscriptionChargeParams params = SubscriptionChargeParams.builder()
                         .subscriptionId("subscription_id")
-                        .productPrice(0L)
+                        .productPrice(0)
                         .build();
                     SubscriptionChargeResponse response = client.subscriptions().charge(params);
                 }
@@ -6481,7 +6360,7 @@ paths:
 
                 val params: SubscriptionChargeParams = SubscriptionChargeParams.builder()
                     .subscriptionId("subscription_id")
-                    .productPrice(0L)
+                    .productPrice(0)
                     .build()
                 val response: SubscriptionChargeResponse = client.subscriptions().charge(params)
             }
@@ -6745,10 +6624,7 @@ paths:
                     // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    WebhookEventRetrieveParams params = WebhookEventRetrieveParams.builder()
-                        .webhookEventId("webhook_event_id")
-                        .build();
-                    WebhookEvent webhookEvent = client.webhookEvents().retrieve(params);
+                    WebhookEvent webhookEvent = client.webhookEvents().retrieve("webhook_event_id");
                 }
             }
         - lang: Kotlin
@@ -6764,10 +6640,7 @@ paths:
                 // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val params: WebhookEventRetrieveParams = WebhookEventRetrieveParams.builder()
-                    .webhookEventId("webhook_event_id")
-                    .build()
-                val webhookEvent: WebhookEvent = client.webhookEvents().retrieve(params)
+                val webhookEvent: WebhookEvent = client.webhookEvents().retrieve("webhook_event_id")
             }
         - lang: Ruby
           source: |-
@@ -7915,6 +7788,10 @@ components:
         payment_id:
           type: string
           description: The unique identifier of the payment associated with the dispute.
+        remarks:
+          type: string
+          description: Remarks
+          nullable: true
     DisputeStage:
       type: string
       enum:
@@ -7975,6 +7852,52 @@ components:
           items:
             $ref: '#/components/schemas/DiscountResponse'
           description: Array of active (non-deleted) discounts for the current page.
+    GetDisputeResponse:
+      type: object
+      required:
+        - dispute_id
+        - payment_id
+        - business_id
+        - amount
+        - currency
+        - dispute_status
+        - dispute_stage
+        - created_at
+        - customer
+      properties:
+        amount:
+          type: string
+          description: The amount involved in the dispute, represented as a string to accommodate precision.
+        business_id:
+          type: string
+          description: The unique identifier of the business involved in the dispute.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp of when the dispute was created, in UTC.
+        currency:
+          type: string
+          description: The currency of the disputed amount, represented as an ISO 4217 currency code.
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+        dispute_id:
+          type: string
+          description: The unique identifier of the dispute.
+        dispute_stage:
+          $ref: '#/components/schemas/DisputeStage'
+        dispute_status:
+          $ref: '#/components/schemas/DisputeStatus'
+        payment_id:
+          type: string
+          description: The unique identifier of the payment associated with the dispute.
+        reason:
+          type: string
+          description: Reason for the dispute
+          nullable: true
+        remarks:
+          type: string
+          description: Remarks
+          nullable: true
     GetDisputesListResponse:
       type: object
       required:
@@ -7983,7 +7906,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/DisputeResponse'
+            $ref: '#/components/schemas/ListDisputeResponse'
     GetPaymentsListResponse:
       type: object
       required:
@@ -8315,6 +8238,41 @@ components:
         - active
         - expired
         - disabled
+    ListDisputeResponse:
+      type: object
+      required:
+        - dispute_id
+        - payment_id
+        - business_id
+        - amount
+        - currency
+        - dispute_status
+        - dispute_stage
+        - created_at
+      properties:
+        amount:
+          type: string
+          description: The amount involved in the dispute, represented as a string to accommodate precision.
+        business_id:
+          type: string
+          description: The unique identifier of the business involved in the dispute.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp of when the dispute was created, in UTC.
+        currency:
+          type: string
+          description: The currency of the disputed amount, represented as an ISO 4217 currency code.
+        dispute_id:
+          type: string
+          description: The unique identifier of the dispute.
+        dispute_stage:
+          $ref: '#/components/schemas/DisputeStage'
+        dispute_status:
+          $ref: '#/components/schemas/DisputeStatus'
+        payment_id:
+          type: string
+          description: The unique identifier of the payment associated with the dispute.
     ListLicenseKeyInstancesResponse:
       type: object
       required:
@@ -8495,7 +8453,7 @@ components:
                     - Refund
           title: Refund
         - allOf:
-            - $ref: '#/components/schemas/DisputeResponse'
+            - $ref: '#/components/schemas/GetDisputeResponse'
             - type: object
               required:
                 - payload_type
@@ -8758,6 +8716,22 @@ components:
         business_id:
           type: string
           description: Identifier of the business associated with the payment
+        card_issuing_country:
+          allOf:
+            - $ref: '#/components/schemas/CountryCodeAlpha2'
+          nullable: true
+        card_last_four:
+          type: string
+          description: The last four digits of the card
+          nullable: true
+        card_network:
+          type: string
+          description: Card network like VISA, MASTERCARD etc.
+          nullable: true
+        card_type:
+          type: string
+          description: The type of card DEBIT or CREDIT
+          nullable: true
         created_at:
           type: string
           format: date-time
@@ -9297,6 +9271,14 @@ components:
         - quantity
         - proration_billing_mode
       properties:
+        addons:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttachAddonReq'
+          description: |-
+            Addons for the new plan.
+            Note : Leaving this empty would remove any existing addons
+          nullable: true
         product_id:
           type: string
           description: Unique identifier of the product to subscribe to
