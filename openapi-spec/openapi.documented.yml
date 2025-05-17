@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.22.0
+  version: 1.25.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -7166,7 +7166,7 @@ components:
             Must be >= 1 if provided.
           nullable: true
     CreateNewCustomer:
-      title: Create New Customer
+      title: Attach Existing Customer
       type: object
       required:
         - name
@@ -7344,6 +7344,10 @@ components:
       required:
         - product_price
       properties:
+        metadata:
+          allOf:
+            - $ref: '#/components/schemas/Metadata'
+          nullable: true
         product_price:
           type: integer
           format: int32
@@ -7832,6 +7836,7 @@ components:
         - subscription.cancelled
         - subscription.failed
         - subscription.expired
+        - subscription.plan_changed
         - license_key.created
     GetCustomersListResponse:
       type: object
