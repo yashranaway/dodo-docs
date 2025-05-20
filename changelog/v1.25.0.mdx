@@ -1,0 +1,33 @@
+---
+title: v1.25.0 (20th May 2025)
+description: Introduced Overlay Checkout Beta, a modern TypeScript library for embedded payments, and a new subscription.plan_changed webhook event for better subscription lifecycle management.
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+- **Overlay Checkout Beta**: We're excited to announce the beta release of our new overlay checkout experience. This modern TypeScript library provides a seamless way to integrate our payment overlay into your web application with real-time event handling and customizable themes. Key features include:
+  - **Real-time Event Handling**: Listen to checkout events like payment creation, success, and failure
+  - **TypeScript Support**: Fully typed APIs for better developer experience
+  - **Customizable Themes**: Support for light and dark themes
+  - **Browser Compatibility**: Works across all modern browsers including Chrome, Firefox, Safari, Edge, and IE11+
+  - **PCI Compliance**: Maintains security standards while providing an embedded experience
+
+  <Frame>
+    <img src="/images/cover-images/overlay-checkout.png" alt="Overlay Checkout Cover Image"/>
+  </Frame>
+
+  Try it out:
+  - Live Demo: [https://atlas.dodopayments.com](https://atlas.dodopayments.com#overlay-checkout)
+  - Example Code: [https://github.com/dodopayments/dodo-checkout-demo](https://github.com/dodopayments/dodo-checkout-demo)
+  - Integration Guide: [Overlay Checkout Guide](/api-reference/overlay-checkout)
+
+- **New Subscription Event**: Added support for the `subscription.plan_changed` webhook event that fires whenever a subscription is upgraded, downgraded, or modified. This event provides:
+  - Complete subscription details after the change
+  - Previous and new plan information
+  - Prorated billing adjustments
+  - Updated next billing date
+
+  This event complements our existing subscription events (`subscription.active`, `subscription.on_hold`, etc.) to provide comprehensive visibility into the subscription lifecycle.
+
+- **Platform Enhancements**: Various performance optimizations, bug fixes, and minor improvements across the platform.
