@@ -46,6 +46,7 @@
                   "features/product-catalog/overview",
                   "features/product-catalog/one-time-payment-products",
                   "features/product-catalog/subscription",
+                  "features/product-catalog/addons",
                   "features/product-catalog/pricing"
                 ]
               },
