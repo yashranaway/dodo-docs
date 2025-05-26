@@ -158,7 +158,8 @@
               "api-reference/payments/get-payments",
               "api-reference/payments/post-payments",
               "api-reference/payments/get-payments-1",
-              "api-reference/payments/get-invoice"
+              "api-reference/payments/get-invoice",
+              "api-reference/payments/retrieve-line-items"
             ]
           },
           {
@@ -258,6 +259,16 @@
             ]
           },
           {
+            "group": "Brands",
+            "pages": [
+              "api-reference/brands/list-brands",
+              "api-reference/brands/create-brand",
+              "api-reference/brands/get-brand",
+              "api-reference/brands/update-brand",
+              "api-reference/brands/update-brand-images"
+            ]
+          },
+          {
             "group": "Miscellaneous",
             "pages": [
               "api-reference/misc/supported-countries",
@@ -335,6 +346,7 @@
           {
             "group": "May 2025",
             "pages": [
+              "changelog/v1.27.0",
               "changelog/v1.25.0",
               "changelog/v1.22.0",
               "changelog/v1.21.0"
