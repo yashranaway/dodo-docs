@@ -1,0 +1,270 @@
+---
+title: 'Error Codes'
+description: 'Learn more about error codes and how to resolve them in Dodo Payments API.'
+---
+
+## Overview
+
+Dodo Payments API uses standard HTTP status codes and custom error codes to indicate the success or failure of API requests. When an error occurs, the API returns an appropriate HTTP status code and a JSON response containing detailed information about the error.
+
+Each error response includes:
+- An HTTP status code indicating the general category of the error
+- A specific error code that identifies the exact nature of the error
+- A human-readable error message explaining what went wrong
+- Additional details about the error when applicable
+
+Understanding these error codes and their meanings is crucial for:
+- Debugging integration issues
+- Implementing proper error handling in your application
+- Providing meaningful feedback to end users
+- Maintaining a robust payment processing system
+
+The following sections provide detailed information about standard HTTP status codes and specific error codes you may encounter when using the Dodo Payments API.
+
+## Standard API Error Codes
+
+| Error code | HTTP Status | Description |
+|------------|-------------|-------------|
+| **400** | Bad Request | The request was malformed or contained invalid parameters |
+| **401** | Unauthorized | Authentication failed or API key is invalid |
+| **403** | Forbidden | The API key doesn't have permission to access the requested resource |
+| **404** | Not Found | The requested resource doesn't exist |
+| **405** | Method Not Allowed | The HTTP method is not supported for this endpoint |
+| **409** | Conflict | The request conflicts with the current state of the resource |
+| **422** | Unprocessable Entity | The request was well-formed but contained semantic errors |
+| **429** | Too Many Requests | Rate limit exceeded |
+| **500** | Internal Server Error | An unexpected error occurred on our servers |
+| **502** | Bad Gateway | The server received an invalid response from an upstream server |
+| **503** | Service Unavailable | The service is temporarily unavailable |
+| **504** | Gateway Timeout | The server timed out while waiting for an upstream response |
+
+
+## Error Codes Reference
+
+- `ACTIVATION_LIMIT_LESS_THAN_CURRENT_AMOUNT`
+  - **Trigger:** License-key activations: new limit < existing instance count
+  - **Message:** New activation limit cannot be less than current instances count
+
+- `ADDONS_NOT_ALLOWED_FOR_ON_DEMAND`
+  - **Trigger:** Attempt to add addons to on-demand subscriptions
+  - **Message:** Addons are not allowed for on demand subscriptions
+
+- `INTEGER_CONVERSION_FAILURE`
+  - **Trigger:** Any integer ↔ string/decimal conversion that fails server-side
+  - **Message:** Integer Conversion Failure
+
+- `DISCOUNT_CODE_ALREADY_EXISTS`
+  - **Trigger:** Duplicate discount code creation
+  - **Message:** Discount Code already exists
+
+- `DISCOUNT_CODE_EXPIRED`
+  - **Trigger:** Discount code past its `expires_at` date
+  - **Message:** Discount code expired
+
+- `DISCOUNT_CODE_USAGE_LIMIT_EXCEEDED`
+  - **Trigger:** Discount reused after `usage_limit` reached
+  - **Message:** Usage limit cannot be less than times_used. Discount code hit usage limit
+
+- `DISCOUNT_NOT_AVAILABLE_FOR_ON_DEMAND`
+  - **Trigger:** Code applied to on-demand subscription
+  - **Message:** Discount coupon not available for on demand subscriptions
+
+- `DISCOUNT_NOT_AVAILABLE_FOR_PRODUCT`
+  - **Trigger:** Code applied to unrelated product(s)
+  - **Message:** Discount coupon not available for this product
+
+- `DUPLICATE_LINE_ITEMS_IN_REQUEST`
+  - **Trigger:** Same `item_id` appears twice in `items[]`
+  - **Message:** Duplicate item_ids specified in items array
+
+- `EXCHANGE_RATE_NOT_FOUND`
+  - **Trigger:** No FX rate for `from → to` currency pair
+  - **Message:** Exchange rate not found to convert from USD to EUR
+
+- `INACTIVE_LICENSE_KEY`
+  - **Trigger:** Key status ≠ `ACTIVE`
+  - **Message:** License key is not active
+
+- `INACTIVE_SUBSCRIPTION_PLAN_CHANGE_NOT_SUPPORTED`
+  - **Trigger:** Plan change on inactive subscription
+  - **Message:** Changing plans is not supported for inactive subscriptions
+
+- `INSUFFICIENT_WALLET_FUNDS`
+  - **Trigger:** Wallet balance < debit amount
+  - **Message:** Insufficient funds in wallet
+
+- `INTERNAL_SERVER_ERROR`
+  - **Trigger:** Uncaught exceptions; you should log details server-side
+  - **Message:** *No public message (generic 500)*
+
+- `INVALID_DISCOUNT_CODE`
+  - **Trigger:** Code does not exist / not applicable
+  - **Message:** Invalid Discount Code. Discount Code cannot be applied to any product in the cart
+
+- `INVALID_PERCENTAGE`
+  - **Trigger:** Percent amount > 100 % (or 10 000 basis points)
+  - **Message:** Percentage amount cannot be more than 10000
+
+- `INVALID_QUERY_PARAMS`
+  - **Trigger:** Mutually exclusive / malformed query parameters
+  - **Message:** Query params should only contain either time_frame or (start, end)
+
+- `INVALID_REQUEST_BODY`
+  - **Trigger:** Malformed JSON or schema violation
+  - **Message:** Your request body is invalid. Please check your request headers and object.
+
+- `INVALID_REQUEST_PARAMETERS`
+  - **Trigger:** Semantics wrong (e.g. date in past)
+  - **Message:** Cannot change next_billing_date to past time
+
+- `INVALID_SUGGESTED_PRICE`
+  - **Trigger:** PWYW price < minimum allowed price
+  - **Message:** Suggested Price cannot be lower than minimum price
+
+- `INVALID_TAX_ID`
+  - **Trigger:** VAT/GST/TIN failed validation
+  - **Message:** Tax Id is invalid
+
+- `LICENSE_KEY_LIMIT_REACHED`
+  - **Trigger:** Activations = limit
+  - **Message:** License key activation limit reached
+
+- `LICENSE_KEY_NOT_FOUND`
+  - **Trigger:** Instance ID or key ID invalid
+  - **Message:** License key instance not found or does not belong to this license key
+
+- `LINE_ITEM_NOT_FOUND`
+  - **Trigger:** Item ID not part of the referenced payment
+  - **Message:** Line item abc123 not found in payment
+
+- `LINE_ITEM_PRORATED`
+  - **Trigger:** Refund or update attempted on a prorated line
+  - **Message:** Line item {id} cannot be refunded because its prorated
+
+- `LINE_ITEM_REFUND_AMOUNT_TOO_HIGH`
+  - **Trigger:** Refund amount > paid amount (tax incl.)
+  - **Message:** Line item {id} requested refund amount … is above the paid amount …
+
+- `MAXIMUM_KEYS_REACHED`
+  - **Trigger:** Metadata / custom-fields exceeded 50 pairs
+  - **Message:** Exceeds 50 key-value pairs
+
+- `MERCHANT_NOT_LIVE`
+  - **Trigger:** Business still in test/sandbox mode
+  - **Message:** Merchant is not live
+
+- `MISSING_ADDON_IDS`
+  - **Trigger:** `addon_id` list empty or unknown IDs
+  - **Message:** One or more product IDs do not exist: 123
+
+- `MISSING_PRODUCT_INFORMATION`
+  - **Trigger:** Product exists but mandatory info missing
+  - **Message:** Product 42 exists but other mandatory information is missing or invalid
+
+- `NO_ELIGIBLE_PAYMENT_METHODS`
+  - **Trigger:** After filtering, nothing left
+  - **Message:** No eligible payment methods found
+
+- `NO_EXPIRY_ON_SUBSCRIPTION_LICENSE_KEYS`
+  - **Trigger:** Attempt to set expiry on sub-based key
+  - **Message:** Cannot set expiry date for subscription-based license key
+
+- `NOT_FOUND`
+  - **Trigger:** Generic 404 for any missing resource
+  - **Message:** Item not found *(or more specific)*
+
+- `ON_DEMAND_PLAN_CHANGE_NOT_SUPPORTED`
+  - **Trigger:** Plan swap not allowed for on-demand
+  - **Message:** Changing plans is not supported for on demand subscriptions
+
+- `ON_DEMAND_SUBSCRIPTIONS_NOT_ENABLED`
+  - **Trigger:** Business has feature flag off
+  - **Message:** On demand subscriptions not enabled for this business
+
+- `PAY_AS_YOU_WANT_AMOUNT_REQUIRED`
+  - **Trigger:** Price missing for PWYW product
+  - **Message:** Amount is mandatory for pay as you want product
+
+- `PAYMENT_ALREADY_REFUNDED`
+  - **Trigger:** Duplicate refund
+  - **Message:** This payment has already been refunded
+
+- `PRODUCT_IS_DELETED`
+  - **Trigger:** Product soft-deleted
+  - **Message:** *No messages*
+
+- `PREVIOUS_PAYMENT_PENDING`
+  - **Trigger:** Attempt to create charge while previous is in non-terminal state
+  - **Message:** Cannot create new charge as previous payment is not successful yet
+
+- `REFUND_AMOUNT_EXCEEDS_PAID_AMOUNT`
+  - **Trigger:** Aggregate refund amount > paid amount
+  - **Message:** The calculated refund amount is larger than the paid amount
+
+- `REFUND_WINDOW_EXPIRED`
+  - **Trigger:** Outside allowable refund window
+  - **Message:** Refunds cannot be initiated 90 days after payment creation. Contact support@dodopayments.com
+
+- `REQUEST_AMOUNT_BELOW_MINIMUM`
+  - **Trigger:** Amount < product minimum
+  - **Message:** Amount cannot be less than minimum amount specified for the product
+
+- `SUBSCRIPTION_EXPIRED`
+  - **Trigger:** Billing past `ends_at`
+  - **Message:** Subscription expired cannot create new charges
+
+- `SUBSCRIPTION_INACTIVE`
+  - **Trigger:** Status ≠ `ACTIVE`
+  - **Message:** Subscription is not active
+
+- `SUBSCRIPTION_NOT_ON_DEMAND`
+  - **Trigger:** Expected on-demand but got fixed interval
+  - **Message:** Subscription is already not on demand
+
+- `TOO_MANY_REQUESTS`
+  - **Trigger:** 429 rate-limit
+  - **Message:** *No messages*
+
+- `TOTAL_PAYMENT_AMOUNT_BELOW_MINIMUM_AMOUNT`
+  - **Trigger:** Combined cart total < gateway minimum
+  - **Message:** Minimum amount of $0.50 is required to process payment
+
+- `UNAUTHORIZED`
+  - **Trigger:** No API key or invalid token / scope
+  - **Message:** You are not authorised to perform this action
+
+- `UNSUPPORTED_BILLING_CURRENCY`
+  - **Trigger:** Subscriptions restricted to USD
+  - **Message:** Non USD billing currency is not supported for subscriptions
+
+- `UNSUPPORTED_COUNTRY`
+  - **Trigger:** Geo not yet supported
+  - **Message:** Country Argentina currently not supported
+
+- `UNSUPPORTED_CURRENCY`
+  - **Trigger:** Product or addon currency invalid
+  - **Message:** Messages listed in enum comment
+
+- `UNSUPPORTED_DISCOUNT_TYPE`
+  - **Trigger:** Flat-amount discounts, etc., not yet live
+  - **Message:** Only percentage discount codes are supported for now
+
+- `UNSUPPORTED_PAYMENT_CURRENCY`
+  - **Trigger:** Payment currency blocked for connector
+  - **Message:** INR transaction is not supported for this transaction
+
+- `UNSUPPORTED_TAX_CATEGORY`
+  - **Trigger:** Tax category string not in enum
+  - **Message:** Category ebooks currently not supported
+
+## Best Practices
+
+1. Always handle errors gracefully in your application
+2. Implement proper error logging
+3. Use appropriate error messages for end users
+4. Implement retry logic for transient errors
+5. Contact support for unresolved issues
+
+## Support
+
+For additional help with error codes or integration issues, please contact our support team at support@dodopayments.com. 
