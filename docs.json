@@ -347,6 +347,12 @@
             ]
           },
           {
+            "group": "June 2025",
+            "pages": [
+              "changelog/v1.30.0"
+            ]
+          },
+          {
             "group": "May 2025",
             "pages": [
               "changelog/v1.27.0",
