@@ -52,6 +52,28 @@ We support the following Payout cycles:
 
 If your balance does not meet the threshold, it will carry forward to the next payout cycle.
 
+### Flexible Minimum Payout Threshold
+
+**Introduction**
+
+You can now set the balance that must build up in your USD wallet before Dodo Payments triggers a payout.
+
+- Allowed values: $100 **or any higher amount**
+- Takes effect from **your current payout cycle**; payouts already scheduled (If entry is created in the payout table) stay unchanged.
+
+**Edit in Dashboard**
+
+<Frame>
+  <img src="/images/payouts/payout-process/payout-threshold.png" />
+</Frame>
+
+1. **Settings → Payouts → Minimum Threshold**
+2. Choose edit threshold and enter a number **≥ 100** (e.g., “250”).
+3. Click **Confirm.**
+4. You will see the updated amount in the Minimum Payout Threshold field
+
+**Note: This feature is only applicable to the USD Wallet as of now. The INR wallet will have no changes**
+
 ## Payout Deductions
 
 1. **Taxes** : All applicable taxes as per the Tax Calculator will be deducted from the sales amount before payout
