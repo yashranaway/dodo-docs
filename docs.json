@@ -150,7 +150,8 @@
               "api-reference/allowed-payment-methods",
               "api-reference/mcp-server",
               "api-reference/technical-faqs",
-              "api-reference/error-codes"
+              "api-reference/error-codes",
+              "api-reference/transaction-failures"
             ]
           },
           {

@@ -1,0 +1,77 @@
+---
+title: 'Transaction Failures'
+description: 'Learn about different transaction failure reasons and how to handle them in Dodo Payments API.'
+icon: 'circle-exclamation'
+---
+
+## Overview
+
+Dodo Payments API provides detailed transaction failure reasons to help you understand why a payment attempt was unsuccessful. These failure reasons are standardized across different payment methods and providers, making it easier to implement consistent error handling in your application.
+
+Each transaction failure response includes:
+- A specific failure reason code
+- A human-readable error message
+- Additional context about the failure when available
+- Whether the error is user-correctable or requires system intervention
+
+Understanding these failure reasons is crucial for:
+- Providing clear feedback to your customers
+- Implementing appropriate retry logic
+- Handling different failure scenarios gracefully
+- Maintaining a reliable payment processing system
+
+## Transaction Failure Reasons
+
+The following table lists all possible transaction failure reasons, their meanings, and whether they are user-correctable errors.
+
+| Failure Code | User Error | Description |
+|----------------|------------|-------------|
+| `AUTHENTICATION_FAILURE` | Yes | The authentication process failed during the transaction |
+| `AUTHENTICATION_REQUIRED` | Yes | Additional authentication is needed to complete the transaction |
+| `AUTHENTICATION_TIMEOUT` | Yes | The authentication process timed out |
+| `CARD_DECLINED` | No | The card was declined by the issuing bank |
+| `CARD_VELOCITY_EXCEEDED` | Yes | Too many transactions attempted in a short period |
+| `CASHAPP_CUSTOMER_REQUEST_DECLINED` | Yes | The customer declined the payment in Cash App |
+| `CUSTOMER_CANCELLED` | Yes | The customer cancelled the transaction |
+| `DO_NOT_HONOR` | No | The issuing bank declined the transaction |
+| `EXPIRED_CARD` | Yes | The card has expired |
+| `FRAUDULENT` | Yes | The transaction was flagged as potentially fraudulent |
+| `GENERIC_DECLINE` | No | The transaction was declined for an unspecified reason |
+| `INCORRECT_CVC` | Yes | The provided CVC code was incorrect |
+| `INCORRECT_NUMBER` | Yes | The card number was entered incorrectly |
+| `INSUFFICIENT_FUNDS` | Yes | The account has insufficient funds to complete the transaction |
+| `INVALID_ACCOUNT` | Yes | The account details provided are invalid |
+| `INVALID_AMOUNT` | Yes | The transaction amount is invalid |
+| `INVALID_CARD_NUMBER` | Yes | The card number format is invalid |
+| `INVALID_CARD_OWNER` | Yes | The card owner information is invalid |
+| `INVALID_CVC` | Yes | The CVC format is invalid |
+| `INVALID_EXPIRY_YEAR` | Yes | The card expiry year is invalid |
+| `INVALID_PIN` | Yes | The provided PIN is incorrect |
+| `INVALID_REQUEST` | Yes | The transaction request contains invalid data |
+| `INVALID_UPI_ID` | Yes | The UPI ID provided is invalid |
+| `LIVE_MODE_TEST_CARD` | Yes | A test card was used in live mode |
+| `LOST_CARD` | Yes | The card has been reported as lost |
+| `MANDATE_INVALID` | Yes | The payment mandate is invalid |
+| `MANDATE_REQUIRED` | Yes | A mandate is required for this transaction |
+| `MANDATE_REQUIRED_SYSTEM` | No | System requires a mandate for this transaction type |
+| `NETWORK_ERROR` | No | A network error occurred during the transaction |
+| `NETWORK_TIMEOUT` | No | The network request timed out |
+| `ORDER_CREATION_FAILED` | No | Failed to create the order for the transaction |
+| `PAYMENT_METHOD_UNSUPPORTED` | Yes | The payment method is not supported for this transaction |
+| `PICKUP_CARD` | Yes | The card has been reported as stolen and should be picked up |
+| `PROCESSING_ERROR` | No | An error occurred while processing the transaction |
+| `REENTER_TRANSACTION` | Yes | The transaction needs to be re-entered |
+| `REVOCATION_OF_AUTHORIZATION` | Yes | The authorization for the transaction was revoked |
+| `STOLEN_CARD` | Yes | The card has been reported as stolen |
+| `TRANSACTION_NOT_ALLOWED` | Yes | The transaction is not allowed for this card or account |
+| `TRANSACTION_NOT_APPROVED` | Yes | The transaction was not approved |
+| `TRY_AGAIN_LATER` | No | The transaction should be retried later |
+| `UNKNOWN_ERROR` | No | An unknown error occurred |
+
+<Note>
+  **User Error** indicates whether the payment decline can be resolved by the customer. When `true`, the customer can take action to fix the issue (e.g., entering correct card details). When `false`, the decline is due to system-level issues or bank restrictions that cannot be resolved by the customer.
+</Note>
+
+## Support
+
+For additional help with transaction failures or integration issues, please contact our support team at support@dodopayments.com. 
