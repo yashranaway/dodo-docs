@@ -82,6 +82,7 @@
               "features/adaptive-currency",
               "features/b2b-payments",
               "features/customers",
+              "features/affiliates",
               "features/purchasing-power-parity",
               "features/fraud-detection",
               "features/api-keys",

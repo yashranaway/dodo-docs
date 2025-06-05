@@ -1,0 +1,231 @@
+---
+title: "Affiliates"
+description: "Launch and manage your affiliate program while processing transactions through Creem."
+icon: "users-line"
+---
+
+## Introduction
+
+This guide walks you through how to track affiliate referrals, handle commission events, and grow your revenue with trusted affiliate partnerships via Dodo Payments.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Automated Commission Attribution" icon="robot">
+    No spreadsheets or manual tracking. Referrals are automatically attributed and logged when a purchase is made.
+  </Card>
+
+  <Card title="Real-Time Reporting" icon="chart-line">
+    Both you and your affiliates can monitor performance and leads from dedicated dashboards.
+  </Card>
+
+  <Card title="Flexible Tracking Options" icon="code">
+    Use tracking scripts, metadata fields, and webhook events to capture referral data across signups and transactions.
+  </Card>
+
+  <Card title="Fully Encrypted & Secure" icon="shield">
+    All sensitive credentials and webhook data are securely exchanged and stored using best-in-class encryption.
+  </Card>
+
+  <Card title="Quick Setup" icon="bolt">
+    Launch your affiliate program in minutes—no code changes required beyond copy-pasting script snippets and API tokens.
+  </Card>
+
+  <Card title="Seamless Integration" icon="plug">
+    Plug affiliate tracking directly into your checkout flows using our integration with Affonso, a leading affiliate marketing platform.
+  </Card>
+</CardGroup>
+
+## Integration Steps
+
+We have partnered with Affonso, a leading affiliate management platform to power your sales. Follow the steps below to connect your Dodo Payments account with Affonso and begin tracking affiliate-driven sales.
+
+<Steps>
+  <Step title="Connect with Dodo Payments">
+    To get started, connect your Dodo Payments account by adding your API key.
+
+    ### How to Get Your Dodo Payments API Key
+
+    - Log in to your **Dodo Payments Dashboard**
+    - Go to the **Developer** section in the left menu
+    - Click on **API Keys**
+    - Select **Add API Key**
+    - Give it a name (e.g. "Affonso Integration")
+    - Click **Create** and **copy** your API key
+
+    ### Add Your API Key to Affonso
+
+    - Open your **Affonso Dashboard via** [affonso.io](https://affonso.io/)
+    - Go to **Program Details > Connect**
+    - Click the **Dodo Payments integration** card
+    - Paste your Dodo Payments API key
+    - Click **Connect**
+
+    <Callout type="info">
+      Your API key will be securely encrypted by Affonso.
+    </Callout>
+  </Step>
+
+  <Step title="Add Webhook to Dodo Payments">
+    Once connected, you'll receive a unique webhook URL from Affonso. This enables payment tracking and affiliate commission triggering.
+
+    ### Add Webhook URL in Dodo Payments
+
+    - In your Dodo Payments Dashboard, go to **Developer → Webhooks**
+    - Click **Add Webhook**
+    - Paste your **Affonso webhook URL** (from your program settings)
+    - Save the webhook
+
+    ### Add Webhook Secret in Affonso
+
+    - After saving the webhook in Dodo Payments, **copy the signing key** provided
+    - Paste it back into Affonso under the **Dodo Payments webhook settings**
+
+    <Callout type="info">
+      This allows Affonso to securely verify incoming events from Dodo Payments.
+    </Callout>
+  </Step>
+
+  <Step title="Add the Tracking Script">
+    Place the Affonso pixel on your site to start tracking affiliate visits and conversions.
+
+    ```html
+    <!-- Place in <head> tag -->
+    <script async defer
+    src="https://affonso.io/js/pixel.min.js"
+    data-affonso="YOUR_PUBLIC_PROGRAM_ID"
+    data-cookie_duration="YOUR_COOKIE_DURATION">
+    </script>
+    ```
+
+    This script:
+    - Tracks affiliate visits
+    - Sets a cookie with the referral ID (`affonso_referral`)
+    - Enables signup and payment tracking
+
+    <Callout type="info">
+      Place this on all domains where users visit or convert (e.g. marketing site, app).
+    </Callout>
+  </Step>
+
+  <Step title="Track User Signups">
+    To gain funnel visibility and optimize affiliate performance, track user signups as leads.
+
+    ```js
+    // After successful registration
+    window.Affonso.signup(userEmail);
+    ```
+
+    This will:
+    - Log a new referral as a **LEAD** if the user came via an affiliate link
+    - Display it in your dashboard and the affiliate's stats
+
+    <Callout type="info">
+      Best practice: Trigger this after successful registration or double opt-in (DOI).
+    </Callout>
+  </Step>
+
+  <Step title="Pass Referral Data to Dodo Payments">
+    To attribute commissions correctly, pass the referral ID from Affonso to Dodo Payments during checkout.
+
+    ### Payments Integration
+
+    ```js
+    import DodoPayments from 'dodopayments';
+
+    const referralId = window.affonso_referral;
+
+    const client = new DodoPayments({
+      bearerToken: process.env['DODO_PAYMENTS_API_KEY'],
+    });
+
+    async function main() {
+      const payment = await client.payments.create({
+        payment_link: true,
+        billing: { city: 'city', country: 'AF', state: 'state', street: 'street', zipcode: 0 },
+        customer: { email: 'email@email.com', name: 'name' },
+        product_cart: [{ product_id: 'product_id', quantity: 0 }],
+        metadata: {
+          affonso_referral: referralId,
+        },
+      });
+
+      console.log(payment.payment_id);
+    }
+
+    main();
+    ```
+
+    ### Subscription Integration
+
+    ```js
+    import DodoPayments from 'dodopayments';
+
+    const referralId = window.affonso_referral;
+
+    const client = new DodoPayments({
+      bearerToken: process.env['DODO_PAYMENTS_API_KEY'],
+    });
+
+    async function main() {
+      const subscription = await client.subscriptions.create({
+        billing: { city: 'city', country: 'IN', state: 'state', street: 'street', zipcode: 89789 },
+        customer: { customer_id: 'customer_id' },
+        product_id: 'product_id',
+        payment_link: true,
+        return_url: 'https://example.com/success',
+        quantity: 1,
+        metadata: {
+          affonso_referral: referralId,
+        },
+      });
+
+      console.log(subscription.subscription_id);
+    }
+
+    main();
+    ```
+
+    ### Payment Links
+
+    ```js
+    // Original Dodo Payments Link
+    const originalLink = 'https://checkout.dodopayments.com/buy/<YOUR_PRODUCT_ID>';
+
+    // Append referral ID as reference_id
+    const linkWithReferral = `${originalLink}?metadata_affonso_referral=${window.affonso_referral}`;
+    ```
+
+    <Callout type="info">
+      For more details, see the [Dodo Payments API documentation](https://docs.dodopayments.com/api-reference/introduction)
+    </Callout>
+  </Step>
+
+  <Step title="Testing Your Integration">
+    Before launching publicly, test your setup with live affiliate links and test transactions.
+
+    **Testing Checklist:**
+    - ✅ Create an affiliate and generate a tracking link
+    - ✅ Visit your website via the affiliate link
+    - ✅ Ensure the Affonso script loads and the `affonso_referral` cookie is set
+    - ✅ Complete a signup (optional)
+    - ✅ Complete a payment via Dodo Payments
+    - ✅ Confirm tracking and attribution in your Affonso dashboard
+  </Step>
+</Steps>
+
+## Need Help?
+
+If you face any issues or need support during integration:
+
+<CardGroup cols={2}>
+  <Card title="Affonso Support" icon="headset">
+    - Chat with us via **live chat** on [affonso.io](https://affonso.io/)
+    - Email us at **support@affonso.io**
+  </Card>
+
+  <Card title="Dodo Payments Support" icon="headset">
+    For Dodo Payments-specific API queries, refer to docs.dodopayments.com or contact our support team.
+  </Card>
+</CardGroup>
+
