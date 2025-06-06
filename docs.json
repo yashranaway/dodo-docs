@@ -117,7 +117,6 @@
       },
       {
         "tab": "API Reference",
-        "openapi": "https://app.stainless.com/api/spec/documented/dodo-payments/openapi.documented.yml",
         "groups": [
           {
             "group": "API Documentation & SDKs",
