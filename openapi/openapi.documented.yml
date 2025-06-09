@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.30.2
+  version: 1.32.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -7090,6 +7090,13 @@ paths:
             format: int32
             nullable: true
             minimum: 0
+        - name: webhook_id
+          in: query
+          description: Filter by webhook destination
+          required: false
+          schema:
+            type: string
+            nullable: true
       responses:
         '200':
           description: ''
@@ -9451,6 +9458,9 @@ components:
           allOf:
             - $ref: '#/components/schemas/BillingAddress'
           nullable: true
+        cancel_at_next_billing_date:
+          type: boolean
+          nullable: true
         disable_on_demand:
           allOf:
             - $ref: '#/components/schemas/DisableOnDemandReq'
@@ -9887,11 +9897,15 @@ components:
         - previous_billing_date
         - customer
         - metadata
+        - cancel_at_next_billing_date
         - billing
         - on_demand
       properties:
         billing:
           $ref: '#/components/schemas/BillingAddress'
+        cancel_at_next_billing_date:
+          type: boolean
+          description: Indicates if the subscription will cancel at the next billing date
         cancelled_at:
           type: string
           format: date-time
@@ -9978,6 +9992,7 @@ components:
         - previous_billing_date
         - customer
         - metadata
+        - cancel_at_next_billing_date
         - billing
         - on_demand
         - addons
@@ -9989,6 +10004,9 @@ components:
           description: Addons associated with this subscription
         billing:
           $ref: '#/components/schemas/BillingAddress'
+        cancel_at_next_billing_date:
+          type: boolean
+          description: Indicates if the subscription will cancel at the next billing date
         cancelled_at:
           type: string
           format: date-time
