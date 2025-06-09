@@ -1,0 +1,25 @@
+---
+title: v1.32.0 (9th June 2025)
+description: Added support for Affiliates with Affonso, multiple webhook support, enhanced fraud prevention, subscription schedule cancellation, and static payment links.
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+- **Affiliate Program Integration**: Launched integration with Affonso, enabling you to create and manage affiliate programs directly through Dodo Payments. Track referrals, handle commissions, and grow your revenue with trusted affiliate partnerships. Learn more in our [Affiliates](/features/affiliates) documentation.
+  <Frame>
+    <img src="/images/affiliates/cover.jpeg" alt="Affiliates Cover Image"/>
+  </Frame>
+
+- **Multiple Webhook Support**: Enhanced webhook capabilities to support multiple endpoints, allowing you to send event notifications to different systems simultaneously.
+
+- **Enhanced Fraud Prevention**: Added a new business setting to force 3D Secure authentication for all transactions, helping reduce fraud and chargebacks.
+
+- **Subscription Schedule Cancellation**: Introduced the ability to schedule subscription cancellations to take effect at the end of the billing period, available through our API.
+
+- **Static Payment Links**: Added two more query params for static payment links:
+  - `paymentCurrency`: Specifies the payment currency. Default is set as per the billing country.
+  - `showCurrencySelector`: Shows the currency selector. Default is true.
+
+
+
