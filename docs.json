@@ -80,6 +80,7 @@
               "features/analytics-and-reporting",
               "features/account-summary-payout-wallet",
               "features/adaptive-currency",
+              "features/digital-product-delivery",
               "features/b2b-payments",
               "features/customers",
               "features/affiliates",

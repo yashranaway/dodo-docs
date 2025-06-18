@@ -1,0 +1,91 @@
+---
+title: Digital Product Delivery
+description: The Digital Product Delivery feature in Dodo Payments allows merchants to deliver digital products to their customers.
+icon: "download"
+---
+
+## Overview
+
+The **Digital Product Delivery** feature enables merchants to automatically deliver digital files to customers after successful purchases. Whether you're selling e-books, design templates, software, or media packs, you can attach downloadable content to your products, providing instant access via email and the customer portal.
+
+This feature supports both hosted file uploads and external download links, offering flexibility for various use cases.
+
+## Key Features
+
+<CardGroup cols={2}>
+<Card title="File Upload" icon="upload">
+Upload and deliver digital files (PDF, ZIP, images, videos, etc.) directly to your customers.
+</Card>
+
+<Card title="Multiple Files" icon="files">
+Attach up to 10 files per product for comprehensive digital product delivery.
+</Card>
+
+<Card title="External Links" icon="link">
+Provide external download links (Dropbox, Google Drive, etc.) as an alternative to file uploads.
+</Card>
+
+<Card title="Automatic Delivery" icon="download">
+Customers automatically receive download instructions via email upon successful payment.
+</Card>
+</CardGroup>
+
+## Setup Process
+
+<Steps>
+<Step title="Navigate to Products">
+Go to your dashboard and select **Products > Create New** or edit an existing product. Navigate to **Advanced Settings → Digital Product Delivery**.
+</Step>
+
+<Step title="Configure File Delivery">
+Choose one of the following options:
+
+- **Upload File(s)**: Add up to 10 files directly to your product
+- **External Download Link**: Paste a secure link hosted externally (e.g., Dropbox, Google Drive)
+
+<Frame>
+<img src="/images/digital-product-delivery/1.png" alt="Digital product delivery configuration interface showing file upload and external link options" />
+</Frame>
+</Step>
+
+<Step title="Save Configuration">
+Click **Update Product** to make your digital product delivery settings live.
+
+<Warning>
+Uploaded files are served via static URLs — anyone with the link can access the file. Consider external services with authentication for sensitive content.
+</Warning>
+</Step>
+</Steps>
+
+## Customer Experience
+
+### Purchase Confirmation
+
+After a successful transaction, customers receive a purchase confirmation email containing download links for their digital products.
+
+<Frame>
+<img src="/images/digital-product-delivery/2.png" alt="Purchase confirmation email showing download links for digital products" />
+</Frame>
+
+### Customer Portal Access
+
+Customers can access their digital products through the Customer Portal:
+
+- Log in to view all past purchases
+- Download files or access external links for each product
+- Persistent access to purchased digital content
+
+<Frame>
+<img src="/images/digital-product-delivery/3.png" alt="Customer portal interface showing available digital products for download" />
+</Frame>
+
+<Check>
+Customers can download files directly from confirmation emails or access them anytime through their portal.
+</Check>
+
+## Important Considerations
+
+- **Security**: Static download links are not order-authenticated. Customers with the link can re-share the same link with other parties. For secure or licensed content, consider integrating with external services that support gated or authenticated access.
+- **File Updates**: Updating a file or external link will affect all future purchases only. Past purchases will not be affected and customers can still access those files
+- **Refunds**: Issuing a refund does not revoke access to files. Customers who already downloaded a file will still have it on their device.
+- **Best Practice**: For version control or limited-time access, consider delivering your content via expiring or signed URLs hosted externally.
