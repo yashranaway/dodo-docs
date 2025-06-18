@@ -229,7 +229,8 @@
               "api-reference/products/patch-products",
               "api-reference/products/put-products-images",
               "api-reference/products/archive-product",
-              "api-reference/products/unarchive-product"
+              "api-reference/products/unarchive-product",
+              "api-reference/products/update-files"
             ]
           },
           {
