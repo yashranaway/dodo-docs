@@ -437,13 +437,19 @@
   "navbar": {
     "links": [
       {
+        "label": "llms-full.txt",
+        "icon": "link",
+        "href": "https://docs.dodopayments.com/llms-full.txt"
+      },
+      {
         "label": "Community",
+        "icon": "discord",
         "href": "https://discord.gg/bYqAp4ayYh"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
+      "label": "Get Started",
       "href": "https://app.dodopayments.com/"
     }
   },
@@ -457,7 +463,11 @@
     "socials": {
       "x": "https://x.com/dodopayments",
       "linkedin": "https://linkedin.com/company/dodopayments",
-      "website": "https://dodopayments.com"
+      "website": "https://dodopayments.com",
+      "discord": "https://discord.gg/bYqAp4ayYh",
+      "github": "https://github.com/dodopayments",
+      "instagram": "https://www.instagram.com/dodo.payments/",
+      "facebook": "https://www.facebook.com/profile.php?id=61565515607280"
     }
   },
   "integrations": {
