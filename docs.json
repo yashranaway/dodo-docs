@@ -428,7 +428,7 @@
     "dark": "/logo/dark.svg"
   },
   "background": {
-    "decoration": "windows",
+    "decoration": "grid",
     "color": {
       "light": "#ffffff",
       "dark": "#0D0D0D"
