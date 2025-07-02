@@ -1,6 +1,6 @@
 ---
 title: v1.37.0 (2nd July 2025)
-description: "Enhanced Analytics Dashboard with comprehensive revenue and retention insights, and new reports and payout reports."
+description: "Enhanced Analytics Dashboard with comprehensive revenue and retention insights, Reports 2.0 with detailed business reporting capabilities, and improved subscription management features for better business intelligence and operational efficiency."
 icon: "arrows-turn-right"
 ---
 
@@ -64,6 +64,65 @@ We've added detailed payout reports that provide clear visibility into fees and 
 <Frame>
   <img src="/images/analytics/payout.png" alt="Payout Report dashboard showing detailed payout information" />
 </Frame>
+
+### Dodo Payments Remote MCP Server
+
+You can now use the hosted Remote MCP Server at [https://mcp.dodopayments.com](https://mcp.dodopayments.com) for instant MCP integration—no local setup required.
+
+<Frame>
+  <iframe 
+      className="w-full aspect-video rounded-md" 
+      src="https://www.youtube.com/embed/TxGgYxNmkT4"
+      title="Using Dodo Payment's Remote MCP Server"
+      frameBorder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowFullScreen
+  ></iframe>
+</Frame>
+
+<Note>
+This is the fastest way to get started with Dodo Payments' MCP integration. No server installation or maintenance needed.
+</Note>
+
+<Steps>
+<Step title="Open the Remote MCP Server">
+    Visit <a href="https://mcp.dodopayments.com" target="_blank">https://mcp.dodopayments.com</a> in your browser.
+</Step>
+<Step title="Copy the MCP JSON configuration">
+    On the site, copy the MCP JSON configuration provided for your client.
+</Step>
+<Step title="Configure your AI application">
+    Paste the configuration into your application's MCP settings (for example, Cursor or Claude).
+    <Tip>
+    For Cursor, your configuration should look like this:
+    </Tip>
+    ```json
+    {
+      "mcpServers": {
+        "dodopayments_api": {
+          "command": "npx",
+          "args": ["-y", "mcp-remote@latest", "https://mcp.dodopayments.com/sse"]
+        }
+      }
+    }
+    ```
+</Step>
+<Step title="Complete authentication and environment setup">
+    After adding the JSON configuration, a pop-up will prompt you to:
+    - Enter your Dodo Payments API key
+    - Select the environment (test or live)
+    - Select your MCP Client under Configuration Options
+</Step>
+<Step title="Login and Approve">
+    - Click the Login and Approve button
+</Step>
+<Step title="Verify successful connection">
+    Once setup is complete, you'll see a success screen.
+    <Check>
+    You're now ready to use the Dodo Payments MCP server!
+    </Check>
+</Step>
+</Steps>
 
 ### Additional Improvements
 
