@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.37.0
+  version: 1.38.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -9939,6 +9939,7 @@ components:
         - items_id
         - amount
         - tax
+        - refundable_amount
       properties:
         amount:
           type: integer
@@ -9953,6 +9954,9 @@ components:
           type:
             - string
             - 'null'
+        refundable_amount:
+          type: integer
+          format: int32
         tax:
           type: integer
           format: int32
