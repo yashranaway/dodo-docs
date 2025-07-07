@@ -5,109 +5,105 @@ icon: "repeat"
 ---
 
 <Info>
-Subscription products are best suited for recurring services, ongoing access to digital content, or products that require regular renewals, such as memberships, software licenses, or content platforms.
+  Subscription products are best suited for recurring services, ongoing access to digital content, or products that require regular renewals, such as memberships, software licenses, or content platforms.
 </Info>
-
-
 
 ## How to Add a Subscription Product
 
 <Steps>
-<Step title="Navigate to the Dashboard">
-Log in to your Dodo Payments dashboard.
-</Step>
-<Step title="Go to the Products Section">
-Click **Products** in the sidebar to view your catalogue.
-</Step>
-<Step title="Add a New Product">
-Click **Add New Product** and select **Subscription** as the pricing type.
-</Step>
-<Step title="Enter Subscription Details">
-Fill in:
-- **Subscription Name**
-- **Description**
-- **Recurring Price**
-- **Billing Cycle** (monthly, yearly, etc.)
-- **Free Trial** (optional)
-</Step>
-<Step title="Save Your Subscription">
-Click **Save**. Your subscription plan is now available for customers.
-<Check>
-You should see your new subscription listed in the catalogue.
-</Check>
-</Step>
+  <Step title="Navigate to the Dashboard">
+    Log in to your Dodo Payments dashboard.
+  </Step>
+  <Step title="Go to the Products Section">
+    Click **Products** in the sidebar to view your catalogue.
+  </Step>
+  <Step title="Add a New Product">
+    Click **Add New Product** and select **Subscription** as the pricing type.
+  </Step>
+  <Step title="Enter Subscription Details">
+    Fill in:
+
+    - **Subscription Name**
+    - **Description**
+    - **Recurring Price**
+    - **Billing Cycle** (monthly, yearly, etc.)
+    - **Free Trial** (optional)
+  </Step>
+  <Step title="Save Your Subscription">
+    Click **Save**. Your subscription plan is now available for customers.
+
+    <Check>
+      You should see your new subscription listed in the catalogue.
+    </Check>
+  </Step>
 </Steps>
-
-
 
 ## How to Edit a Subscription Product
 
 <Steps>
-<Step title="Access the Products Section">
-Go to **Products** in your dashboard.
-</Step>
-<Step title="Locate the Subscription to Edit">
-Find the subscription plan and click the edit button.
-</Step>
-<Step title="Update Subscription Details">
-Edit any of the following:
-- **Billing Cycle**
-- **Price**
-- **Description**
-- **Add-Ons**
-</Step>
-<Step title="Save Changes">
-Click **Save** to apply your updates.
-<Check>
-Your changes will affect new customers and future renewals.
-</Check>
-</Step>
+  <Step title="Access the Products Section">
+    Go to **Products** in your dashboard.
+  </Step>
+  <Step title="Locate the Subscription to Edit">
+    Find the subscription plan and click the edit button.
+  </Step>
+  <Step title="Update Subscription Details">
+    Edit any of the following:
+
+    - **Billing Cycle**
+    - **Price**
+    - **Description**
+    - **Add-Ons**
+  </Step>
+  <Step title="Save Changes">
+    Click **Save** to apply your updates.
+
+    <Check>
+      Your changes will affect new customers and future renewals.
+    </Check>
+  </Step>
 </Steps>
 
 <Info>
-Editing a subscription does not affect current subscribers until their next renewal. Contact support to update terms for existing customers.
+  Editing a subscription does not affect current subscribers until their next renewal. Contact support to update terms for existing customers.
 </Info>
-
-
 
 ## How to Delete a Subscription Product
 
 <Steps>
-<Step title="Access the Products Section">
-Go to **Products** in your dashboard.
-</Step>
-<Step title="Find the Subscription to Delete">
-Locate the subscription plan you want to remove.
-</Step>
-<Step title="Delete the Subscription">
-Click the **Delete** button and confirm when prompted.
-<Warning>
-Deleting a subscription product prevents new signups but does not affect current subscribers. Contact support to remove subscriptions for existing customers.
-</Warning>
-</Step>
+  <Step title="Access the Products Section">
+    Go to **Products** in your dashboard.
+  </Step>
+  <Step title="Find the Subscription to Delete">
+    Locate the subscription plan you want to remove.
+  </Step>
+  <Step title="Delete the Subscription">
+    Click the **Delete** button and confirm when prompted.
+
+    <Warning>
+      Deleting a subscription product prevents new signups but does not affect current subscribers. Contact support to remove subscriptions for existing customers.
+    </Warning>
+  </Step>
 </Steps>
 
 ## Subscription Payment Flow
 
 <Frame>
-<img src="/images/subscriptions/mandate-creation.png" alt="Mandate Creation Flow" />
+  ![Mandate Creation Flow](/images/subscriptions/mandate-creation.png)
 </Frame>
+
 <Frame>
-<img src="/images/subscriptions/payment-renewal.png" alt="Payment Renewal Flow" />
+  ![Payment Renewal Flow](/images/subscriptions/payment-renewal.png)
 </Frame>
-
-
 
 ## Subscription Cancellation
 
 You or your customers can cancel subscriptions at any time via the dashboard or customer portal. Cancellation takes effect immediately, but access continues until the end of the current billing period. No automatic refunds are issued for cancellations.
 
-
-
 ## On-Demand Subscriptions
 
 <Info>
-On-demand subscriptions let you charge customers flexibly, not just on a fixed schedule. Contact support to enable this feature.
+  On-demand subscriptions let you charge customers flexibly, not just on a fixed schedule. Contact support to enable this feature.
 </Info>
 
 **To create an on-demand subscription:**
@@ -116,36 +112,32 @@ To create an on-demand subscription, use the [POST /subscriptions](/api-referenc
 
 **To charge an on-demand subscription:**
 
-For subsequent charges, use the [POST /subscriptions/{subscription_id}/charge](/api-reference/misc/charge-subscriptions) endpoint and specify the amount to charge the customer for that transaction.
-
-
+For subsequent charges, use the [POST /subscriptions/charge](/api-reference/misc/charge-subscriptions) endpoint and specify the amount to charge the customer for that transaction.
 
 ## Add-Ons
 
 <Info>
-Add-Ons are optional, paid enhancements billed together with the main subscription. Customers can select add-ons during checkout.
+  Add-Ons are optional, paid enhancements billed together with the main subscription. Customers can select add-ons during checkout.
 </Info>
 
 <Steps>
-<Step title="Create an Add-On">
-Go to **Products** → **Add-Ons** tab and click **Create Add-On**. Fill in the details and save.
-</Step>
-<Step title="Associate Add-Ons with a Subscription">
-While creating or editing a subscription, select up to 3 add-ons to offer.
-</Step>
-<Step title="Customer Checkout Experience">
-Customers can select add-ons and quantities at checkout. All charges appear on a single invoice.
-</Step>
+  <Step title="Create an Add-On">
+    Go to **Products** → **Add-Ons** tab and click **Create Add-On**. Fill in the details and save.
+  </Step>
+  <Step title="Associate Add-Ons with a Subscription">
+    While creating or editing a subscription, select up to 3 add-ons to offer.
+  </Step>
+  <Step title="Customer Checkout Experience">
+    Customers can select add-ons and quantities at checkout. All charges appear on a single invoice.
+  </Step>
 </Steps>
 
 <Tip>
-Add-Ons must be linked to a subscription and follow the same billing cycle.
+  Add-Ons must be linked to a subscription and follow the same billing cycle.
 </Tip>
-
-
 
 ## Developer Integration
 
-<Card title="For Developers" horizontal icon="brackets-curly" href="/developer-resources/subscription-integration-guide">
-Step-by-step integration guide to help developers implement the Subscription Payment product.
+<Card title="For Developers" icon="brackets-curly" horizontal href="/developer-resources/subscription-integration-guide">
+  Step-by-step integration guide to help developers implement the Subscription Payment product.
 </Card>
