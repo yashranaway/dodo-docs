@@ -350,6 +350,7 @@
           {
             "group": "July 2025",
             "pages": [
+              "changelog/v1.38.0",
               "changelog/v1.37.0"
             ]
           },
