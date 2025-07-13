@@ -295,3 +295,17 @@ When changing subscription plans, you have two options for handling the immediat
 
 - The immediate charge initiated upon plan change usually completes processing in less than 2 minutes
 - If this immediate charge fails for any reason, the subscription is automatically placed on hold until the issue is resolved
+
+## On-Demand Subscriptions
+
+<Info>
+  On-demand subscriptions let you charge customers flexibly, not just on a fixed schedule. Contact support to enable this feature.
+</Info>
+
+**To create an on-demand subscription:**
+
+To create an on-demand subscription, use the [POST /subscriptions](/api-reference/subscriptions/post-subscriptions) API endpoint and include the `on_demand` field in your request body. This allows you to authorize a payment method without an immediate charge, or set a custom initial price.
+
+**To charge an on-demand subscription:**
+
+For subsequent charges, use the [POST /subscriptions/charge](/api-reference/subscriptions/create-charge) endpoint and specify the amount to charge the customer for that transaction.
