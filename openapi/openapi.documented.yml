@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.38.0
+  version: 1.40.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -52,7 +52,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -61,11 +61,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.addons.list()
             page = page.items[0]
@@ -84,7 +83,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Addons.List(context.TODO(), dodopayments.AddonListParams{
 
@@ -107,7 +106,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     AddonListPage page = client.addons().list();
@@ -123,7 +121,6 @@ paths:
             import com.dodopayments.api.models.addons.AddonListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: AddonListPage = client.addons().list()
@@ -133,7 +130,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -169,7 +166,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const addonResponse = await client.addons.create({
@@ -182,11 +179,10 @@ paths:
             console.log(addonResponse.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             addon_response = client.addons.create(
                 currency="AED",
@@ -209,7 +205,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               addonResponse, err := client.Addons.New(context.TODO(), dodopayments.AddonNewParams{
                 Currency: dodopayments.F(dodopayments.CurrencyAed),
@@ -237,7 +233,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     AddonCreateParams params = AddonCreateParams.builder()
@@ -261,7 +256,6 @@ paths:
             import com.dodopayments.api.models.misc.TaxCategory
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: AddonCreateParams = AddonCreateParams.builder()
@@ -278,7 +272,7 @@ paths:
 
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -317,7 +311,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const addonResponse = await client.addons.retrieve('id');
@@ -325,11 +319,10 @@ paths:
             console.log(addonResponse.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             addon_response = client.addons.retrieve(
                 "id",
@@ -349,7 +342,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               addonResponse, err := client.Addons.Get(context.TODO(), "id")
               if err != nil {
@@ -370,7 +363,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     AddonResponse addonResponse = client.addons().retrieve("id");
@@ -386,7 +378,6 @@ paths:
             import com.dodopayments.api.models.addons.AddonRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val addonResponse: AddonResponse = client.addons().retrieve("id")
@@ -396,7 +387,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -439,7 +430,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const addonResponse = await client.addons.update('id');
@@ -447,11 +438,10 @@ paths:
             console.log(addonResponse.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             addon_response = client.addons.update(
                 id="id",
@@ -471,7 +461,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               addonResponse, err := client.Addons.Update(
                 context.TODO(),
@@ -498,7 +488,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     AddonResponse addonResponse = client.addons().update("id");
@@ -514,7 +503,6 @@ paths:
             import com.dodopayments.api.models.addons.AddonUpdateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val addonResponse: AddonResponse = client.addons().update("id")
@@ -524,7 +512,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -562,7 +550,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const response = await client.addons.updateImages('id');
@@ -570,11 +558,10 @@ paths:
             console.log(response.image_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             response = client.addons.update_images(
                 "id",
@@ -594,7 +581,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               response, err := client.Addons.UpdateImages(context.TODO(), "id")
               if err != nil {
@@ -615,7 +602,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     AddonUpdateImagesResponse response = client.addons().updateImages("id");
@@ -631,7 +617,6 @@ paths:
             import com.dodopayments.api.models.addons.AddonUpdateImagesResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val response: AddonUpdateImagesResponse = client.addons().updateImages("id")
@@ -641,7 +626,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -668,7 +653,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const brands = await client.brands.list();
@@ -676,11 +661,10 @@ paths:
             console.log(brands.items);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             brands = client.brands.list()
             print(brands.items)
@@ -698,7 +682,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               brands, err := client.Brands.List(context.TODO())
               if err != nil {
@@ -719,7 +703,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     BrandListResponse brands = client.brands().list();
@@ -735,7 +718,6 @@ paths:
             import com.dodopayments.api.models.brands.BrandListResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val brands: BrandListResponse = client.brands().list()
@@ -745,7 +727,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -777,7 +759,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const brand = await client.brands.create();
@@ -785,11 +767,10 @@ paths:
             console.log(brand.brand_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             brand = client.brands.create()
             print(brand.brand_id)
@@ -807,7 +788,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               brand, err := client.Brands.New(context.TODO(), dodopayments.BrandNewParams{
 
@@ -830,7 +811,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     BrandCreateResponse brand = client.brands().create();
@@ -846,7 +826,6 @@ paths:
             import com.dodopayments.api.models.brands.BrandCreateResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val brand: BrandCreateResponse = client.brands().create()
@@ -856,7 +835,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -893,7 +872,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const brand = await client.brands.retrieve('id');
@@ -901,11 +880,10 @@ paths:
             console.log(brand.brand_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             brand = client.brands.retrieve(
                 "id",
@@ -925,7 +903,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               brand, err := client.Brands.Get(context.TODO(), "id")
               if err != nil {
@@ -946,7 +924,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     BrandRetrieveResponse brand = client.brands().retrieve("id");
@@ -962,7 +939,6 @@ paths:
             import com.dodopayments.api.models.brands.BrandRetrieveResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val brand: BrandRetrieveResponse = client.brands().retrieve("id")
@@ -972,7 +948,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1015,7 +991,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const brand = await client.brands.update('id');
@@ -1023,11 +999,10 @@ paths:
             console.log(brand.brand_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             brand = client.brands.update(
                 id="id",
@@ -1047,7 +1022,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               brand, err := client.Brands.Update(
                 context.TODO(),
@@ -1074,7 +1049,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     BrandUpdateResponse brand = client.brands().update("id");
@@ -1090,7 +1064,6 @@ paths:
             import com.dodopayments.api.models.brands.BrandUpdateResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val brand: BrandUpdateResponse = client.brands().update("id")
@@ -1100,7 +1073,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1134,7 +1107,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const response = await client.brands.updateImages('id');
@@ -1142,11 +1115,10 @@ paths:
             console.log(response.image_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             response = client.brands.update_images(
                 "id",
@@ -1166,7 +1138,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               response, err := client.Brands.UpdateImages(context.TODO(), "id")
               if err != nil {
@@ -1187,7 +1159,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     BrandUpdateImagesResponse response = client.brands().updateImages("id");
@@ -1203,7 +1174,6 @@ paths:
             import com.dodopayments.api.models.brands.BrandUpdateImagesResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val response: BrandUpdateImagesResponse = client.brands().updateImages("id")
@@ -1213,7 +1183,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1242,7 +1212,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const countryCodes = await client.misc.listSupportedCountries();
@@ -1250,11 +1220,10 @@ paths:
             console.log(countryCodes);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             country_codes = client.misc.list_supported_countries()
             print(country_codes)
@@ -1272,7 +1241,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               countryCodes, err := client.Misc.ListSupportedCountries(context.TODO())
               if err != nil {
@@ -1293,7 +1262,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     List<CountryCode> countryCodes = client.misc().listSupportedCountries();
@@ -1309,7 +1277,6 @@ paths:
             import com.dodopayments.api.models.misc.MiscListSupportedCountriesParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val countryCodes: List<CountryCode> = client.misc().listSupportedCountries()
@@ -1319,7 +1286,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1376,7 +1343,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -1385,11 +1352,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.customers.list()
             page = page.items[0]
@@ -1408,7 +1374,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Customers.List(context.TODO(), dodopayments.CustomerListParams{
 
@@ -1431,7 +1397,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     CustomerListPage page = client.customers().list();
@@ -1447,7 +1412,6 @@ paths:
             import com.dodopayments.api.models.customers.CustomerListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: CustomerListPage = client.customers().list()
@@ -1457,7 +1421,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1493,7 +1457,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const customer = await client.customers.create({ email: 'email', name: 'name' });
@@ -1501,11 +1465,10 @@ paths:
             console.log(customer.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             customer = client.customers.create(
                 email="email",
@@ -1526,7 +1489,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               customer, err := client.Customers.New(context.TODO(), dodopayments.CustomerNewParams{
                 Email: dodopayments.F("email"),
@@ -1550,7 +1513,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     CustomerCreateParams params = CustomerCreateParams.builder()
@@ -1570,7 +1532,6 @@ paths:
             import com.dodopayments.api.models.customers.CustomerCreateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: CustomerCreateParams = CustomerCreateParams.builder()
@@ -1584,7 +1545,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1620,7 +1581,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const customer = await client.customers.retrieve('customer_id');
@@ -1628,11 +1589,10 @@ paths:
             console.log(customer.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             customer = client.customers.retrieve(
                 "customer_id",
@@ -1652,7 +1612,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               customer, err := client.Customers.Get(context.TODO(), "customer_id")
               if err != nil {
@@ -1673,7 +1633,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Customer customer = client.customers().retrieve("customer_id");
@@ -1689,7 +1648,6 @@ paths:
             import com.dodopayments.api.models.customers.CustomerRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val customer: Customer = client.customers().retrieve("customer_id")
@@ -1699,7 +1657,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1742,7 +1700,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const customer = await client.customers.update('customer_id');
@@ -1750,11 +1708,10 @@ paths:
             console.log(customer.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             customer = client.customers.update(
                 customer_id="customer_id",
@@ -1774,7 +1731,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               customer, err := client.Customers.Update(
                 context.TODO(),
@@ -1801,7 +1758,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Customer customer = client.customers().update("customer_id");
@@ -1817,7 +1773,6 @@ paths:
             import com.dodopayments.api.models.customers.CustomerUpdateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val customer: Customer = client.customers().update("customer_id")
@@ -1827,7 +1782,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -1872,7 +1827,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const customerPortalSession = await client.customers.customerPortal.create('customer_id');
@@ -1880,11 +1835,10 @@ paths:
             console.log(customerPortalSession.link);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             customer_portal_session = client.customers.customer_portal.create(
                 customer_id="customer_id",
@@ -1904,7 +1858,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               customerPortalSession, err := client.Customers.CustomerPortal.New(
                 context.TODO(),
@@ -1931,7 +1885,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     CustomerPortalSession customerPortalSession = client.customers().customerPortal().create("customer_id");
@@ -1947,7 +1900,6 @@ paths:
             import com.dodopayments.api.models.customers.customerportal.CustomerPortalCreateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val customerPortalSession: CustomerPortalSession = client.customers().customerPortal().create("customer_id")
@@ -1957,7 +1909,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2008,7 +1960,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -2017,11 +1969,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.discounts.list()
             page = page.items[0]
@@ -2040,7 +1991,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Discounts.List(context.TODO(), dodopayments.DiscountListParams{
 
@@ -2063,7 +2014,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     DiscountListPage page = client.discounts().list();
@@ -2079,7 +2029,6 @@ paths:
             import com.dodopayments.api.models.discounts.DiscountListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: DiscountListPage = client.discounts().list()
@@ -2089,7 +2038,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2128,7 +2077,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const discount = await client.discounts.create({ amount: 0, type: 'percentage' });
@@ -2136,11 +2085,10 @@ paths:
             console.log(discount.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             discount = client.discounts.create(
                 amount=0,
@@ -2161,7 +2109,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               discount, err := client.Discounts.New(context.TODO(), dodopayments.DiscountNewParams{
                 Amount: dodopayments.F(int64(0)),
@@ -2186,7 +2134,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     DiscountCreateParams params = DiscountCreateParams.builder()
@@ -2207,7 +2154,6 @@ paths:
             import com.dodopayments.api.models.discounts.DiscountType
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: DiscountCreateParams = DiscountCreateParams.builder()
@@ -2221,7 +2167,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2260,7 +2206,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const discount = await client.discounts.retrieve('discount_id');
@@ -2268,11 +2214,10 @@ paths:
             console.log(discount.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             discount = client.discounts.retrieve(
                 "discount_id",
@@ -2292,7 +2237,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               discount, err := client.Discounts.Get(context.TODO(), "discount_id")
               if err != nil {
@@ -2313,7 +2258,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Discount discount = client.discounts().retrieve("discount_id");
@@ -2329,7 +2273,6 @@ paths:
             import com.dodopayments.api.models.discounts.DiscountRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val discount: Discount = client.discounts().retrieve("discount_id")
@@ -2339,7 +2282,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2373,17 +2316,16 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             await client.discounts.delete('discount_id');
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             client.discounts.delete(
                 "discount_id",
@@ -2401,7 +2343,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               err := client.Discounts.Delete(context.TODO(), "discount_id")
               if err != nil {
@@ -2420,7 +2362,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     client.discounts().delete("discount_id");
@@ -2435,7 +2376,6 @@ paths:
             import com.dodopayments.api.models.discounts.DiscountDeleteParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 client.discounts().delete("discount_id")
@@ -2445,7 +2385,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2489,7 +2429,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const discount = await client.discounts.update('discount_id');
@@ -2497,11 +2437,10 @@ paths:
             console.log(discount.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             discount = client.discounts.update(
                 discount_id="discount_id",
@@ -2521,7 +2460,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               discount, err := client.Discounts.Update(
                 context.TODO(),
@@ -2548,7 +2487,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Discount discount = client.discounts().update("discount_id");
@@ -2564,7 +2502,6 @@ paths:
             import com.dodopayments.api.models.discounts.DiscountUpdateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val discount: Discount = client.discounts().update("discount_id")
@@ -2574,7 +2511,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2671,7 +2608,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -2680,11 +2617,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.disputes.list()
             page = page.items[0]
@@ -2703,7 +2639,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Disputes.List(context.TODO(), dodopayments.DisputeListParams{
 
@@ -2726,7 +2662,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     DisputeListPage page = client.disputes().list();
@@ -2742,7 +2677,6 @@ paths:
             import com.dodopayments.api.models.disputes.DisputeListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: DisputeListPage = client.disputes().list()
@@ -2752,7 +2686,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2788,7 +2722,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const dispute = await client.disputes.retrieve('dispute_id');
@@ -2796,11 +2730,10 @@ paths:
             console.log(dispute.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             dispute = client.disputes.retrieve(
                 "dispute_id",
@@ -2820,7 +2753,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               dispute, err := client.Disputes.Get(context.TODO(), "dispute_id")
               if err != nil {
@@ -2841,7 +2774,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     DisputeRetrieveResponse dispute = client.disputes().retrieve("dispute_id");
@@ -2857,7 +2789,6 @@ paths:
             import com.dodopayments.api.models.disputes.DisputeRetrieveResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val dispute: DisputeRetrieveResponse = client.disputes().retrieve("dispute_id")
@@ -2867,7 +2798,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -2906,7 +2837,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const payment = await client.invoices.payments.retrieve('payment_id');
@@ -2917,11 +2848,10 @@ paths:
             console.log(content);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             payment = client.invoices.payments.retrieve(
                 "payment_id",
@@ -2943,7 +2873,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               payment, err := client.Invoices.Payments.Get(context.TODO(), "payment_id")
               if err != nil {
@@ -2964,7 +2894,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     HttpResponse payment = client.invoices().payments().retrieve("payment_id");
@@ -2980,7 +2909,6 @@ paths:
             import com.dodopayments.api.models.invoices.payments.PaymentRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val payment: HttpResponse = client.invoices().payments().retrieve("payment_id")
@@ -2990,7 +2918,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3048,7 +2976,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -3057,11 +2985,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.license_key_instances.list()
             page = page.items[0]
@@ -3080,7 +3007,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.LicenseKeyInstances.List(context.TODO(), dodopayments.LicenseKeyInstanceListParams{
 
@@ -3103,7 +3030,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseKeyInstanceListPage page = client.licenseKeyInstances().list();
@@ -3119,7 +3045,6 @@ paths:
             import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: LicenseKeyInstanceListPage = client.licenseKeyInstances().list()
@@ -3129,7 +3054,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3168,7 +3093,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const licenseKeyInstance = await client.licenseKeyInstances.retrieve('lki_123');
@@ -3176,11 +3101,10 @@ paths:
             console.log(licenseKeyInstance.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             license_key_instance = client.license_key_instances.retrieve(
                 "id",
@@ -3200,7 +3124,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               licenseKeyInstance, err := client.LicenseKeyInstances.Get(context.TODO(), "lki_123")
               if err != nil {
@@ -3221,7 +3145,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseKeyInstance licenseKeyInstance = client.licenseKeyInstances().retrieve("lki_123");
@@ -3237,7 +3160,6 @@ paths:
             import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val licenseKeyInstance: LicenseKeyInstance = client.licenseKeyInstances().retrieve("lki_123")
@@ -3247,7 +3169,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3291,7 +3213,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const licenseKeyInstance = await client.licenseKeyInstances.update('lki_123', { name: 'name' });
@@ -3299,11 +3221,10 @@ paths:
             console.log(licenseKeyInstance.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             license_key_instance = client.license_key_instances.update(
                 id="lki_123",
@@ -3324,7 +3245,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               licenseKeyInstance, err := client.LicenseKeyInstances.Update(
                 context.TODO(),
@@ -3351,7 +3272,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseKeyInstanceUpdateParams params = LicenseKeyInstanceUpdateParams.builder()
@@ -3371,7 +3291,6 @@ paths:
             import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceUpdateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: LicenseKeyInstanceUpdateParams = LicenseKeyInstanceUpdateParams.builder()
@@ -3385,7 +3304,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3458,7 +3377,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -3467,11 +3386,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.license_keys.list()
             page = page.items[0]
@@ -3490,7 +3408,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.LicenseKeys.List(context.TODO(), dodopayments.LicenseKeyListParams{
 
@@ -3513,7 +3431,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseKeyListPage page = client.licenseKeys().list();
@@ -3529,7 +3446,6 @@ paths:
             import com.dodopayments.api.models.licensekeys.LicenseKeyListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: LicenseKeyListPage = client.licenseKeys().list()
@@ -3539,7 +3455,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3578,7 +3494,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const licenseKey = await client.licenseKeys.retrieve('lic_123');
@@ -3586,11 +3502,10 @@ paths:
             console.log(licenseKey.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             license_key = client.license_keys.retrieve(
                 "id",
@@ -3610,7 +3525,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               licenseKey, err := client.LicenseKeys.Get(context.TODO(), "lic_123")
               if err != nil {
@@ -3631,7 +3546,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseKey licenseKey = client.licenseKeys().retrieve("lic_123");
@@ -3647,7 +3561,6 @@ paths:
             import com.dodopayments.api.models.licensekeys.LicenseKeyRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val licenseKey: LicenseKey = client.licenseKeys().retrieve("lic_123")
@@ -3657,7 +3570,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3705,7 +3618,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const licenseKey = await client.licenseKeys.update('lic_123');
@@ -3713,11 +3626,10 @@ paths:
             console.log(licenseKey.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             license_key = client.license_keys.update(
                 id="lic_123",
@@ -3737,7 +3649,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               licenseKey, err := client.LicenseKeys.Update(
                 context.TODO(),
@@ -3764,7 +3676,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseKey licenseKey = client.licenseKeys().update("lic_123");
@@ -3780,7 +3691,6 @@ paths:
             import com.dodopayments.api.models.licensekeys.LicenseKeyUpdateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val licenseKey: LicenseKey = client.licenseKeys().update("lic_123")
@@ -3790,7 +3700,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3830,7 +3740,7 @@ paths:
 
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
 
@@ -3841,11 +3751,10 @@ paths:
             console.log(licenseKeyInstance.id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             license_key_instance = client.licenses.activate(
                 license_key="license_key",
@@ -3866,7 +3775,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               licenseKeyInstance, err := client.Licenses.Activate(context.TODO(), dodopayments.LicenseActivateParams{
                 LicenseKey: dodopayments.F("license_key"),
@@ -3890,7 +3799,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseActivateParams params = LicenseActivateParams.builder()
@@ -3910,7 +3818,6 @@ paths:
             import com.dodopayments.api.models.licenses.LicenseActivateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: LicenseActivateParams = LicenseActivateParams.builder()
@@ -3924,7 +3831,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -3957,7 +3864,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             await client.licenses.deactivate({
@@ -3966,11 +3873,10 @@ paths:
             });
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             client.licenses.deactivate(
                 license_key="license_key",
@@ -3989,7 +3895,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               err := client.Licenses.Deactivate(context.TODO(), dodopayments.LicenseDeactivateParams{
                 LicenseKey: dodopayments.F("license_key"),
@@ -4011,7 +3917,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseDeactivateParams params = LicenseDeactivateParams.builder()
@@ -4030,7 +3935,6 @@ paths:
             import com.dodopayments.api.models.licenses.LicenseDeactivateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: LicenseDeactivateParams = LicenseDeactivateParams.builder()
@@ -4044,7 +3948,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -4083,7 +3987,7 @@ paths:
 
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
 
@@ -4094,11 +3998,10 @@ paths:
             console.log(response.valid);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             response = client.licenses.validate(
                 license_key="2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43",
@@ -4118,7 +4021,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               response, err := client.Licenses.Validate(context.TODO(), dodopayments.LicenseValidateParams{
                 LicenseKey: dodopayments.F("2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43"),
@@ -4141,7 +4044,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     LicenseValidateParams params = LicenseValidateParams.builder()
@@ -4160,7 +4062,6 @@ paths:
             import com.dodopayments.api.models.licenses.LicenseValidateResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: LicenseValidateParams = LicenseValidateParams.builder()
@@ -4173,7 +4074,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -4277,7 +4178,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -4286,11 +4187,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.payments.list()
             page = page.items[0]
@@ -4309,7 +4209,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Payments.List(context.TODO(), dodopayments.PaymentListParams{
 
@@ -4332,7 +4232,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     PaymentListPage page = client.payments().list();
@@ -4348,7 +4247,6 @@ paths:
             import com.dodopayments.api.models.payments.PaymentListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: PaymentListPage = client.payments().list()
@@ -4358,7 +4256,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -4394,7 +4292,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const payment = await client.payments.create({
@@ -4406,11 +4304,10 @@ paths:
             console.log(payment.payment_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             payment = client.payments.create(
                 billing={
@@ -4443,7 +4340,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               payment, err := client.Payments.New(context.TODO(), dodopayments.PaymentNewParams{
                 Billing: dodopayments.F(dodopayments.BillingAddressParam{
@@ -4483,7 +4380,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     PaymentCreateParams params = PaymentCreateParams.builder()
@@ -4519,7 +4415,6 @@ paths:
             import com.dodopayments.api.models.payments.PaymentCreateResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: PaymentCreateParams = PaymentCreateParams.builder()
@@ -4545,7 +4440,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -4585,7 +4480,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const payment = await client.payments.retrieve('payment_id');
@@ -4593,11 +4488,10 @@ paths:
             console.log(payment.brand_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             payment = client.payments.retrieve(
                 "payment_id",
@@ -4617,7 +4511,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               payment, err := client.Payments.Get(context.TODO(), "payment_id")
               if err != nil {
@@ -4638,7 +4532,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Payment payment = client.payments().retrieve("payment_id");
@@ -4654,7 +4547,6 @@ paths:
             import com.dodopayments.api.models.payments.PaymentRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val payment: Payment = client.payments().retrieve("payment_id")
@@ -4664,7 +4556,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -4698,7 +4590,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const response = await client.payments.retrieveLineItems('payment_id');
@@ -4706,11 +4598,10 @@ paths:
             console.log(response.currency);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             response = client.payments.retrieve_line_items(
                 "payment_id",
@@ -4730,7 +4621,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               response, err := client.Payments.GetLineItems(context.TODO(), "payment_id")
               if err != nil {
@@ -4751,7 +4642,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     PaymentRetrieveLineItemsResponse response = client.payments().retrieveLineItems("payment_id");
@@ -4767,7 +4657,6 @@ paths:
             import com.dodopayments.api.models.payments.PaymentRetrieveLineItemsResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val response: PaymentRetrieveLineItemsResponse = client.payments().retrieveLineItems("payment_id")
@@ -4777,7 +4666,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -4825,7 +4714,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -4834,11 +4723,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.payouts.list()
             page = page.items[0]
@@ -4857,7 +4745,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Payouts.List(context.TODO(), dodopayments.PayoutListParams{
 
@@ -4880,7 +4768,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     PayoutListPage page = client.payouts().list();
@@ -4896,7 +4783,6 @@ paths:
             import com.dodopayments.api.models.payouts.PayoutListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: PayoutListPage = client.payouts().list()
@@ -4906,7 +4792,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -4981,7 +4867,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -4990,11 +4876,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.products.list()
             page = page.items[0]
@@ -5013,7 +4898,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Products.List(context.TODO(), dodopayments.ProductListParams{
 
@@ -5036,7 +4921,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     ProductListPage page = client.products().list();
@@ -5052,7 +4936,6 @@ paths:
             import com.dodopayments.api.models.products.ProductListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: ProductListPage = client.products().list()
@@ -5062,7 +4945,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -5098,7 +4981,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const product = await client.products.create({
@@ -5109,11 +4992,10 @@ paths:
             console.log(product.brand_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             product = client.products.create(
                 price={
@@ -5140,7 +5022,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               product, err := client.Products.New(context.TODO(), dodopayments.ProductNewParams{
                 Price: dodopayments.F[dodopayments.PriceUnionParam](dodopayments.PriceOneTimePriceParam{
@@ -5173,7 +5055,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     ProductCreateParams params = ProductCreateParams.builder()
@@ -5202,7 +5083,6 @@ paths:
             import com.dodopayments.api.models.products.ProductCreateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: ProductCreateParams = ProductCreateParams.builder()
@@ -5222,7 +5102,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -5261,7 +5141,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const product = await client.products.retrieve('id');
@@ -5269,11 +5149,10 @@ paths:
             console.log(product.brand_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             product = client.products.retrieve(
                 "id",
@@ -5293,7 +5172,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               product, err := client.Products.Get(context.TODO(), "id")
               if err != nil {
@@ -5314,7 +5193,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Product product = client.products().retrieve("id");
@@ -5330,7 +5208,6 @@ paths:
             import com.dodopayments.api.models.products.ProductRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val product: Product = client.products().retrieve("id")
@@ -5340,7 +5217,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -5374,17 +5251,16 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             await client.products.delete('id');
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             client.products.delete(
                 "id",
@@ -5402,7 +5278,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               err := client.Products.Delete(context.TODO(), "id")
               if err != nil {
@@ -5421,7 +5297,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     client.products().delete("id");
@@ -5436,7 +5311,6 @@ paths:
             import com.dodopayments.api.models.products.ProductDeleteParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 client.products().delete("id")
@@ -5446,7 +5320,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -5484,17 +5358,16 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             await client.products.update('id');
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             client.products.update(
                 id="id",
@@ -5512,7 +5385,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               err := client.Products.Update(
                 context.TODO(),
@@ -5537,7 +5410,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     client.products().update("id");
@@ -5552,7 +5424,6 @@ paths:
             import com.dodopayments.api.models.products.ProductUpdateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 client.products().update("id")
@@ -5562,7 +5433,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -5606,7 +5477,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const response = await client.products.updateFiles('id', { file_name: 'file_name' });
@@ -5614,11 +5485,10 @@ paths:
             console.log(response.file_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             response = client.products.update_files(
                 id="id",
@@ -5639,7 +5509,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               response, err := client.Products.UpdateFiles(
                 context.TODO(),
@@ -5666,7 +5536,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     ProductUpdateFilesParams params = ProductUpdateFilesParams.builder()
@@ -5686,7 +5555,6 @@ paths:
             import com.dodopayments.api.models.products.ProductUpdateFilesResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: ProductUpdateFilesParams = ProductUpdateFilesParams.builder()
@@ -5700,7 +5568,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -5744,7 +5612,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const image = await client.products.images.update('id');
@@ -5752,11 +5620,10 @@ paths:
             console.log(image.image_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             image = client.products.images.update(
                 id="id",
@@ -5776,7 +5643,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               image, err := client.Products.Images.Update(
                 context.TODO(),
@@ -5803,7 +5670,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     ImageUpdateResponse image = client.products().images().update("id");
@@ -5819,7 +5685,6 @@ paths:
             import com.dodopayments.api.models.products.images.ImageUpdateResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val image: ImageUpdateResponse = client.products().images().update("id")
@@ -5829,7 +5694,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -5860,17 +5725,16 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             await client.products.unarchive('id');
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             client.products.unarchive(
                 "id",
@@ -5888,7 +5752,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               err := client.Products.Unarchive(context.TODO(), "id")
               if err != nil {
@@ -5907,7 +5771,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     client.products().unarchive("id");
@@ -5922,7 +5785,6 @@ paths:
             import com.dodopayments.api.models.products.ProductUnarchiveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 client.products().unarchive("id")
@@ -5932,7 +5794,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6015,7 +5877,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -6024,11 +5886,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.refunds.list()
             page = page.items[0]
@@ -6047,7 +5908,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Refunds.List(context.TODO(), dodopayments.RefundListParams{
 
@@ -6070,7 +5931,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     RefundListPage page = client.refunds().list();
@@ -6086,7 +5946,6 @@ paths:
             import com.dodopayments.api.models.refunds.RefundListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: RefundListPage = client.refunds().list()
@@ -6096,7 +5955,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6134,7 +5993,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const refund = await client.refunds.create({ payment_id: 'payment_id' });
@@ -6142,11 +6001,10 @@ paths:
             console.log(refund.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             refund = client.refunds.create(
                 payment_id="payment_id",
@@ -6166,7 +6024,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               refund, err := client.Refunds.New(context.TODO(), dodopayments.RefundNewParams{
                 PaymentID: dodopayments.F("payment_id"),
@@ -6189,7 +6047,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     RefundCreateParams params = RefundCreateParams.builder()
@@ -6208,7 +6065,6 @@ paths:
             import com.dodopayments.api.models.refunds.RefundCreateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: RefundCreateParams = RefundCreateParams.builder()
@@ -6221,7 +6077,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6257,7 +6113,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const refund = await client.refunds.retrieve('refund_id');
@@ -6265,11 +6121,10 @@ paths:
             console.log(refund.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             refund = client.refunds.retrieve(
                 "refund_id",
@@ -6289,7 +6144,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               refund, err := client.Refunds.Get(context.TODO(), "refund_id")
               if err != nil {
@@ -6310,7 +6165,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Refund refund = client.refunds().retrieve("refund_id");
@@ -6326,7 +6180,6 @@ paths:
             import com.dodopayments.api.models.refunds.RefundRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val refund: Refund = client.refunds().retrieve("refund_id")
@@ -6336,7 +6189,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6429,7 +6282,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -6438,11 +6291,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.subscriptions.list()
             page = page.items[0]
@@ -6461,7 +6313,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.Subscriptions.List(context.TODO(), dodopayments.SubscriptionListParams{
 
@@ -6484,7 +6336,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     SubscriptionListPage page = client.subscriptions().list();
@@ -6500,7 +6351,6 @@ paths:
             import com.dodopayments.api.models.subscriptions.SubscriptionListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: SubscriptionListPage = client.subscriptions().list()
@@ -6510,7 +6360,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6546,7 +6396,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const subscription = await client.subscriptions.create({
@@ -6559,11 +6409,10 @@ paths:
             console.log(subscription.payment_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             subscription = client.subscriptions.create(
                 billing={
@@ -6594,7 +6443,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               subscription, err := client.Subscriptions.New(context.TODO(), dodopayments.SubscriptionNewParams{
                 Billing: dodopayments.F(dodopayments.BillingAddressParam{
@@ -6631,7 +6480,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     SubscriptionCreateParams params = SubscriptionCreateParams.builder()
@@ -6664,7 +6512,6 @@ paths:
             import com.dodopayments.api.models.subscriptions.SubscriptionCreateResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: SubscriptionCreateParams = SubscriptionCreateParams.builder()
@@ -6688,7 +6535,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6729,7 +6576,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const subscription = await client.subscriptions.retrieve('subscription_id');
@@ -6737,11 +6584,10 @@ paths:
             console.log(subscription.product_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             subscription = client.subscriptions.retrieve(
                 "subscription_id",
@@ -6761,7 +6607,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               subscription, err := client.Subscriptions.Get(context.TODO(), "subscription_id")
               if err != nil {
@@ -6782,7 +6628,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Subscription subscription = client.subscriptions().retrieve("subscription_id");
@@ -6798,7 +6643,6 @@ paths:
             import com.dodopayments.api.models.subscriptions.SubscriptionRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val subscription: Subscription = client.subscriptions().retrieve("subscription_id")
@@ -6808,7 +6652,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6851,7 +6695,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const subscription = await client.subscriptions.update('subscription_id');
@@ -6859,11 +6703,10 @@ paths:
             console.log(subscription.product_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             subscription = client.subscriptions.update(
                 subscription_id="subscription_id",
@@ -6883,7 +6726,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               subscription, err := client.Subscriptions.Update(
                 context.TODO(),
@@ -6910,7 +6753,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     Subscription subscription = client.subscriptions().update("subscription_id");
@@ -6926,7 +6768,6 @@ paths:
             import com.dodopayments.api.models.subscriptions.SubscriptionUpdateParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val subscription: Subscription = client.subscriptions().update("subscription_id")
@@ -6936,7 +6777,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -6974,7 +6815,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             await client.subscriptions.changePlan('subscription_id', {
@@ -6984,11 +6825,10 @@ paths:
             });
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             client.subscriptions.change_plan(
                 subscription_id="subscription_id",
@@ -7009,7 +6849,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               err := client.Subscriptions.ChangePlan(
                 context.TODO(),
@@ -7036,7 +6876,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     SubscriptionChangePlanParams params = SubscriptionChangePlanParams.builder()
@@ -7057,7 +6896,6 @@ paths:
             import com.dodopayments.api.models.subscriptions.SubscriptionChangePlanParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: SubscriptionChangePlanParams = SubscriptionChangePlanParams.builder()
@@ -7073,7 +6911,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -7122,7 +6960,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const response = await client.subscriptions.charge('subscription_id', { product_price: 0 });
@@ -7130,11 +6968,10 @@ paths:
             console.log(response.payment_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             response = client.subscriptions.charge(
                 subscription_id="subscription_id",
@@ -7155,7 +6992,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               response, err := client.Subscriptions.Charge(
                 context.TODO(),
@@ -7182,7 +7019,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     SubscriptionChargeParams params = SubscriptionChargeParams.builder()
@@ -7202,7 +7038,6 @@ paths:
             import com.dodopayments.api.models.subscriptions.SubscriptionChargeResponse
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: SubscriptionChargeParams = SubscriptionChargeParams.builder()
@@ -7216,7 +7051,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -7309,7 +7144,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             // Automatically fetches more pages as needed.
@@ -7318,11 +7153,10 @@ paths:
             }
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             page = client.webhook_events.list()
             page = page.items[0]
@@ -7341,7 +7175,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               page, err := client.WebhookEvents.List(context.TODO(), dodopayments.WebhookEventListParams{
 
@@ -7364,7 +7198,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     WebhookEventListPage page = client.webhookEvents().list();
@@ -7380,7 +7213,6 @@ paths:
             import com.dodopayments.api.models.webhookevents.WebhookEventListParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val page: WebhookEventListPage = client.webhookEvents().list()
@@ -7390,7 +7222,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -7426,7 +7258,7 @@ paths:
             import DodoPayments from 'dodopayments';
 
             const client = new DodoPayments({
-              bearerToken: process.env['DODO_PAYMENTS_API_KEY'], // This is the default and can be omitted
+              bearerToken: 'My Bearer Token',
             });
 
             const webhookEvent = await client.webhookEvents.retrieve('webhook_event_id');
@@ -7434,11 +7266,10 @@ paths:
             console.log(webhookEvent.business_id);
         - lang: Python
           source: |-
-            import os
             from dodopayments import DodoPayments
 
             client = DodoPayments(
-                bearer_token=os.environ.get("DODO_PAYMENTS_API_KEY"),  # This is the default and can be omitted
+                bearer_token="My Bearer Token",
             )
             webhook_event = client.webhook_events.retrieve(
                 "webhook_event_id",
@@ -7458,7 +7289,7 @@ paths:
 
             func main() {
               client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("DODO_PAYMENTS_API_KEY")
+                option.WithBearerToken("My Bearer Token"),
               )
               webhookEvent, err := client.WebhookEvents.Get(context.TODO(), "webhook_event_id")
               if err != nil {
@@ -7479,7 +7310,6 @@ paths:
                 private Main() {}
 
                 public static void main(String[] args) {
-                    // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     WebhookEvent webhookEvent = client.webhookEvents().retrieve("webhook_event_id");
@@ -7495,7 +7325,6 @@ paths:
             import com.dodopayments.api.models.webhookevents.WebhookEventRetrieveParams
 
             fun main() {
-                // Configures using the `DODO_PAYMENTS_API_KEY` and `DODO_PAYMENTS_BASE_URL` environment variables
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val webhookEvent: WebhookEvent = client.webhookEvents().retrieve("webhook_event_id")
@@ -7505,7 +7334,7 @@ paths:
             require "dodopayments"
 
             dodo_payments = Dodopayments::Client.new(
-              bearer_token: ENV["DODO_PAYMENTS_API_KEY"], # This is the default and can be omitted
+              bearer_token: "My Bearer Token",
               environment: "test_mode" # defaults to "live_mode"
             )
 
@@ -8360,11 +8189,27 @@ components:
       required:
         - product_price
       properties:
+        adaptive_currency_fees_inclusive:
+          type:
+            - boolean
+            - 'null'
+          description: >-
+            Whether adaptive currency fees should be included in the product_price (true) or added on top
+            (false).
+
+            This field is ignored if adaptive pricing is not enabled for the business.
         metadata:
           oneOf:
             - type: 'null'
             - $ref: '#/components/schemas/Metadata'
               description: Metadata for the payment. If not passed, the metadata of the subscription will be taken
+        product_currency:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Currency'
+              description: >-
+                Optional currency of the product price. If not specified, defaults to the currency of the
+                product.
         product_price:
           type: integer
           format: int32
@@ -9459,11 +9304,27 @@ components:
       required:
         - mandate_only
       properties:
+        adaptive_currency_fees_inclusive:
+          type:
+            - boolean
+            - 'null'
+          description: >-
+            Whether adaptive currency fees should be included in the product_price (true) or added on top
+            (false).
+
+            This field is ignored if adaptive pricing is not enabled for the business.
         mandate_only:
           type: boolean
           description: >-
             If set as True, does not perform any charge and only authorizes payment method details for future
             use.
+        product_currency:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Currency'
+              description: >-
+                Optional currency of the product price. If not specified, defaults to the currency of the
+                product.
         product_price:
           type:
             - integer
