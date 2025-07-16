@@ -696,6 +696,10 @@
     {
       "source": "/features/product-catalog/pricing",
       "destination": "/features/pricing"
+    },
+    {
+      "source": "/miscellaneous/no-code",
+      "destination": "/introduction"
     }
   ]
 }
