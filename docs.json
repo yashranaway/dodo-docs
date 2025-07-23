@@ -492,6 +492,11 @@
       "claude"
     ]
   },
+  "error": {
+    "404": {
+      "redirect": true
+    }
+  },
   "redirects": [
     {
       "source": "/guides/license",
@@ -705,6 +710,5 @@
       "source": "/developer-resources/mobile-integration-flutter",
       "destination": "/developer-resources/mobile-integration"
     }
-    
   ]
 }
