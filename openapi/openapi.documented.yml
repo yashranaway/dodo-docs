@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.42.0
+  version: 1.42.5
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -804,8 +804,8 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient;
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.Brand;
             import com.dodopayments.api.models.brands.BrandCreateParams;
-            import com.dodopayments.api.models.brands.BrandCreateResponse;
 
             public final class Main {
                 private Main() {}
@@ -813,7 +813,7 @@ paths:
                 public static void main(String[] args) {
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    BrandCreateResponse brand = client.brands().create();
+                    Brand brand = client.brands().create();
                 }
             }
         - lang: Kotlin
@@ -822,13 +822,13 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.Brand
             import com.dodopayments.api.models.brands.BrandCreateParams
-            import com.dodopayments.api.models.brands.BrandCreateResponse
 
             fun main() {
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val brand: BrandCreateResponse = client.brands().create()
+                val brand: Brand = client.brands().create()
             }
         - lang: Ruby
           source: |-
@@ -917,8 +917,8 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient;
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.Brand;
             import com.dodopayments.api.models.brands.BrandRetrieveParams;
-            import com.dodopayments.api.models.brands.BrandRetrieveResponse;
 
             public final class Main {
                 private Main() {}
@@ -926,7 +926,7 @@ paths:
                 public static void main(String[] args) {
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    BrandRetrieveResponse brand = client.brands().retrieve("id");
+                    Brand brand = client.brands().retrieve("id");
                 }
             }
         - lang: Kotlin
@@ -935,13 +935,13 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.Brand
             import com.dodopayments.api.models.brands.BrandRetrieveParams
-            import com.dodopayments.api.models.brands.BrandRetrieveResponse
 
             fun main() {
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val brand: BrandRetrieveResponse = client.brands().retrieve("id")
+                val brand: Brand = client.brands().retrieve("id")
             }
         - lang: Ruby
           source: |-
@@ -1042,8 +1042,8 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient;
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.Brand;
             import com.dodopayments.api.models.brands.BrandUpdateParams;
-            import com.dodopayments.api.models.brands.BrandUpdateResponse;
 
             public final class Main {
                 private Main() {}
@@ -1051,7 +1051,7 @@ paths:
                 public static void main(String[] args) {
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    BrandUpdateResponse brand = client.brands().update("id");
+                    Brand brand = client.brands().update("id");
                 }
             }
         - lang: Kotlin
@@ -1060,13 +1060,13 @@ paths:
 
             import com.dodopayments.api.client.DodoPaymentsClient
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.Brand
             import com.dodopayments.api.models.brands.BrandUpdateParams
-            import com.dodopayments.api.models.brands.BrandUpdateResponse
 
             fun main() {
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val brand: BrandUpdateResponse = client.brands().update("id")
+                val brand: Brand = client.brands().update("id")
             }
         - lang: Ruby
           source: |-
@@ -2725,9 +2725,9 @@ paths:
               bearerToken: 'My Bearer Token',
             });
 
-            const dispute = await client.disputes.retrieve('dispute_id');
+            const getDispute = await client.disputes.retrieve('dispute_id');
 
-            console.log(dispute.business_id);
+            console.log(getDispute.business_id);
         - lang: Python
           source: |-
             from dodopayments import DodoPayments
@@ -2735,10 +2735,10 @@ paths:
             client = DodoPayments(
                 bearer_token="My Bearer Token",
             )
-            dispute = client.disputes.retrieve(
+            get_dispute = client.disputes.retrieve(
                 "dispute_id",
             )
-            print(dispute.business_id)
+            print(get_dispute.business_id)
         - lang: Go
           source: |
             package main
@@ -2755,11 +2755,11 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"),
               )
-              dispute, err := client.Disputes.Get(context.TODO(), "dispute_id")
+              getDispute, err := client.Disputes.Get(context.TODO(), "dispute_id")
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", dispute.BusinessID)
+              fmt.Printf("%+v\n", getDispute.BusinessID)
             }
         - lang: Java
           source: |-
@@ -2768,7 +2768,7 @@ paths:
             import com.dodopayments.api.client.DodoPaymentsClient;
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
             import com.dodopayments.api.models.disputes.DisputeRetrieveParams;
-            import com.dodopayments.api.models.disputes.DisputeRetrieveResponse;
+            import com.dodopayments.api.models.disputes.GetDispute;
 
             public final class Main {
                 private Main() {}
@@ -2776,7 +2776,7 @@ paths:
                 public static void main(String[] args) {
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
-                    DisputeRetrieveResponse dispute = client.disputes().retrieve("dispute_id");
+                    GetDispute getDispute = client.disputes().retrieve("dispute_id");
                 }
             }
         - lang: Kotlin
@@ -2786,12 +2786,12 @@ paths:
             import com.dodopayments.api.client.DodoPaymentsClient
             import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
             import com.dodopayments.api.models.disputes.DisputeRetrieveParams
-            import com.dodopayments.api.models.disputes.DisputeRetrieveResponse
+            import com.dodopayments.api.models.disputes.GetDispute
 
             fun main() {
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
-                val dispute: DisputeRetrieveResponse = client.disputes().retrieve("dispute_id")
+                val getDispute: GetDispute = client.disputes().retrieve("dispute_id")
             }
         - lang: Ruby
           source: |-
@@ -2802,9 +2802,9 @@ paths:
               environment: "test_mode" # defaults to "live_mode"
             )
 
-            dispute = dodo_payments.disputes.retrieve("dispute_id")
+            get_dispute = dodo_payments.disputes.retrieve("dispute_id")
 
-            puts(dispute)
+            puts(get_dispute)
   /invoices/payments/{payment_id}:
     get:
       tags:
@@ -6253,6 +6253,7 @@ paths:
               - pending
               - active
               - on_hold
+              - paused
               - cancelled
               - failed
               - expired
@@ -10476,6 +10477,7 @@ components:
         - pending
         - active
         - on_hold
+        - paused
         - cancelled
         - failed
         - expired
@@ -10647,3 +10649,1016 @@ tags:
   - name: Outgoing Webhooks
   - name: Checkout
   - name: Webhook Events
+x-webhooks:
+  dispute.accepted:
+    post:
+      description: Sent when a dispute is accepted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/DisputeResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Dispute
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - dispute.accepted
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Dispute accepted webhook
+  dispute.cancelled:
+    post:
+      description: Sent when a dispute is cancelled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/DisputeResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Dispute
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - dispute.cancelled
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Dispute cancelled webhook
+  dispute.challenged:
+    post:
+      description: Sent when a dispute is challenged
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/DisputeResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Dispute
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - dispute.challenged
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Dispute challenged webhook
+  dispute.expired:
+    post:
+      description: Sent when a dispute expires
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/DisputeResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Dispute
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - dispute.expired
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Dispute expired webhook
+  dispute.lost:
+    post:
+      description: Sent when a dispute is lost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/DisputeResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Dispute
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - dispute.lost
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Dispute lost webhook
+  dispute.opened:
+    post:
+      description: Sent when a dispute is opened
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/DisputeResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Dispute
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - dispute.opened
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Dispute opened webhook
+  dispute.won:
+    post:
+      description: Sent when a dispute is won
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/DisputeResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Dispute
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - dispute.won
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Dispute won webhook
+  license_key.created:
+    post:
+      description: Sent when a license key is created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/LicenseKeyResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - LicenseKey
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - license_key.created
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: License key created webhook
+  payment.cancelled:
+    post:
+      description: Sent when a payment is cancelled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/PaymentResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Payment
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - payment.cancelled
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Payment cancelled webhook
+  payment.failed:
+    post:
+      description: Sent when a payment fails to process
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/PaymentResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Payment
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - payment.failed
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Payment failed webhook
+  payment.processing:
+    post:
+      description: Sent when a payment is being processed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/PaymentResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Payment
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - payment.processing
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Payment processing webhook
+  payment.succeeded:
+    post:
+      description: Sent when a payment is successfully processed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/PaymentResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Payment
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - payment.succeeded
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Payment succeeded webhook
+  refund.failed:
+    post:
+      description: Sent when a refund fails to process
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/RefundResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Refund
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - refund.failed
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Refund failed webhook
+  refund.succeeded:
+    post:
+      description: Sent when a refund is successfully processed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/RefundResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Refund
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - refund.succeeded
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Refund succeeded webhook
+  subscription.active:
+    post:
+      description: Sent when a subscription becomes active
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.active
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription active webhook
+  subscription.cancelled:
+    post:
+      description: Sent when a subscription is cancelled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.cancelled
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription cancelled webhook
+  subscription.expired:
+    post:
+      description: Sent when a subscription expires
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.expired
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription expired webhook
+  subscription.failed:
+    post:
+      description: Sent when a subscription fails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.failed
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription failed webhook
+  subscription.on_hold:
+    post:
+      description: Sent when a subscription is put on hold
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.on_hold
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription on hold webhook
+  subscription.paused:
+    post:
+      description: Sent when a subscription is paused
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.paused
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription paused webhook
+  subscription.plan_changed:
+    post:
+      description: Sent when a subscription plan is changed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.plan_changed
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription plan changed webhook
+  subscription.renewed:
+    post:
+      description: Sent when a subscription is renewed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                business_id:
+                  description: The business identifier
+                  type: string
+                data:
+                  allOf:
+                    - $ref: '#/components/schemas/SubscriptionResponse'
+                  description: Event-specific data
+                  properties:
+                    payload_type:
+                      description: The type of payload in the data field
+                      enum:
+                        - Subscription
+                      type: string
+                  type: object
+                timestamp:
+                  description: The timestamp of when the event occurred
+                  format: date-time
+                  type: string
+                type:
+                  description: The event type
+                  enum:
+                    - subscription.renewed
+                  type: string
+              required:
+                - business_id
+                - type
+                - timestamp
+                - data
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Webhook received successfully
+        '400':
+          description: Invalid request
+        '401':
+          description: Invalid webhook signature
+      summary: Subscription renewed webhook

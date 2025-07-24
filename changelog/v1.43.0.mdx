@@ -1,0 +1,47 @@
+---
+title: v1.43.0 (24th July 2025)
+description: "Comprehensive Webhooks Upgrade: endpoint management, security, delivery logs, debugging, and monitoring—now fully self-serve in the dashboard."
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+### Major Webhooks Upgrade
+
+Gain complete control, visibility, and security with our fully reimagined webhooks system. Explore the new capabilities below.
+
+<Steps>
+<Step title="Endpoint & Subscription Management">
+    - Create, edit, pause/resume, and delete webhook endpoints (URLs)
+    - Select event types for each endpoint
+    - Configure custom headers per endpoint
+    - Set rate limits for each endpoint
+</Step>
+
+<Step title="Secrets & Security">
+    - View and rotate signing secrets (HMAC keys) per endpoint
+    - Regenerate secrets and view last rotation timestamps
+    - Copy code snippets or documentation for signature verification
+</Step>
+
+<Step title="Delivery History & Debugging">
+    - View message logs for each endpoint (status, timestamps)
+    - Inspect individual message attempts with request/response bodies and headers
+    - Replay (re-send) failed or past messages
+    - Filter logs by event type, status code, or time range
+</Step>
+
+<Step title="Testing & Troubleshooting">
+    - Send test events from the portal using mock payloads
+    - Inspect payload schemas and view expected fields
+</Step>
+
+<Step title="Monitoring & Metrics">
+    - Track delivery stats: success/failure counts, latency, and recent error trends
+    - Monitor endpoint health status (e.g., failing, healthy)
+</Step>
+</Steps>
+
+<Check>
+You can now manage, debug, and secure your webhooks with greater flexibility—all from the dashboard.
+</Check>
