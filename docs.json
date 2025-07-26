@@ -187,12 +187,6 @@
         "developer-resources/better-auth-adaptor",
         "developer-resources/express-adaptor"
       ]
-    },
-    {
-      "group": "Plugins & External Integrations",
-      "pages": [
-        "developer-resources/woocommerce-plugin"
-      ]
     }
   ]
 },
@@ -330,6 +324,23 @@
             "pages": [
               "api-reference/misc/supported-countries",
               "api-reference/misc/charge-subscriptions"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "External Integrations",
+        "groups": [
+          {
+            "group": "Important",
+            "pages": [
+              "integrations/woocommerce-plugin"
+            ]
+          },
+          {
+            "group": "Messaging",
+            "pages": [
+              "integrations/slack"
             ]
           }
         ]
@@ -643,7 +654,11 @@
     },
     {
       "source": "/features/woocommerce-plugin",
-      "destination": "/developer-resources/woocommerce-plugin"
+      "destination": "/integrations/woocommerce-plugin"
+    },
+    {
+      "source": "/developer-resources/woocommerce-plugin",
+      "destination": "/integrations/woocommerce-plugin"
     },
     {
       "source": "/quickstart",
