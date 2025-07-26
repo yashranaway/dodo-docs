@@ -332,6 +332,12 @@
         "tab": "External Integrations",
         "groups": [
           {
+            "group": "External Integrations",
+            "pages": [
+              "integrations/introduction"
+            ]
+          },
+          {
             "group": "Important",
             "pages": [
               "integrations/woocommerce-plugin"
