@@ -1,0 +1,822 @@
+---
+title: "Segment"
+description: "Integrate Dodo Payments with Segment to track payment events and analyze customer behavior across your analytics stack."
+icon: "segment"
+---
+
+## Introduction
+
+The Dodo Payments Segment integration allows you to automatically send payment events to Segment for comprehensive customer analytics and behavior tracking. This integration enables you to analyze payment patterns, track customer lifetime value, and create targeted marketing campaigns based on payment behavior across your entire analytics and marketing stack.
+
+<Info>
+This integration uses our webhook management portal to automatically transform Dodo Payments webhook events into Segment Track API calls. Configure your Segment write key and custom event properties to track payment data seamlessly across your analytics tools.
+</Info>
+
+## Getting Started
+
+<Steps>
+<Step title="Open the Webhook Section">
+  Go to the <b>Webhook</b> section in your Dodo Payments dashboard. Click the <b>+ Add Endpoint</b> button, then open the webhook dropdown to reveal other integrations.
+  <Frame>
+    <img src="/images/integrations/segment/1.png" alt="Dodo Payments dashboard showing Add Endpoint button and integrations dropdown" />
+  </Frame>
+</Step>
+
+<Step title="Select Segment Integration">
+  Select the <b>Segment</b> integration and click <b>Configure Segment tracking</b>.
+  <Frame>
+    <img src="/images/integrations/segment/2.png" alt="Segment integration card and configure button" />
+  </Frame>
+</Step>
+
+<Step title="Configure Segment Write Key">
+  Enter your Segment write key. You can find this in your Segment workspace under Settings > API Keys. Select the appropriate source for your payment events.
+  <Frame>
+    <img src="/images/integrations/segment/3.png" alt="Segment write key configuration screen" />
+  </Frame>
+</Step>
+
+<Step title="Configure Event Properties">
+  Map Dodo Payments data fields to Segment event properties. You can use default mappings or create custom properties for detailed payment analytics.
+  <Frame>
+    <img src="/images/integrations/segment/4.png" alt="Event property mapping configuration" />
+  </Frame>
+</Step>
+
+<Step title="Customize Transformation Code">
+  Add or edit the transformation code to customize your Segment events for your use case. You can use the pre-made templates or write your own logic.
+  <Frame>
+    <img src="/images/integrations/segment/5.png" alt="Transformation code editor for Segment integration" />
+  </Frame>
+</Step>
+
+<Step title="Test and Create">
+  Test your transformation code with custom or pre-made event payloads. Once you're satisfied, click <b>Create</b> to activate the integration.
+  <Frame>
+    <img src="/images/integrations/segment/6.png" alt="Test transformation and create button" />
+  </Frame>
+</Step>
+
+<Step title="Integration Complete!">
+  🎉 You have successfully created the Segment integration! Your Dodo Payments events will now be tracked in Segment and flow to all your connected destinations.
+</Step>
+</Steps>
+
+## Transformation Code Examples
+
+### Basic Payment Event Tracking
+
+This transformation sends standard payment events to Segment with essential properties:
+
+```javascript payment_tracking.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const timestamp = new Date(webhook.payload.timestamp).toISOString();
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Payment Completed",
+        timestamp: timestamp,
+        properties: {
+          payment_id: event.payment_id,
+          amount: event.total_amount,
+          currency: event.currency || "USD",
+          payment_method: event.payment_method,
+          product_id: event.product_id,
+          customer_email: event.customer.email,
+          first_name: event.customer.first_name,
+          last_name: event.customer.last_name,
+          company: event.customer.company,
+          revenue: event.total_amount,
+          payment_status: "successful"
+        },
+        traits: {
+          email: event.customer.email,
+          firstName: event.customer.first_name,
+          lastName: event.customer.last_name,
+          company: event.customer.company,
+          total_lifetime_value: event.customer.lifetime_value || event.total_amount,
+          last_payment_date: timestamp
+        }
+      };
+      break;
+      
+    case "payment.failed":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Payment Failed",
+        timestamp: timestamp,
+        properties: {
+          payment_id: event.payment_id,
+          amount: event.total_amount,
+          currency: event.currency || "USD",
+          payment_method: event.payment_method,
+          error_message: event.error_message,
+          error_code: event.error_code,
+          customer_email: event.customer.email,
+          payment_status: "failed"
+        },
+        traits: {
+          email: event.customer.email,
+          payment_failures: "{{previous_failures + 1}}",
+          last_payment_failure: timestamp
+        }
+      };
+      break;
+      
+    case "payment.processing":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Payment Processing",
+        timestamp: timestamp,
+        properties: {
+          payment_id: event.payment_id,
+          amount: event.total_amount,
+          currency: event.currency || "USD",
+          payment_method: event.payment_method,
+          customer_email: event.customer.email,
+          payment_status: "processing"
+        }
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### Comprehensive Subscription Analytics
+
+This transformation tracks detailed subscription events and customer lifecycle metrics:
+
+```javascript subscription_analytics.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const timestamp = new Date(webhook.payload.timestamp).toISOString();
+  
+  switch (webhook.eventType) {
+    case "subscription.active":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Subscription Started",
+        timestamp: timestamp,
+        properties: {
+          subscription_id: event.id,
+          plan_id: event.product_id,
+          billing_frequency: event.payment_frequency_interval,
+          amount: event.recurring_pre_tax_amount,
+          currency: event.currency || "USD",
+          trial_days: event.trial_period_days || 0,
+          next_billing_date: event.next_billing_date,
+          subscription_status: "active",
+          mrr: event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : Math.round(event.recurring_pre_tax_amount / 12),
+          arr: event.payment_frequency_interval === "year" ? event.recurring_pre_tax_amount : event.recurring_pre_tax_amount * 12,
+          customer_email: event.customer.email,
+          revenue: event.recurring_pre_tax_amount
+        },
+        traits: {
+          email: event.customer.email,
+          subscription_status: "active",
+          plan_type: event.product_id,
+          billing_frequency: event.payment_frequency_interval,
+          mrr_contribution: event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : Math.round(event.recurring_pre_tax_amount / 12),
+          subscription_start_date: timestamp,
+          customer_segment: event.recurring_pre_tax_amount > 100 ? "enterprise" : event.recurring_pre_tax_amount > 50 ? "professional" : "basic"
+        }
+      };
+      break;
+      
+    case "subscription.cancelled":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Subscription Cancelled",
+        timestamp: timestamp,
+        properties: {
+          subscription_id: event.id,
+          plan_id: event.product_id,
+          cancellation_reason: event.cancellation_reason || "unknown",
+          cancelled_at: event.cancelled_at,
+          cancel_at_next_billing: event.cancel_at_next_billing_date,
+          subscription_duration_days: Math.floor((new Date(event.cancelled_at) - new Date(event.created_at)) / (1000 * 60 * 60 * 24)),
+          lost_mrr: event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : Math.round(event.recurring_pre_tax_amount / 12),
+          lost_arr: event.payment_frequency_interval === "year" ? event.recurring_pre_tax_amount : event.recurring_pre_tax_amount * 12,
+          customer_email: event.customer.email
+        },
+        traits: {
+          subscription_status: "cancelled",
+          churn_date: timestamp,
+          churn_reason: event.cancellation_reason || "unknown",
+          customer_segment: "churned"
+        }
+      };
+      break;
+      
+    case "subscription.renewed":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Subscription Renewed",
+        timestamp: timestamp,
+        properties: {
+          subscription_id: event.id,
+          plan_id: event.product_id,
+          amount: event.recurring_pre_tax_amount,
+          currency: event.currency || "USD",
+          billing_cycle: event.total_payments || 1,
+          next_billing_date: event.next_billing_date,
+          renewal_number: event.total_payments || 1,
+          customer_email: event.customer.email,
+          revenue: event.recurring_pre_tax_amount
+        },
+        traits: {
+          total_renewals: event.total_payments || 1,
+          last_renewal_date: timestamp,
+          customer_loyalty_score: Math.min((event.total_payments || 1) * 10, 100)
+        }
+      };
+      break;
+      
+    case "subscription.paused":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Subscription Paused",
+        timestamp: timestamp,
+        properties: {
+          subscription_id: event.id,
+          plan_id: event.product_id,
+          pause_reason: event.pause_reason || "unknown",
+          paused_at: event.paused_at,
+          resume_date: event.resume_date,
+          customer_email: event.customer.email
+        },
+        traits: {
+          subscription_status: "paused",
+          pause_date: timestamp
+        }
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### E-commerce and Revenue Analytics
+
+This transformation tracks detailed e-commerce events and revenue metrics:
+
+```javascript ecommerce_analytics.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const timestamp = new Date(webhook.payload.timestamp).toISOString();
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      // Track order completed event
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Order Completed",
+        timestamp: timestamp,
+        properties: {
+          order_id: event.payment_id,
+          total: event.total_amount,
+          revenue: event.total_amount,
+          currency: event.currency || "USD",
+          payment_method: event.payment_method,
+          products: [
+            {
+              product_id: event.product_id,
+              name: event.product_name || event.product_id,
+              price: event.total_amount,
+              quantity: 1,
+              category: event.product_category || "digital"
+            }
+          ],
+          customer_email: event.customer.email,
+          is_first_purchase: event.customer.first_purchase || false,
+          acquisition_channel: event.utm_source || "direct",
+          campaign: event.utm_campaign,
+          source: event.utm_source,
+          medium: event.utm_medium
+        },
+        traits: {
+          email: event.customer.email,
+          firstName: event.customer.first_name,
+          lastName: event.customer.last_name,
+          company: event.customer.company,
+          total_orders: "{{previous_orders + 1}}",
+          total_spent: "{{previous_spent + " + event.total_amount + "}}",
+          last_order_date: timestamp,
+          average_order_value: "{{total_spent / total_orders}}",
+          customer_tier: event.total_amount > 500 ? "premium" : event.total_amount > 100 ? "standard" : "basic"
+        }
+      };
+      break;
+      
+    case "refund.succeeded":
+      webhook.payload = {
+        userId: event.customer?.id,
+        event: "Order Refunded",
+        timestamp: timestamp,
+        properties: {
+          order_id: event.payment_id,
+          refund_id: event.refund_id,
+          refund_amount: event.amount,
+          refund_reason: event.reason || "unknown",
+          currency: event.currency || "USD",
+          partial_refund: event.amount < event.original_amount,
+          customer_email: event.customer?.email,
+          revenue: -event.amount // Negative revenue for refunds
+        },
+        traits: {
+          total_refunds: "{{previous_refunds + 1}}",
+          total_refunded_amount: "{{previous_refunded + " + event.amount + "}}",
+          last_refund_date: timestamp
+        }
+      };
+      break;
+      
+    case "dispute.opened":
+      webhook.payload = {
+        userId: event.customer?.id,
+        event: "Payment Disputed",
+        timestamp: timestamp,
+        properties: {
+          payment_id: event.payment_id,
+          dispute_id: event.id,
+          dispute_amount: event.amount,
+          dispute_reason: event.dispute_reason || "unknown",
+          dispute_status: event.dispute_status,
+          dispute_stage: event.dispute_stage,
+          currency: event.currency || "USD",
+          customer_email: event.customer?.email,
+          revenue: -event.amount // Negative revenue impact
+        },
+        traits: {
+          total_disputes: "{{previous_disputes + 1}}",
+          dispute_risk_score: "{{(total_disputes / total_orders) * 100}}",
+          last_dispute_date: timestamp
+        }
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### Customer Journey and Funnel Analytics
+
+This transformation tracks the complete customer journey and conversion funnel:
+
+```javascript customer_journey.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const timestamp = new Date(webhook.payload.timestamp).toISOString();
+  
+  // Calculate customer journey stage
+  function getCustomerStage(eventType, paymentCount, subscriptionStatus) {
+    if (subscriptionStatus === "active") return "subscriber";
+    if (eventType === "payment.succeeded" && paymentCount > 3) return "loyal_customer";
+    if (eventType === "payment.succeeded" && paymentCount === 1) return "new_customer";
+    if (eventType === "payment.succeeded") return "repeat_customer";
+    if (eventType === "payment.failed") return "payment_issue";
+    return "prospect";
+  }
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      const isFirstPurchase = event.customer.payment_count === 1;
+      const customerStage = getCustomerStage(webhook.eventType, event.customer.payment_count || 1, null);
+      
+      if (isFirstPurchase) {
+        // Track conversion event for first purchase
+        webhook.payload = [
+          {
+            userId: event.customer.id,
+            event: "Signed Up",
+            timestamp: timestamp,
+            properties: {
+              method: "payment",
+              customer_email: event.customer.email,
+              signup_source: event.utm_source || "direct",
+              conversion_value: event.total_amount
+            },
+            traits: {
+              email: event.customer.email,
+              firstName: event.customer.first_name,
+              lastName: event.customer.last_name,
+              company: event.customer.company,
+              signup_date: timestamp,
+              conversion_date: timestamp,
+              customer_stage: "new_customer"
+            }
+          },
+          {
+            userId: event.customer.id,
+            event: "First Purchase",
+            timestamp: timestamp,
+            properties: {
+              payment_id: event.payment_id,
+              amount: event.total_amount,
+              currency: event.currency || "USD",
+              payment_method: event.payment_method,
+              product_id: event.product_id,
+              time_to_purchase: 0, // Immediate conversion
+              acquisition_channel: event.utm_source || "direct",
+              revenue: event.total_amount
+            },
+            traits: {
+              customer_stage: "new_customer",
+              first_purchase_date: timestamp,
+              first_purchase_amount: event.total_amount,
+              acquisition_channel: event.utm_source || "direct"
+            }
+          }
+        ];
+      } else {
+        // Track repeat purchase
+        webhook.payload = {
+          userId: event.customer.id,
+          event: "Repeat Purchase",
+          timestamp: timestamp,
+          properties: {
+            payment_id: event.payment_id,
+            amount: event.total_amount,
+            currency: event.currency || "USD",
+            payment_method: event.payment_method,
+            product_id: event.product_id,
+            purchase_number: event.customer.payment_count || 2,
+            days_since_last_purchase: event.days_since_last_purchase || 0,
+            revenue: event.total_amount
+          },
+          traits: {
+            customer_stage: customerStage,
+            last_purchase_date: timestamp,
+            purchase_frequency: event.customer.payment_count || 2,
+            customer_loyalty: event.customer.payment_count > 5 ? "high" : event.customer.payment_count > 2 ? "medium" : "low"
+          }
+        };
+      }
+      break;
+      
+    case "subscription.active":
+      webhook.payload = [
+        {
+          userId: event.customer.id,
+          event: "Subscription Conversion",
+          timestamp: timestamp,
+          properties: {
+            subscription_id: event.id,
+            plan_id: event.product_id,
+            billing_frequency: event.payment_frequency_interval,
+            amount: event.recurring_pre_tax_amount,
+            trial_converted: event.trial_period_days > 0,
+            trial_duration: event.trial_period_days || 0,
+            conversion_value: event.recurring_pre_tax_amount,
+            customer_email: event.customer.email
+          },
+          traits: {
+            customer_stage: "subscriber",
+            subscription_tier: event.product_id,
+            conversion_type: "subscription",
+            conversion_date: timestamp
+          }
+        },
+        {
+          userId: event.customer.id,
+          event: "Became Subscriber",
+          timestamp: timestamp,
+          properties: {
+            subscription_id: event.id,
+            plan_type: event.product_id,
+            billing_cycle: event.payment_frequency_interval,
+            subscription_value: event.recurring_pre_tax_amount
+          },
+          traits: {
+            customer_stage: "subscriber",
+            subscriber_since: timestamp,
+            subscription_status: "active"
+          }
+        }
+      ];
+      break;
+      
+    case "license_key.created":
+      webhook.payload = {
+        userId: event.customer?.id,
+        event: "License Activated",
+        timestamp: timestamp,
+        properties: {
+          license_id: event.id,
+          product_id: event.product_id,
+          license_type: event.license_type || "standard",
+          expires_at: event.expires_at,
+          is_trial: event.is_trial || false,
+          customer_email: event.customer?.email,
+          activation_method: "payment"
+        },
+        traits: {
+          license_holder: true,
+          active_licenses: "{{current_licenses + 1}}",
+          license_activation_date: timestamp,
+          customer_stage: "licensed_user"
+        }
+      };
+      break;
+      
+    case "payment.failed":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Payment Failed",
+        timestamp: timestamp,
+        properties: {
+          payment_id: event.payment_id,
+          amount: event.total_amount,
+          error_message: event.error_message,
+          error_code: event.error_code,
+          payment_method: event.payment_method,
+          failure_reason: event.failure_reason || "unknown",
+          customer_email: event.customer.email,
+          retry_attempt: event.retry_attempt || 1
+        },
+        traits: {
+          customer_stage: "payment_issue",
+          payment_risk_score: "{{(payment_failures / total_attempts) * 100}}",
+          last_payment_failure: timestamp,
+          needs_followup: true
+        }
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### Advanced Analytics with Custom Dimensions
+
+This transformation adds advanced analytics with custom dimensions and cohort tracking:
+
+```javascript advanced_analytics.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const timestamp = new Date(webhook.payload.timestamp).toISOString();
+  const month = new Date(webhook.payload.timestamp).toISOString().slice(0, 7); // YYYY-MM
+  
+  // Calculate customer cohort based on first purchase date
+  function calculateCohort(firstPurchaseDate) {
+    return new Date(firstPurchaseDate).toISOString().slice(0, 7);
+  }
+  
+  // Determine customer value segment
+  function getValueSegment(totalSpent, avgOrderValue) {
+    if (totalSpent > 1000) return "high_value";
+    if (totalSpent > 500 || avgOrderValue > 200) return "medium_value";
+    return "low_value";
+  }
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Revenue Tracked",
+        timestamp: timestamp,
+        properties: {
+          // Revenue metrics
+          amount: event.total_amount,
+          revenue: event.total_amount,
+          currency: event.currency || "USD",
+          
+          // Payment details
+          payment_id: event.payment_id,
+          payment_method: event.payment_method,
+          payment_processor: "dodo_payments",
+          
+          // Product details
+          product_id: event.product_id,
+          product_category: event.product_category || "digital",
+          product_type: event.product_type || "one_time",
+          
+          // Customer segmentation
+          customer_segment: getValueSegment(
+            event.customer.total_spent || event.total_amount,
+            event.customer.avg_order_value || event.total_amount
+          ),
+          customer_cohort: calculateCohort(event.customer.first_purchase_date || timestamp),
+          
+          // Time-based dimensions
+          revenue_month: month,
+          revenue_quarter: `${new Date(timestamp).getFullYear()}-Q${Math.ceil((new Date(timestamp).getMonth() + 1) / 3)}`,
+          revenue_year: new Date(timestamp).getFullYear().toString(),
+          
+          // Attribution
+          utm_source: event.utm_source,
+          utm_medium: event.utm_medium,
+          utm_campaign: event.utm_campaign,
+          utm_content: event.utm_content,
+          utm_term: event.utm_term,
+          
+          // Geographic data
+          country: event.customer.country,
+          state: event.customer.state,
+          city: event.customer.city,
+          
+          // Business metrics
+          ltv_contribution: event.total_amount,
+          mrr_impact: 0, // One-time payment doesn't impact MRR
+          arr_impact: 0,
+          
+          // Custom dimensions
+          device_type: event.device_type || "unknown",
+          browser: event.browser || "unknown",
+          referrer: event.referrer || "direct"
+        },
+        traits: {
+          email: event.customer.email,
+          customer_id: event.customer.id,
+          
+          // Updated customer metrics
+          total_orders: "{{previous_orders + 1}}",
+          total_revenue: "{{previous_revenue + " + event.total_amount + "}}",
+          avg_order_value: "{{total_revenue / total_orders}}",
+          
+          // Behavioral segments
+          purchase_frequency: "{{orders_per_month}}",
+          customer_lifetime_value: "{{total_revenue}}",
+          days_since_last_purchase: 0,
+          
+          // Risk and health scores
+          payment_success_rate: "{{successful_payments / total_payment_attempts}}",
+          churn_risk_score: "low", // Just made a purchase
+          customer_health_score: "{{(total_orders * 20) + (total_revenue / 10)}}",
+          
+          // Cohort and segmentation
+          cohort_month: calculateCohort(event.customer.first_purchase_date || timestamp),
+          value_segment: getValueSegment(
+            event.customer.total_spent || event.total_amount,
+            event.customer.avg_order_value || event.total_amount
+          ),
+          
+          // Geographic traits
+          country: event.customer.country,
+          timezone: event.customer.timezone
+        }
+      };
+      break;
+      
+    case "subscription.active":
+      const mrr = event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : Math.round(event.recurring_pre_tax_amount / 12);
+      const arr = event.payment_frequency_interval === "year" ? event.recurring_pre_tax_amount : event.recurring_pre_tax_amount * 12;
+      
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "MRR Added",
+        timestamp: timestamp,
+        properties: {
+          subscription_id: event.id,
+          mrr_added: mrr,
+          arr_added: arr,
+          plan_id: event.product_id,
+          billing_frequency: event.payment_frequency_interval,
+          plan_amount: event.recurring_pre_tax_amount,
+          
+          // Subscription metrics
+          trial_converted: event.trial_period_days > 0,
+          trial_duration_days: event.trial_period_days || 0,
+          subscription_tier: event.product_id,
+          
+          // Time dimensions
+          mrr_month: month,
+          arr_year: new Date(timestamp).getFullYear().toString(),
+          
+          // Customer context
+          customer_cohort: calculateCohort(event.customer.first_purchase_date || timestamp),
+          is_expansion: event.customer.existing_subscriber || false,
+          
+          // Business impact
+          revenue_type: "recurring",
+          ltv_multiplier: event.payment_frequency_interval === "year" ? 1.2 : 1.0 // Annual subscriptions have higher LTV
+        },
+        traits: {
+          subscription_status: "active",
+          subscriber_since: timestamp,
+          subscription_tier: event.product_id,
+          mrr_contribution: mrr,
+          arr_contribution: arr,
+          billing_frequency: event.payment_frequency_interval,
+          
+          // Updated value metrics
+          customer_lifetime_value: "{{previous_ltv + " + arr + "}}",
+          predicted_ltv: "{{" + arr + " * ltv_multiplier}}",
+          customer_stage: "subscriber",
+          value_segment: arr > 1200 ? "high_value" : arr > 600 ? "medium_value" : "low_value"
+        }
+      };
+      break;
+      
+    case "subscription.cancelled":
+      const lostMrr = event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : Math.round(event.recurring_pre_tax_amount / 12);
+      const lostArr = event.payment_frequency_interval === "year" ? event.recurring_pre_tax_amount : event.recurring_pre_tax_amount * 12;
+      
+      webhook.payload = {
+        userId: event.customer.id,
+        event: "Churn",
+        timestamp: timestamp,
+        properties: {
+          subscription_id: event.id,
+          churn_mrr: lostMrr,
+          churn_arr: lostArr,
+          churn_reason: event.cancellation_reason || "unknown",
+          subscription_duration_days: Math.floor((new Date(event.cancelled_at) - new Date(event.created_at)) / (1000 * 60 * 60 * 24)),
+          plan_id: event.product_id,
+          
+          // Churn analysis
+          voluntary_churn: event.cancellation_reason !== "payment_failed",
+          cancel_at_period_end: event.cancel_at_next_billing_date,
+          
+          // Time dimensions
+          churn_month: month,
+          churn_cohort: calculateCohort(event.customer.first_purchase_date || event.created_at),
+          
+          // Financial impact
+          lost_ltv: lostArr,
+          revenue_impact: -lostMrr
+        },
+        traits: {
+          subscription_status: "cancelled",
+          churn_date: timestamp,
+          churn_reason: event.cancellation_reason || "unknown",
+          customer_stage: "churned",
+          
+          // Reset subscription metrics
+          mrr_contribution: 0,
+          arr_contribution: 0,
+          
+          // Churn analysis traits
+          churn_risk_score: 100, // They've already churned
+          win_back_eligible: true,
+          days_as_subscriber: Math.floor((new Date(event.cancelled_at) - new Date(event.created_at)) / (1000 * 60 * 60 * 24))
+        }
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+## Best Practices
+
+To make your Segment integration effective:
+
+- **Use Consistent User IDs**: Always use the same user identifier across all events to ensure accurate user tracking and funnel analysis.
+- **Track Revenue Events**: Include revenue properties in payment events to enable accurate revenue attribution and cohort analysis.
+- **Implement Customer Traits**: Update user traits with each event to maintain current customer state across your analytics stack.
+- **Set Up Custom Properties**: Create custom properties for payment-specific metrics like MRR, ARR, and customer lifetime value.
+- **Enable Cross-Platform Tracking**: Use Segment's destinations to sync payment data across your marketing and analytics tools.
+- **Implement Cohort Tracking**: Track customer cohorts based on first purchase date for retention and LTV analysis.
+
+<Warning>
+**Data Volume and Costs**: Segment pricing is often based on the number of events tracked. Be mindful of event volume and consider batching or filtering events if necessary. Also, ensure your write key has the appropriate permissions and rate limits configured.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Events not appearing in Segment">
+    - Verify that your Segment write key is correct and active
+    - Check that the source is configured properly in your Segment workspace
+    - Ensure that the transformation code is valid JavaScript and returns a properly formatted payload
+    - Verify that required fields (userId, event name) are present
+</Accordion>
+
+<Accordion title="User identification issues">
+    - Confirm that you're using consistent user IDs across all events
+    - Check that the userId field is properly populated and not null
+    - Ensure that user traits are being updated with identify calls or within track events
+    - Verify that email addresses are valid and consistent
+</Accordion>
+
+<Accordion title="Revenue tracking not working">
+    - Verify that revenue properties are included in payment events
+    - Check that revenue values are numbers, not strings
+    - Ensure that currency codes are properly formatted (3-letter ISO codes)
+    - Confirm that your analytics destinations support revenue tracking
+</Accordion>
+
+<Accordion title="Destinations not receiving data">
+    - Check that your Segment destinations are properly configured and enabled
+    - Verify that the event names and properties match what your destinations expect
+    - Ensure that any required destination-specific properties are included
+    - Check destination-specific error logs in your Segment workspace
+</Accordion>
+
+<Accordion title="Transformation errors">
+    - Check the webhook management portal for transformation error logs
+    - Verify that the webhook payload structure matches your transformation code expectations
+    - Test your transformation code with sample data before deploying
+    - Ensure that all required properties are present and properly typed
+</Accordion>
+</AccordionGroup>

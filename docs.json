@@ -346,7 +346,9 @@
           {
             "group": "Messaging",
             "pages": [
-              "integrations/slack"
+              "integrations/slack",
+              "integrations/discord",
+              "integrations/microsoft-teams"
             ]
           }
         ]

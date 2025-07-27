@@ -1,0 +1,642 @@
+---
+title: "Close CRM"
+description: "Integrate Dodo Payments with Close CRM to sync payment data and automate your sales pipeline."
+icon: "close"
+---
+
+## Introduction
+
+The Dodo Payments Close CRM integration allows you to automatically sync payment data with your Close CRM, create and update leads and contacts based on payment events, and trigger sales activities. This integration enables you to maintain a complete view of your customers' payment history and optimize your sales process with real-time payment insights.
+
+<Info>
+This integration uses our webhook management portal to automatically transform Dodo Payments webhook events into Close CRM API calls. Configure API key authentication and custom field mappings to sync payment data seamlessly with your sales pipeline.
+</Info>
+
+## Getting Started
+
+<Steps>
+<Step title="Open the Webhook Section">
+  Go to the <b>Webhook</b> section in your Dodo Payments dashboard. Click the <b>+ Add Endpoint</b> button, then open the webhook dropdown to reveal other integrations.
+  <Frame>
+    <img src="/images/integrations/close-crm/1.png" alt="Dodo Payments dashboard showing Add Endpoint button and integrations dropdown" />
+  </Frame>
+</Step>
+
+<Step title="Select Close CRM Integration">
+  Select the <b>Close CRM</b> integration and click <b>Connect your Close account</b>.
+  <Frame>
+    <img src="/images/integrations/close-crm/2.png" alt="Close CRM integration card and connect button" />
+  </Frame>
+</Step>
+
+<Step title="Configure API Authentication">
+  Enter your Close CRM API key. You can find this in your Close account settings under API Keys. Ensure the API key has the necessary permissions for contacts, leads, and activities.
+  <Frame>
+    <img src="/images/integrations/close-crm/3.png" alt="Close CRM API key configuration screen" />
+  </Frame>
+</Step>
+
+<Step title="Configure Field Mapping">
+  Map Dodo Payments data fields to Close CRM custom fields. You can use default mappings or create custom fields for payment-specific data.
+  <Frame>
+    <img src="/images/integrations/close-crm/4.png" alt="Field mapping configuration for payment data" />
+  </Frame>
+</Step>
+
+<Step title="Customize Transformation Code">
+  Add or edit the transformation code to customize your Close CRM actions for your use case. You can use the pre-made templates or write your own logic.
+  <Frame>
+    <img src="/images/integrations/close-crm/5.png" alt="Transformation code editor for Close CRM integration" />
+  </Frame>
+</Step>
+
+<Step title="Test and Create">
+  Test your transformation code with custom or pre-made event payloads. Once you're satisfied, click <b>Create</b> to activate the integration.
+  <Frame>
+    <img src="/images/integrations/close-crm/6.png" alt="Test transformation and create button" />
+  </Frame>
+</Step>
+
+<Step title="Integration Complete!">
+  🎉 You have successfully created the Close CRM integration! Your Dodo Payments events will now sync with your Close CRM in real time.
+</Step>
+</Steps>
+
+## Transformation Code Examples
+
+### Basic Lead Creation and Updates
+
+This transformation creates or updates leads in Close CRM when payments are processed:
+
+```javascript lead_sync.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const closeClient = webhook.integrations.close;
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      // Create or update lead
+      webhook.payload = {
+        endpoint: "lead/",
+        method: "POST",
+        body: {
+          name: event.customer.company || `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+          status_id: "stat_payment_received", // Configure this status in your Close account
+          contacts: [
+            {
+              name: `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+              emails: [
+                {
+                  type: "office",
+                  email: event.customer.email
+                }
+              ]
+            }
+          ],
+          custom: {
+            "custom.lcf_total_payment_amount": event.total_amount,
+            "custom.lcf_last_payment_date": webhook.payload.timestamp,
+            "custom.lcf_payment_status": "Successful",
+            "custom.lcf_dodo_customer_id": event.customer.id,
+            "custom.lcf_payment_id": event.payment_id,
+            "custom.lcf_payment_method": event.payment_method || "Unknown",
+            "custom.lcf_currency": event.currency || "USD"
+          }
+        }
+      };
+      break;
+      
+    case "payment.failed":
+      // Update lead with failed payment info
+      webhook.payload = {
+        endpoint: "lead/",
+        method: "POST", 
+        body: {
+          name: event.customer.company || `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+          status_id: "stat_payment_failed",
+          contacts: [
+            {
+              name: `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+              emails: [
+                {
+                  type: "office",
+                  email: event.customer.email
+                }
+              ]
+            }
+          ],
+          custom: {
+            "custom.lcf_payment_status": "Failed",
+            "custom.lcf_last_failed_payment_date": webhook.payload.timestamp,
+            "custom.lcf_failed_payment_reason": event.error_message || "Unknown error",
+            "custom.lcf_failed_amount": event.total_amount
+          }
+        }
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### Subscription Management with Opportunities
+
+This transformation manages subscription data and creates opportunities for recurring revenue:
+
+```javascript subscription_opportunities.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  
+  switch (webhook.eventType) {
+    case "subscription.active":
+      // Create lead and opportunity for subscription
+      webhook.payload = {
+        endpoint: "lead/",
+        method: "POST",
+        body: {
+          name: event.customer.company || `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+          status_id: "stat_subscription_active",
+          contacts: [
+            {
+              name: `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+              emails: [
+                {
+                  type: "office", 
+                  email: event.customer.email
+                }
+              ]
+            }
+          ],
+          custom: {
+            "custom.lcf_subscription_status": "Active",
+            "custom.lcf_subscription_id": event.id,
+            "custom.lcf_subscription_amount": event.recurring_pre_tax_amount,
+            "custom.lcf_billing_frequency": event.payment_frequency_interval,
+            "custom.lcf_next_billing_date": event.next_billing_date,
+            "custom.lcf_product_id": event.product_id,
+            "custom.lcf_mrr": event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : Math.round(event.recurring_pre_tax_amount / 12),
+            "custom.lcf_arr": event.payment_frequency_interval === "year" ? event.recurring_pre_tax_amount : event.recurring_pre_tax_amount * 12
+          }
+        },
+        after: [
+          {
+            // Create opportunity for recurring revenue
+            endpoint: "opportunity/",
+            method: "POST",
+            body: {
+              note: `Subscription opportunity for ${event.product_id}`,
+              confidence: 100,
+              value: event.payment_frequency_interval === "year" ? event.recurring_pre_tax_amount : event.recurring_pre_tax_amount * 12,
+              value_period: "annual",
+              status_id: "stat_won",
+              lead_id: "{{lead_id}}", // Will be populated after lead creation
+              custom: {
+                "custom.cf_subscription_id": event.id,
+                "custom.cf_opportunity_type": "Subscription",
+                "custom.cf_billing_frequency": event.payment_frequency_interval,
+                "custom.cf_monthly_value": event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : Math.round(event.recurring_pre_tax_amount / 12)
+              }
+            }
+          }
+        ]
+      };
+      break;
+      
+    case "subscription.cancelled":
+      // Update lead status and create cancellation activity
+      webhook.payload = {
+        endpoint: "lead/search/",
+        method: "GET",
+        query: {
+          query: `custom.lcf_subscription_id:"${event.id}"`
+        },
+        after: [
+          {
+            endpoint: "lead/{{lead_id}}/",
+            method: "PUT",
+            body: {
+              status_id: "stat_subscription_cancelled",
+              custom: {
+                "custom.lcf_subscription_status": "Cancelled",
+                "custom.lcf_cancellation_date": event.cancelled_at,
+                "custom.lcf_cancel_at_next_billing": event.cancel_at_next_billing_date ? "Yes" : "No"
+              }
+            }
+          },
+          {
+            // Create cancellation activity
+            endpoint: "activity/note/",
+            method: "POST",
+            body: {
+              note: `Subscription cancelled. Cancel at next billing: ${event.cancel_at_next_billing_date ? "Yes" : "No"}`,
+              lead_id: "{{lead_id}}"
+            }
+          }
+        ]
+      };
+      break;
+      
+    case "subscription.renewed":
+      // Create renewal activity and update metrics
+      webhook.payload = {
+        endpoint: "lead/search/",
+        method: "GET", 
+        query: {
+          query: `custom.lcf_subscription_id:"${event.id}"`
+        },
+        after: [
+          {
+            endpoint: "lead/{{lead_id}}/",
+            method: "PUT",
+            body: {
+              custom: {
+                "custom.lcf_last_renewal_date": webhook.payload.timestamp,
+                "custom.lcf_total_subscription_payments": event.total_payments || 1,
+                "custom.lcf_next_billing_date": event.next_billing_date
+              }
+            }
+          },
+          {
+            // Create renewal activity
+            endpoint: "activity/note/",
+            method: "POST",
+            body: {
+              note: `Subscription renewed successfully. Amount: $${event.recurring_pre_tax_amount}. Next billing: ${new Date(event.next_billing_date).toLocaleDateString()}`,
+              lead_id: "{{lead_id}}"
+            }
+          },
+          {
+            // Create renewal opportunity
+            endpoint: "opportunity/",
+            method: "POST",
+            body: {
+              note: `Subscription renewal for ${event.product_id}`,
+              confidence: 100,
+              value: event.recurring_pre_tax_amount,
+              value_period: event.payment_frequency_interval === "month" ? "monthly" : "annual",
+              status_id: "stat_won",
+              lead_id: "{{lead_id}}",
+              custom: {
+                "custom.cf_opportunity_type": "Renewal",
+                "custom.cf_subscription_id": event.id
+              }
+            }
+          }
+        ]
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### Sales Activity Tracking
+
+This transformation creates detailed sales activities for payment events:
+
+```javascript sales_activities.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      webhook.payload = {
+        endpoint: "lead/search/",
+        method: "GET",
+        query: {
+          query: `email:"${event.customer.email}"`
+        },
+        after: [
+          {
+            // Create payment received activity
+            endpoint: "activity/note/",
+            method: "POST",
+            body: {
+              note: `💰 Payment Received: $${event.total_amount}\n\nPayment ID: ${event.payment_id}\nMethod: ${event.payment_method || 'Unknown'}\nCurrency: ${event.currency || 'USD'}\nCustomer: ${event.customer.email}`,
+              lead_id: "{{lead_id}}"
+            }
+          },
+          {
+            // Create call activity if high-value payment
+            endpoint: event.total_amount > 500 ? "activity/call/" : null,
+            method: "POST",
+            body: event.total_amount > 500 ? {
+              note: `High-value payment received ($${event.total_amount}). Consider follow-up call for upselling opportunities.`,
+              status: "completed",
+              lead_id: "{{lead_id}}",
+              direction: "outbound"
+            } : null
+          }
+        ]
+      };
+      break;
+      
+    case "payment.failed":
+      webhook.payload = {
+        endpoint: "lead/search/",
+        method: "GET",
+        query: {
+          query: `email:"${event.customer.email}"`
+        },
+        after: [
+          {
+            // Create failed payment activity
+            endpoint: "activity/note/",
+            method: "POST",
+            body: {
+              note: `❌ Payment Failed: $${event.total_amount}\n\nReason: ${event.error_message || 'Unknown'}\nPayment ID: ${event.payment_id}\nCustomer: ${event.customer.email}\n\n⚠️ Follow-up required to resolve payment issue.`,
+              lead_id: "{{lead_id}}"
+            }
+          },
+          {
+            // Create follow-up task
+            endpoint: "task/",
+            method: "POST",
+            body: {
+              text: `Follow up on failed payment of $${event.total_amount} for ${event.customer.email}`,
+              due_date: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Tomorrow
+              is_complete: false,
+              lead_id: "{{lead_id}}"
+            }
+          }
+        ]
+      };
+      break;
+      
+    case "dispute.opened":
+      webhook.payload = {
+        endpoint: "lead/search/",
+        method: "GET",
+        query: {
+          query: `custom.lcf_dodo_customer_id:"${event.customer?.id}"`
+        },
+        after: [
+          {
+            // Create dispute activity
+            endpoint: "activity/note/",
+            method: "POST",
+            body: {
+              note: `🚨 DISPUTE OPENED: $${event.amount}\n\nPayment ID: ${event.payment_id}\nStatus: ${event.dispute_status}\nStage: ${event.dispute_stage}\nRemarks: ${event.remarks || 'None'}\n\n🔥 URGENT: Immediate action required!`,
+              lead_id: "{{lead_id}}"
+            }
+          },
+          {
+            // Create urgent task for dispute resolution
+            endpoint: "task/",
+            method: "POST",
+            body: {
+              text: `URGENT: Resolve dispute for $${event.amount} - Payment ID: ${event.payment_id}`,
+              due_date: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString().split('T')[0], // Today
+              is_complete: false,
+              lead_id: "{{lead_id}}"
+            }
+          }
+        ]
+      };
+      break;
+      
+    case "refund.succeeded":
+      webhook.payload = {
+        endpoint: "lead/search/",
+        method: "GET",
+        query: {
+          query: `custom.lcf_dodo_customer_id:"${event.customer?.id}"`
+        },
+        after: [
+          {
+            // Create refund activity  
+            endpoint: "activity/note/",
+            method: "POST",
+            body: {
+              note: `💸 Refund Processed: $${event.amount}\n\nRefund ID: ${event.refund_id}\nOriginal Payment: ${event.payment_id}\nReason: ${event.reason || 'Not specified'}\nCustomer: ${event.customer?.email || 'Unknown'}`,
+              lead_id: "{{lead_id}}"
+            }
+          },
+          {
+            // Create follow-up task to understand refund reason
+            endpoint: "task/",
+            method: "POST",
+            body: {
+              text: `Follow up on refund: Understand why customer requested $${event.amount} refund`,
+              due_date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 3 days
+              is_complete: false,
+              lead_id: "{{lead_id}}"
+            }
+          }
+        ]
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### Comprehensive Lead Scoring and Pipeline Management
+
+This transformation provides advanced lead scoring and automated pipeline progression:
+
+```javascript pipeline_management.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  
+  // Calculate lead score based on payment behavior
+  function calculateLeadScore(eventType, amount, frequency) {
+    let score = 0;
+    switch (eventType) {
+      case "payment.succeeded":
+        score = Math.min(Math.floor(amount / 10), 50); // Max 50 points
+        break;
+      case "subscription.active":
+        score = frequency === "year" ? 100 : 75; // Higher score for annual
+        break;
+      case "subscription.renewed":
+        score = 30; // Loyalty bonus
+        break;
+      case "payment.failed":
+        score = -15;
+        break;
+      case "dispute.opened":
+        score = -40;
+        break;
+      case "refund.succeeded":
+        score = -20;
+        break;
+    }
+    return score;
+  }
+  
+  // Determine lead status based on behavior
+  function getLeadStatus(eventType, amount, isRecurring) {
+    if (eventType === "subscription.active") return "stat_customer";
+    if (eventType === "payment.succeeded" && amount > 1000) return "stat_qualified";
+    if (eventType === "payment.succeeded" && isRecurring) return "stat_opportunity";
+    if (eventType === "payment.failed") return "stat_follow_up_required";
+    if (eventType === "dispute.opened") return "stat_at_risk";
+    return "stat_lead";
+  }
+  
+  const leadScore = calculateLeadScore(
+    webhook.eventType, 
+    event.total_amount || event.amount || 0,
+    event.payment_frequency_interval
+  );
+  
+  const leadStatus = getLeadStatus(
+    webhook.eventType,
+    event.total_amount || event.amount || 0,
+    !!event.recurring_pre_tax_amount
+  );
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      webhook.payload = {
+        endpoint: "lead/",
+        method: "POST",
+        body: {
+          name: event.customer.company || `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+          status_id: leadStatus,
+          contacts: [
+            {
+              name: `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+              emails: [{ type: "office", email: event.customer.email }],
+              phones: event.customer.phone ? [{ type: "office", phone: event.customer.phone }] : []
+            }
+          ],
+          custom: {
+            "custom.lcf_lead_score": leadScore,
+            "custom.lcf_total_revenue": event.total_amount,
+            "custom.lcf_payment_count": 1,
+            "custom.lcf_average_payment": event.total_amount,
+            "custom.lcf_last_payment_date": webhook.payload.timestamp,
+            "custom.lcf_customer_lifetime_value": event.total_amount,
+            "custom.lcf_payment_velocity": "1", // Payments per month
+            "custom.lcf_risk_score": 0,
+            "custom.lcf_customer_segment": event.total_amount > 500 ? "Enterprise" : event.total_amount > 100 ? "Professional" : "Basic"
+          }
+        },
+        after: [
+          {
+            // Create opportunity if high-value payment
+            endpoint: event.total_amount > 200 ? "opportunity/" : null,
+            method: "POST",
+            body: event.total_amount > 200 ? {
+              note: `High-value customer - upselling opportunity`,
+              confidence: 75,
+              value: event.total_amount * 3, // 3x current value as potential
+              value_period: "annual",
+              status_id: "stat_potential",
+              lead_id: "{{lead_id}}",
+              custom: {
+                "custom.cf_opportunity_source": "High-value payment",
+                "custom.cf_upsell_potential": "High"
+              }
+            } : null
+          }
+        ]
+      };
+      break;
+      
+    case "subscription.active":
+      webhook.payload = {
+        endpoint: "lead/",
+        method: "POST",
+        body: {
+          name: event.customer.company || `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+          status_id: "stat_customer",
+          contacts: [
+            {
+              name: `${event.customer.first_name} ${event.customer.last_name}`.trim() || event.customer.email,
+              emails: [{ type: "office", email: event.customer.email }]
+            }
+          ],
+          custom: {
+            "custom.lcf_lead_score": leadScore,
+            "custom.lcf_subscription_tier": event.product_id,
+            "custom.lcf_customer_type": "Subscriber",
+            "custom.lcf_churn_risk": "Low",
+            "custom.lcf_expansion_score": event.recurring_pre_tax_amount > 50 ? 80 : 60,
+            "custom.lcf_customer_health": "Healthy"
+          }
+        },
+        after: [
+          {
+            // Create expansion opportunity
+            endpoint: "opportunity/",
+            method: "POST",
+            body: {
+              note: `Subscription expansion opportunity`,
+              confidence: 60,
+              value: event.recurring_pre_tax_amount * 2,
+              value_period: event.payment_frequency_interval === "month" ? "monthly" : "annual",
+              status_id: "stat_potential",
+              lead_id: "{{lead_id}}",
+              custom: {
+                "custom.cf_opportunity_type": "Expansion",
+                "custom.cf_current_subscription": event.product_id
+              }
+            }
+          }
+        ]
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+## Best Practices
+
+To make your Close CRM integration effective:
+
+- **Use Custom Fields**: Create custom fields in Close for payment-specific data like subscription status, MRR, ARR, and customer lifetime value.
+- **Implement Lead Scoring**: Use payment behavior to automatically score leads and prioritize sales efforts.
+- **Create Automated Tasks**: Set up tasks for follow-ups on failed payments, disputes, and high-value customers.
+- **Track Customer Journey**: Use lead statuses to track the complete customer journey from prospect to paying customer.
+- **Monitor Payment Health**: Create custom fields to track payment health metrics and churn risk.
+
+<Warning>
+**API Rate Limits**: Close CRM has API rate limits (typically 120 requests per minute). For high-volume payment processing, implement appropriate delays or batching. Also, ensure your API key has the necessary permissions for all operations you want to perform.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="API authentication failing">
+    - Verify that your Close CRM API key is correct and active
+    - Check that the API key has the necessary permissions for contacts, leads, opportunities, and activities
+    - Ensure your Close CRM account has API access enabled
+    - Verify that the API key hasn't expired or been revoked
+</Accordion>
+
+<Accordion title="Leads not being created or updated">
+    - Verify that the lead name and contact email are properly formatted
+    - Check that the lead status IDs exist in your Close CRM account
+    - Ensure that required fields are being populated
+    - Verify that duplicate lead handling is configured correctly
+</Accordion>
+
+<Accordion title="Custom fields not syncing">
+    - Confirm that custom fields are created in Close CRM before using them
+    - Check that custom field names match exactly (including the 'custom.lcf_' or 'custom.cf_' prefix)
+    - Ensure that field types are compatible with the data being sent
+    - Verify that your API key has permissions to write to custom fields
+</Accordion>
+
+<Accordion title="Activities and tasks not creating">
+    - Check that the lead ID exists before trying to create associated activities
+    - Verify that activity types are supported by the Close CRM API
+    - Ensure that task due dates are in the correct format (YYYY-MM-DD)
+    - Confirm that your API permissions include activities and tasks
+</Accordion>
+
+<Accordion title="Search queries not finding leads">
+    - Verify that the search query syntax is correct for Close CRM
+    - Check that the fields being searched actually contain the expected data
+    - Ensure that the search is case-sensitive where required
+    - Try using the Close CRM API directly to test your search queries
+</Accordion>
+</AccordionGroup>

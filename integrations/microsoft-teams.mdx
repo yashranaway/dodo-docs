@@ -1,0 +1,547 @@
+---
+title: "Microsoft Teams"
+description: "Integrate Dodo Payments with Microsoft Teams to receive real-time notifications about your payments in your Teams channels."
+icon: "microsoft"
+---
+
+## Introduction
+
+The Dodo Payments Microsoft Teams integration allows you to receive real-time notifications about your payments directly in your Microsoft Teams channels. This integration enables you to stay updated on the status of your payments, track transactions, and manage your payments more efficiently within your Teams workspace and collaborate with your team on payment-related activities.
+
+<Info>
+This integration uses our webhook management portal to automatically transform Dodo Payments webhook events into Teams-compatible messages with Adaptive Cards. No additional coding is required - just configure the connector and start receiving rich, interactive notifications.
+</Info>
+
+## Getting Started
+
+<Steps>
+<Step title="Open the Webhook Section">
+  Go to the <b>Webhook</b> section in your Dodo Payments dashboard. Click the <b>+ Add Endpoint</b> button, then open the webhook dropdown to reveal other integrations.
+  <Frame>
+    <img src="/images/integrations/slack/1.png" alt="Dodo Payments dashboard showing Add Endpoint button and integrations dropdown" />
+  </Frame>
+</Step>
+
+<Step title="Select Microsoft Teams Integration">
+  Select the <b>Microsoft Teams</b> integration and click <b>Connect your Teams workspace</b>.
+</Step>
+
+<Step title="Create Teams Incoming Webhook">
+  In your Microsoft Teams channel, click the <b>···</b> (More options) next to the channel name → <b>Connectors</b> → <b>Incoming Webhook</b> → <b>Configure</b>. Provide a name and optionally upload an image for the webhook, then click <b>Create</b>. Copy the webhook URL.
+  <Warning>
+  You need to be a team owner or have the necessary permissions to add connectors to a Teams channel.
+  </Warning>
+</Step>
+
+<Step title="Configure Webhook URL">
+  Paste the Teams webhook URL into the Dodo Payments integration setup and select the types of events you want to receive notifications for.
+</Step>
+
+<Step title="Customize Transformation Code">
+  Add or edit the transformation code to customize your Teams notifications. You can use Adaptive Cards for rich, interactive notifications that Teams users can engage with directly in the chat.
+</Step>
+
+<Step title="Test and Create">
+  Test your transformation code with custom or pre-made event payloads. Once you're satisfied, click <b>Create</b> to activate the integration.
+</Step>
+
+<Step title="Integration Complete!">
+  🎉 You have successfully created the Microsoft Teams integration! Your Dodo Payments events will now be delivered to your selected Teams channel in real time.
+</Step>
+</Steps>
+
+## Transformation Code Examples
+
+### Basic Text Notifications
+
+This transformation sends simple text messages for payment events:
+
+```javascript basic_teams_notifs.js icon="js" expandable
+function handler(webhook) {
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      webhook.payload = {
+        text: `✅ **Payment Successful**\n\n💰 Amount: $${webhook.payload.data.total_amount}\n👤 Customer: ${webhook.payload.data.customer.email}\n🆔 Payment ID: ${webhook.payload.data.payment_id}`
+      };
+      break;
+      
+    case "payment.failed":
+      webhook.payload = {
+        text: `❌ **Payment Failed**\n\n💰 Amount: $${webhook.payload.data.total_amount}\n👤 Customer: ${webhook.payload.data.customer.email}\n⚠️ Reason: ${webhook.payload.data.error_message || 'Unknown'}`
+      };
+      break;
+      
+    case "payment.processing":
+      webhook.payload = {
+        text: `⏳ **Payment Processing**\n\n💰 Amount: $${webhook.payload.data.total_amount}\n👤 Customer: ${webhook.payload.data.customer.email}`
+      };
+      break;
+  }
+
+  return webhook;
+}
+```
+
+### Adaptive Cards for Rich Notifications
+
+This transformation creates rich Adaptive Cards with structured layout and interactive elements:
+
+```javascript adaptive_cards_notifs.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const timestamp = new Date(webhook.payload.timestamp).toISOString();
+  
+  let cardColor, title, facts = [];
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      cardColor = "good";
+      title = "✅ Payment Successful";
+      facts = [
+        { title: "Amount:", value: `$${event.total_amount}` },
+        { title: "Customer:", value: event.customer.email },
+        { title: "Payment ID:", value: event.payment_id },
+        { title: "Payment Method:", value: event.payment_method || "Unknown" }
+      ];
+      break;
+      
+    case "payment.failed":
+      cardColor = "attention";
+      title = "❌ Payment Failed";
+      facts = [
+        { title: "Amount:", value: `$${event.total_amount}` },
+        { title: "Customer:", value: event.customer.email },
+        { title: "Error:", value: event.error_message || "Unknown error" }
+      ];
+      break;
+      
+    case "subscription.active":
+      cardColor = "good";
+      title = "🎉 Subscription Activated";
+      facts = [
+        { title: "Customer:", value: event.customer.email },
+        { title: "Product ID:", value: event.product_id },
+        { title: "Amount:", value: `$${event.recurring_pre_tax_amount}/${event.payment_frequency_interval}` },
+        { title: "Next Billing:", value: new Date(event.next_billing_date).toLocaleDateString() }
+      ];
+      break;
+      
+    case "subscription.cancelled":
+      cardColor = "warning";
+      title = "⚠️ Subscription Cancelled";
+      facts = [
+        { title: "Customer:", value: event.customer.email },
+        { title: "Product ID:", value: event.product_id },
+        { title: "Cancellation Date:", value: new Date(event.cancelled_at).toLocaleDateString() },
+        { title: "Cancel at Next Billing:", value: event.cancel_at_next_billing_date ? "Yes" : "No" }
+      ];
+      break;
+  }
+  
+  webhook.payload = {
+    "@type": "MessageCard",
+    "@context": "https://schema.org/extensions",
+    themeColor: cardColor === "good" ? "00FF00" : cardColor === "attention" ? "FF0000" : "FFA500",
+    summary: title,
+    sections: [{
+      activityTitle: title,
+      activitySubtitle: "Dodo Payments",
+      activityImage: "https://dodopayments.com/favicon.ico",
+      facts: facts,
+      markdown: true
+    }]
+  };
+
+  return webhook;
+}
+```
+
+### Interactive Adaptive Cards with Actions
+
+This transformation creates Adaptive Cards with interactive buttons for common actions:
+
+```javascript interactive_cards_notifs.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  
+  let cardColor, title, facts = [], actions = [];
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      cardColor = "00FF00";
+      title = "✅ Payment Successful";
+      facts = [
+        { title: "Amount:", value: `$${event.total_amount}` },
+        { title: "Customer:", value: event.customer.email },
+        { title: "Payment ID:", value: event.payment_id }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "View Payment",
+          targets: [{
+            os: "default",
+            uri: `https://app.dodopayments.com/payments/${event.payment_id}`
+          }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "Send Receipt",
+          targets: [{
+            os: "default",
+            uri: `https://app.dodopayments.com/payments/${event.payment_id}/receipt`
+          }]
+        }
+      ];
+      break;
+      
+    case "payment.failed":
+      cardColor = "FF0000";
+      title = "❌ Payment Failed - Action Required";
+      facts = [
+        { title: "Amount:", value: `$${event.total_amount}` },
+        { title: "Customer:", value: event.customer.email },
+        { title: "Error:", value: event.error_message || "Unknown error" }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "View Details",
+          targets: [{
+            os: "default",
+            uri: `https://app.dodopayments.com/payments/${event.payment_id}`
+          }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "Contact Customer",
+          targets: [{
+            os: "default",
+            uri: `mailto:${event.customer.email}?subject=Payment Issue - ${event.payment_id}`
+          }]
+        }
+      ];
+      break;
+      
+    case "dispute.opened":
+      cardColor = "FF0000";
+      title = "🚨 New Dispute Opened - Urgent Action Required";
+      facts = [
+        { title: "Payment ID:", value: event.payment_id },
+        { title: "Amount:", value: `$${event.amount}` },
+        { title: "Status:", value: event.dispute_status },
+        { title: "Stage:", value: event.dispute_stage }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "Respond to Dispute",
+          targets: [{
+            os: "default",
+            uri: `https://app.dodopayments.com/disputes/${event.dispute_id}`
+          }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "View Evidence",
+          targets: [{
+            os: "default",
+            uri: `https://app.dodopayments.com/disputes/${event.dispute_id}/evidence`
+          }]
+        }
+      ];
+      break;
+      
+    case "subscription.cancelled":
+      cardColor = "FFA500";
+      title = "⚠️ Subscription Cancelled";
+      facts = [
+        { title: "Customer:", value: event.customer.email },
+        { title: "Product:", value: event.product_id },
+        { title: "Revenue Impact:", value: `$${event.recurring_pre_tax_amount}/${event.payment_frequency_interval}` }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "View Customer",
+          targets: [{
+            os: "default",
+            uri: `https://app.dodopayments.com/customers/${event.customer.id}`
+          }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "Win-back Campaign",
+          targets: [{
+            os: "default",
+            uri: `mailto:${event.customer.email}?subject=We'd love to have you back&body=Hi ${event.customer.email}, we noticed you cancelled your subscription...`
+          }]
+        }
+      ];
+      break;
+  }
+  
+  webhook.payload = {
+    "@type": "MessageCard",
+    "@context": "https://schema.org/extensions",
+    themeColor: cardColor,
+    summary: title,
+    sections: [{
+      activityTitle: title,
+      activitySubtitle: "Dodo Payments",
+      activityImage: "https://dodopayments.com/favicon.ico",
+      facts: facts,
+      markdown: true
+    }],
+    potentialAction: actions
+  };
+
+  return webhook;
+}
+```
+
+### Comprehensive Teams Handler with Analytics
+
+This transformation provides detailed analytics and formatted information for all event types:
+
+```javascript comprehensive_teams_handler.js icon="js" expandable
+function handler(webhook) {
+  const event = webhook.payload.data;
+  const timestamp = new Date(webhook.payload.timestamp);
+  
+  let cardColor, title, subtitle, facts = [], actions = [];
+  
+  switch (webhook.eventType) {
+    case "payment.succeeded":
+      cardColor = "00FF00";
+      title = "✅ Payment Successful";
+      subtitle = `Revenue: +$${event.total_amount}`;
+      facts = [
+        { title: "💰 Amount:", value: `$${event.total_amount}` },
+        { title: "👤 Customer:", value: event.customer.email },
+        { title: "🆔 Payment ID:", value: event.payment_id },
+        { title: "💳 Method:", value: event.payment_method || "Unknown" },
+        { title: "🌍 Country:", value: event.customer.country || "Unknown" },
+        { title: "⏰ Time:", value: timestamp.toLocaleString() }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "📊 View Dashboard",
+          targets: [{ os: "default", uri: "https://app.dodopayments.com/dashboard" }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "📧 Send Receipt",
+          targets: [{ os: "default", uri: `https://app.dodopayments.com/payments/${event.payment_id}/receipt` }]
+        }
+      ];
+      break;
+      
+    case "payment.failed":
+      cardColor = "FF0000";
+      title = "❌ Payment Failed";
+      subtitle = `Lost Revenue: $${event.total_amount}`;
+      facts = [
+        { title: "💰 Amount:", value: `$${event.total_amount}` },
+        { title: "👤 Customer:", value: event.customer.email },
+        { title: "⚠️ Error:", value: event.error_message || "Unknown error" },
+        { title: "💳 Method:", value: event.payment_method || "Unknown" },
+        { title: "🔄 Retry Recommended:", value: event.can_retry ? "Yes" : "No" },
+        { title: "⏰ Failed At:", value: timestamp.toLocaleString() }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "🔍 Investigate",
+          targets: [{ os: "default", uri: `https://app.dodopayments.com/payments/${event.payment_id}` }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "📞 Contact Customer",
+          targets: [{ os: "default", uri: `mailto:${event.customer.email}` }]
+        }
+      ];
+      break;
+      
+    case "subscription.active":
+      cardColor = "00FF00";
+      title = "🎉 New Subscription";
+      subtitle = `MRR: +$${event.recurring_pre_tax_amount}`;
+      facts = [
+        { title: "👤 Customer:", value: event.customer.email },
+        { title: "📦 Product:", value: event.product_id },
+        { title: "💰 Monthly Value:", value: `$${event.recurring_pre_tax_amount}` },
+        { title: "🔄 Frequency:", value: event.payment_frequency_interval },
+        { title: "📅 Next Billing:", value: new Date(event.next_billing_date).toLocaleDateString() },
+        { title: "⏰ Started:", value: timestamp.toLocaleString() }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "👤 View Customer",
+          targets: [{ os: "default", uri: `https://app.dodopayments.com/customers/${event.customer.id}` }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "📊 Subscription Analytics",
+          targets: [{ os: "default", uri: "https://app.dodopayments.com/analytics/subscriptions" }]
+        }
+      ];
+      break;
+      
+    case "subscription.cancelled":
+      cardColor = "FFA500";
+      title = "⚠️ Subscription Cancelled";
+      subtitle = `Churn: -$${event.recurring_pre_tax_amount}/month`;
+      facts = [
+        { title: "👤 Customer:", value: event.customer.email },
+        { title: "📦 Product:", value: event.product_id },
+        { title: "💸 Lost MRR:", value: `$${event.recurring_pre_tax_amount}` },
+        { title: "📅 Cancelled:", value: new Date(event.cancelled_at).toLocaleDateString() },
+        { title: "🔄 End of Period:", value: event.cancel_at_next_billing_date ? "Yes" : "No" },
+        { title: "📈 Customer LTV:", value: event.customer_lifetime_value ? `$${event.customer_lifetime_value}` : "Unknown" }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "📧 Win-back Email",
+          targets: [{ os: "default", uri: `mailto:${event.customer.email}?subject=We miss you!` }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "📊 Churn Analysis",
+          targets: [{ os: "default", uri: "https://app.dodopayments.com/analytics/churn" }]
+        }
+      ];
+      break;
+      
+    case "dispute.opened":
+      cardColor = "FF0000";
+      title = "🚨 URGENT: New Dispute";
+      subtitle = `Amount at Risk: $${event.amount}`;
+      facts = [
+        { title: "🆔 Payment ID:", value: event.payment_id },
+        { title: "💰 Amount:", value: `$${event.amount}` },
+        { title: "📊 Status:", value: event.dispute_status },
+        { title: "🏷️ Stage:", value: event.dispute_stage },
+        { title: "⏰ Response Due:", value: event.due_date ? new Date(event.due_date).toLocaleDateString() : "Unknown" },
+        { title: "📝 Remarks:", value: event.remarks || "No remarks provided" }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "🛡️ Respond Now",
+          targets: [{ os: "default", uri: `https://app.dodopayments.com/disputes/${event.dispute_id}` }]
+        },
+        {
+          "@type": "OpenUri",
+          name: "📁 Upload Evidence",
+          targets: [{ os: "default", uri: `https://app.dodopayments.com/disputes/${event.dispute_id}/evidence` }]
+        }
+      ];
+      break;
+      
+    case "refund.succeeded":
+      cardColor = "0099FF";
+      title = "💰 Refund Processed";
+      subtitle = `Refunded: $${event.amount}`;
+      facts = [
+        { title: "💰 Amount:", value: `$${event.amount}` },
+        { title: "🆔 Refund ID:", value: event.refund_id },
+        { title: "🆔 Payment ID:", value: event.payment_id },
+        { title: "📝 Reason:", value: event.reason || "No reason provided" },
+        { title: "⏰ Processed:", value: timestamp.toLocaleString() }
+      ];
+      actions = [
+        {
+          "@type": "OpenUri",
+          name: "📄 View Details",
+          targets: [{ os: "default", uri: `https://app.dodopayments.com/refunds/${event.refund_id}` }]
+        }
+      ];
+      break;
+      
+    default:
+      cardColor = "808080";
+      title = `ℹ️ ${webhook.eventType.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
+      subtitle = "Dodo Payments Event";
+      facts = [
+        { title: "Event Type:", value: webhook.eventType },
+        { title: "Timestamp:", value: timestamp.toLocaleString() }
+      ];
+  }
+  
+  webhook.payload = {
+    "@type": "MessageCard",
+    "@context": "https://schema.org/extensions",
+    themeColor: cardColor,
+    summary: title,
+    sections: [{
+      activityTitle: title,
+      activitySubtitle: subtitle,
+      activityImage: "https://dodopayments.com/favicon.ico",
+      facts: facts,
+      markdown: true
+    }],
+    potentialAction: actions.length > 0 ? actions : undefined
+  };
+
+  return webhook;
+}
+```
+
+## Best Practices
+
+To make your Microsoft Teams notifications effective:
+
+- **Use Adaptive Cards** for rich, structured notifications that provide clear visual hierarchy and actionable information.
+- **Include relevant actions** with OpenUri buttons that link directly to your Dodo Payments dashboard or relevant pages for quick navigation.
+- **Choose appropriate colors**: Green (00FF00) for success, Red (FF0000) for failures/urgent issues, Orange (FFA500) for warnings, Blue (0099FF) for informational events.
+- **Structure information logically** using facts arrays to present key data in an easily scannable format.
+- **Add business context** like revenue impact, customer lifetime value, and next steps to make notifications more actionable.
+- **Use clear, action-oriented language** in button labels and titles.
+
+<Warning>
+**Handle Sensitive Data**: Be careful not to include sensitive information like full license keys, credit card details, or personal data in Teams messages. Consider truncating or masking sensitive values. Teams messages may be visible to multiple team members depending on channel permissions.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Notifications not appearing in Teams">
+    - Verify that the Teams webhook URL is correct and the connector is still active
+    - Check that the transformation code is valid JavaScript and returns proper MessageCard format
+    - Ensure the webhook connector hasn't been removed or disabled in Teams
+    - Verify that the channel still exists and you have posting permissions
+    - Test the webhook URL directly with a simple MessageCard POST request
+</Accordion>
+
+<Accordion title="Adaptive Card formatting issues">
+    - Ensure the MessageCard schema is correctly formatted with proper @type and @context
+    - Check that themeColor values are valid 6-digit hex codes without the # symbol
+    - Verify that facts arrays contain objects with title and value properties
+    - Make sure potentialAction items have proper @type and target structure
+</Accordion>
+
+<Accordion title="Interactive buttons not working">
+    - Verify that OpenUri actions have properly formatted targets with os and uri properties
+    - Check that URIs are valid and accessible (HTTPS required for most actions)
+    - Ensure button names are descriptive and not too long
+    - Test action URLs manually to verify they work as expected
+</Accordion>
+
+<Accordion title="Cards appearing as plain text">
+    - Confirm you're using the MessageCard format, not the newer Adaptive Card format
+    - Check that the webhook connector supports rich cards (most Teams connectors do)
+    - Verify that the JSON structure is valid and properly formatted
+    - Ensure content-type is set to application/json
+</Accordion>
+
+<Accordion title="Missing event types">
+    - Confirm that the events you want to receive are enabled in your Dodo Payments webhook configuration
+    - Check that the event types are selected in your Teams connector configuration
+    - Verify that your endpoint is properly configured to receive the events
+    - Review the webhook management portal for any error logs or delivery failures
+</Accordion>
+</AccordionGroup>

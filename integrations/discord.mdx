@@ -1,0 +1,154 @@
+---
+title: "Discord"
+description: "Send real-time Dodo Payments notifications to your Discord channels."
+icon: "discord"
+---
+
+## Introduction
+
+Keep your team informed where they already collaborate. The Discord integration delivers payment, subscription, dispute, and other important events directly to any channel you choose—no polling or dashboards required.
+
+<Info>
+This guide assumes you have access to the Integrations section of the Dodo Payments dashboard.
+</Info>
+
+## Getting Started
+
+<Steps>
+<Step title="Open the Webhook Section">
+  In your Dodo Payments dashboard, open <b>Webhooks → + Add Endpoint</b> and expand the dropdown to reveal integrations.
+  <Frame>
+    <img src="/images/integrations/discord/1.png" alt="Add Endpoint and integrations dropdown" />
+  </Frame>
+</Step>
+
+<Step title="Select Discord">
+  Choose the <b>Discord</b> card then click <b>Connect your Discord workspace</b>.
+  <Frame>
+    <img src="/images/integrations/discord/2.png" alt="Discord integration card" />
+  </Frame>
+</Step>
+
+<Step title="Authorize the Bot">
+  Grant the requested permissions so the bot can post messages in your selected channel.
+  <Frame>
+    <img src="/images/integrations/discord/3.png" alt="Discord OAuth permissions screen" />
+  </Frame>
+</Step>
+
+<Step title="Edit Transformation Code">
+  Tailor the payload → embed mapping to your needs—or start with the templates below.
+  <Frame>
+    <img src="/images/integrations/discord/4.png" alt="Transformation code editor" />
+  </Frame>
+</Step>
+
+<Step title="Test & Create">
+  Use sample payloads to preview the embed, then hit <b>Create</b>.
+  <Frame>
+    <img src="/images/integrations/discord/5.png" alt="Test transformation and create" />
+  </Frame>
+</Step>
+
+<Step title="Done!">
+  🎉 Your Discord channel will now receive live Dodo Payments updates.
+</Step>
+</Steps>
+
+## Transformation Code Examples
+
+### Minimal Payment Embed
+
+```javascript payment_embed.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType === "payment.succeeded") {
+    const p = webhook.payload.data;
+    webhook.payload = {
+      embeds: [{
+        title: "✅ Payment Successful",
+        description: `**Amount:** $${p.total_amount}\n**Customer:** ${p.customer.email}`,
+        color: 0x2ecc71 // green
+      }]
+    };
+  }
+  return webhook;
+}
+```
+
+### Subscription Events
+
+```javascript subscription_embed.js icon="js" expandable
+function handler(webhook) {
+  const s = webhook.payload.data;
+  switch (webhook.eventType) {
+    case "subscription.active":
+      webhook.payload = {
+        embeds: [{
+          title: "📄 Subscription Activated",
+          fields: [
+            { name: "Customer", value: s.customer.email, inline: true },
+            { name: "Product", value: s.product_id, inline: true },
+            { name: "Next Billing", value: new Date(s.next_billing_date).toLocaleDateString(), inline: true }
+          ],
+          color: 0x2ecc71
+        }]
+      };
+      break;
+    case "subscription.cancelled":
+      webhook.payload = {
+        embeds: [{
+          title: "⚠️ Subscription Cancelled",
+          fields: [
+            { name: "Customer", value: s.customer.email, inline: true },
+            { name: "Product", value: s.product_id, inline: true }
+          ],
+          color: 0xf1c40f
+        }]
+      };
+      break;
+  }
+  return webhook;
+}
+```
+
+### Dispute Alerts
+
+```javascript dispute_embed.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType.startsWith("dispute.")) {
+    const d = webhook.payload.data;
+    webhook.payload = {
+      embeds: [{
+        title: d.dispute_status === "won" ? "🏆 Dispute Won" : d.dispute_status === "lost" ? "❌ Dispute Lost" : "🚨 Dispute Update",
+        fields: [
+          { name: "Payment ID", value: d.payment_id, inline: true },
+          { name: "Amount", value: `$${d.amount}`, inline: true },
+          { name: "Status", value: d.dispute_status, inline: true }
+        ],
+        color: d.dispute_status === "won" ? 0x2ecc71 : d.dispute_status === "lost" ? 0xe74c3c : 0xe67e22
+      }]
+    };
+  }
+  return webhook;
+}
+```
+
+## Tips
+
+- Prefer embeds for rich formatting and colors.
+- Keep titles short; put details in fields.
+- Use intuitive colors: green (success), red (failure), orange (warnings).
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="No messages in Discord">
+- Confirm the bot has access to the channel.
+- Check that the transformation returns a JSON object with `embeds`.
+</Accordion>
+
+<Accordion title="Transformation errors">
+- Validate your code in the editor – syntax errors will block delivery.
+- Ensure field names match the webhook payload structure.
+</Accordion>
+</AccordionGroup>
