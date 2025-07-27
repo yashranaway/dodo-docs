@@ -1,0 +1,201 @@
+---
+title: "Inngest"
+description: "Trigger serverless functions and background jobs in Inngest based on Dodo Payments events."
+icon: "cloud"
+---
+
+## Introduction
+
+Execute serverless functions and background jobs automatically when payment events occur. Process payments, send notifications, update databases, and run complex workflows with Inngest's reliable function execution platform.
+
+<Info>
+This integration requires your Inngest webhook URL from your function configuration.
+</Info>
+
+## Getting Started
+
+<Steps>
+<Step title="Open the Webhook Section">
+  In your Dodo Payments dashboard, navigate to <b>Webhooks → + Add Endpoint</b> and expand the integrations dropdown.
+  <Frame>
+    <img src="/images/integrations/inngest.png" alt="Add Endpoint and integrations dropdown" />
+  </Frame>
+</Step>
+
+<Step title="Select Inngest">
+  Choose the <b>Inngest</b> integration card.
+</Step>
+
+<Step title="Create Inngest Function">
+  In Inngest, create a new function and copy the webhook URL from the function configuration.
+</Step>
+
+<Step title="Paste Webhook URL">
+  Paste the Inngest webhook URL into the endpoint configuration.
+</Step>
+
+<Step title="Configure Transformation">
+  Edit the transformation code to format events for your Inngest function.
+</Step>
+
+<Step title="Test & Create">
+  Test with sample payloads and click <b>Create</b> to activate the integration.
+</Step>
+
+<Step title="Done!">
+  🎉 Payment events will now trigger your Inngest functions automatically.
+</Step>
+</Steps>
+
+## Transformation Code Examples
+
+### Basic Event Payload
+
+```javascript basic_event.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType === "payment.succeeded") {
+    const p = webhook.payload.data;
+    webhook.payload = {
+      name: "payment.succeeded",
+      data: {
+        payment_id: p.payment_id,
+        amount: p.total_amount,
+        currency: p.currency || "USD",
+        customer_email: p.customer.email,
+        customer_name: p.customer.name,
+        payment_method: p.payment_method || "unknown"
+      },
+      user: {
+        email: p.customer.email
+      },
+      ts: Math.floor(new Date(webhook.payload.timestamp).getTime() / 1000)
+    };
+  }
+  return webhook;
+}
+```
+
+### Subscription Event Handler
+
+```javascript subscription_event.js icon="js" expandable
+function handler(webhook) {
+  const s = webhook.payload.data;
+  switch (webhook.eventType) {
+    case "subscription.active":
+      webhook.payload = {
+        name: "subscription.started",
+        data: {
+          subscription_id: s.subscription_id,
+          customer_email: s.customer.email,
+          customer_name: s.customer.name,
+          product_id: s.product_id,
+          amount: s.recurring_pre_tax_amount,
+          frequency: s.payment_frequency_interval,
+          next_billing: s.next_billing_date
+        },
+        user: {
+          email: s.customer.email
+        },
+        ts: Math.floor(new Date(webhook.payload.timestamp).getTime() / 1000)
+      };
+      break;
+    case "subscription.cancelled":
+      webhook.payload = {
+        name: "subscription.cancelled",
+        data: {
+          subscription_id: s.subscription_id,
+          customer_email: s.customer.email,
+          cancelled_at: s.cancelled_at,
+          cancel_at_next_billing: s.cancel_at_next_billing_date
+        },
+        user: {
+          email: s.customer.email
+        },
+        ts: Math.floor(new Date(webhook.payload.timestamp).getTime() / 1000)
+      };
+      break;
+  }
+  return webhook;
+}
+```
+
+### Dispute Event Handler
+
+```javascript dispute_event.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType.startsWith("dispute.")) {
+    const d = webhook.payload.data;
+    webhook.payload = {
+      name: webhook.eventType,
+      data: {
+        dispute_id: d.dispute_id,
+        payment_id: d.payment_id,
+        amount: d.amount,
+        status: d.dispute_status,
+        stage: d.dispute_stage,
+        remarks: d.remarks || "",
+        urgent: webhook.eventType === "dispute.opened"
+      },
+      user: {
+        email: d.customer?.email || "unknown"
+      },
+      ts: Math.floor(new Date(webhook.payload.timestamp).getTime() / 1000)
+    };
+  }
+  return webhook;
+}
+```
+
+## Common Inngest Use Cases
+
+<AccordionGroup>
+<Accordion title="Payment Processing">
+- Send confirmation emails
+- Update customer records
+- Process refunds
+- Generate invoices
+- Update inventory
+</Accordion>
+
+<Accordion title="Subscription Management">
+- Welcome new subscribers
+- Process cancellations
+- Send renewal reminders
+- Update billing cycles
+- Handle failed payments
+</Accordion>
+
+<Accordion title="Analytics & Reporting">
+- Update revenue metrics
+- Track customer behavior
+- Generate reports
+- Sync data to analytics platforms
+- Calculate churn rates
+</Accordion>
+</AccordionGroup>
+
+## Tips
+
+- Use descriptive event names for better function organization
+- Include user context for function execution
+- Set proper timestamps for event ordering
+- Structure data consistently across events
+- Use Inngest's retry and error handling features
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Functions not triggering">
+- Verify webhook URL is correct and active
+- Check that Inngest function is deployed and active
+- Ensure event names match function triggers
+- Review Inngest function logs for errors
+</Accordion>
+
+<Accordion title="Data not received correctly">
+- Check payload structure matches Inngest expectations
+- Verify event names are properly formatted
+- Ensure all required fields are included
+- Test with Inngest's webhook testing tool
+</Accordion>
+</AccordionGroup> 

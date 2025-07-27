@@ -1,0 +1,188 @@
+---
+title: "Windmill"
+description: "Trigger Windmill workflows and scripts based on Dodo Payments events for custom automation."
+icon: "wind"
+---
+
+## Introduction
+
+Execute custom workflows and scripts in Windmill when payment events occur. Run database operations, send notifications, process data, and automate complex business logic with Windmill's powerful workflow engine.
+
+<Info>
+This integration requires your Windmill webhook URL from your workflow configuration.
+</Info>
+
+## Getting Started
+
+<Steps>
+<Step title="Open the Webhook Section">
+  In your Dodo Payments dashboard, navigate to <b>Webhooks → + Add Endpoint</b> and expand the integrations dropdown.
+  <Frame>
+    <img src="/images/integrations/windmill.png" alt="Add Endpoint and integrations dropdown" />
+  </Frame>
+</Step>
+
+<Step title="Select Windmill">
+  Choose the <b>Windmill</b> integration card.
+</Step>
+
+<Step title="Create Windmill Workflow">
+  In Windmill, create a new workflow and copy the webhook URL from the trigger configuration.
+</Step>
+
+<Step title="Paste Webhook URL">
+  Paste the Windmill webhook URL into the endpoint configuration.
+</Step>
+
+<Step title="Configure Transformation">
+  Edit the transformation code to format events for your Windmill workflow.
+</Step>
+
+<Step title="Test & Create">
+  Test with sample payloads and click <b>Create</b> to activate the integration.
+</Step>
+
+<Step title="Done!">
+  🎉 Payment events will now trigger your Windmill workflows automatically.
+</Step>
+</Steps>
+
+## Transformation Code Examples
+
+### Basic Workflow Payload
+
+```javascript basic_workflow.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType === "payment.succeeded") {
+    const p = webhook.payload.data;
+    webhook.payload = {
+      event_type: webhook.eventType,
+      payment_id: p.payment_id,
+      amount: p.total_amount,
+      currency: p.currency || "USD",
+      customer_email: p.customer.email,
+      customer_name: p.customer.name,
+      payment_method: p.payment_method || "unknown",
+      timestamp: webhook.payload.timestamp,
+      metadata: {
+        business_id: p.business_id,
+        product_id: p.product_id
+      }
+    };
+  }
+  return webhook;
+}
+```
+
+### Subscription Workflow Handler
+
+```javascript subscription_workflow.js icon="js" expandable
+function handler(webhook) {
+  const s = webhook.payload.data;
+  switch (webhook.eventType) {
+    case "subscription.active":
+      webhook.payload = {
+        event_type: "subscription_started",
+        subscription_id: s.subscription_id,
+        customer_email: s.customer.email,
+        customer_name: s.customer.name,
+        product_id: s.product_id,
+        amount: s.recurring_pre_tax_amount,
+        frequency: s.payment_frequency_interval,
+        next_billing: s.next_billing_date,
+        customer_id: s.customer.customer_id,
+        timestamp: webhook.payload.timestamp
+      };
+      break;
+    case "subscription.cancelled":
+      webhook.payload = {
+        event_type: "subscription_cancelled",
+        subscription_id: s.subscription_id,
+        customer_email: s.customer.email,
+        cancelled_at: s.cancelled_at,
+        cancel_at_next_billing: s.cancel_at_next_billing_date,
+        customer_id: s.customer.customer_id,
+        timestamp: webhook.payload.timestamp
+      };
+      break;
+  }
+  return webhook;
+}
+```
+
+### Dispute Workflow Handler
+
+```javascript dispute_workflow.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType.startsWith("dispute.")) {
+    const d = webhook.payload.data;
+    webhook.payload = {
+      event_type: webhook.eventType,
+      dispute_id: d.dispute_id,
+      payment_id: d.payment_id,
+      amount: d.amount,
+      status: d.dispute_status,
+      stage: d.dispute_stage,
+      remarks: d.remarks || "",
+      urgent: webhook.eventType === "dispute.opened",
+      business_id: d.business_id,
+      timestamp: webhook.payload.timestamp
+    };
+  }
+  return webhook;
+}
+```
+
+## Common Windmill Use Cases
+
+<AccordionGroup>
+<Accordion title="Database Operations">
+- Update customer records in PostgreSQL/MySQL
+- Log payment events to data warehouses
+- Sync data to external systems
+- Update inventory levels
+- Track analytics metrics
+</Accordion>
+
+<Accordion title="Business Logic">
+- Calculate revenue metrics
+- Process refunds and adjustments
+- Handle subscription lifecycle
+- Generate reports and exports
+- Validate payment data
+</Accordion>
+
+<Accordion title="External Integrations">
+- Send data to analytics platforms
+- Update CRM systems
+- Trigger email campaigns
+- Create calendar events
+- Send SMS notifications
+</Accordion>
+</AccordionGroup>
+
+## Tips
+
+- Structure payload data for easy workflow processing
+- Include all relevant metadata for business logic
+- Use consistent field naming across events
+- Include timestamps for workflow timing
+- Leverage Windmill's built-in error handling
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Workflows not triggering">
+- Verify webhook URL is correct and active
+- Check that Windmill workflow is published and active
+- Ensure payload structure matches workflow expectations
+- Review Windmill execution logs for errors
+</Accordion>
+
+<Accordion title="Data processing issues">
+- Check workflow input parameter mapping
+- Verify data types match expected formats
+- Test workflow with sample data
+- Review Windmill script execution logs
+</Accordion>
+</AccordionGroup> 

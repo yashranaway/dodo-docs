@@ -1,848 +1,150 @@
 ---
 title: "HubSpot"
-description: "Integrate Dodo Payments with HubSpot to sync payment data with your CRM and automate sales workflows."
+description: "Automatically create and update contacts, companies, and deals in HubSpot from Dodo Payments events."
 icon: "hubspot"
 ---
 
 ## Introduction
 
-The Dodo Payments HubSpot integration allows you to automatically sync payment data with your HubSpot CRM, create and update contacts, companies, and deals based on payment events, and trigger sales automation workflows. This integration enables you to maintain a complete view of your customers' payment history and subscription status directly in your CRM.
+Sync your payment data directly to HubSpot CRM. Create contacts from successful payments, track subscription lifecycle, and build comprehensive customer profiles—all automatically triggered by Dodo Payments events.
 
 <Info>
-This integration uses our webhook management portal to automatically transform Dodo Payments webhook events into HubSpot CRM actions. Configure OAuth authentication and custom property mappings to sync payment data seamlessly with your sales pipeline.
+This integration requires HubSpot admin access to configure OAuth scopes and API permissions.
 </Info>
 
 ## Getting Started
 
 <Steps>
 <Step title="Open the Webhook Section">
-  Go to the <b>Webhook</b> section in your Dodo Payments dashboard. Click the <b>+ Add Endpoint</b> button, then open the webhook dropdown to reveal other integrations.
+  In your Dodo Payments dashboard, go to <b>Webhooks → + Add Endpoint</b> and expand the integrations dropdown.
   <Frame>
-    <img src="/images/integrations/hubspot/1.png" alt="Dodo Payments dashboard showing Add Endpoint button and integrations dropdown" />
+    <img src="/images/integrations/hubspot.png" alt="Add Endpoint and integrations dropdown" />
   </Frame>
 </Step>
 
-<Step title="Select HubSpot Integration">
-  Select the <b>HubSpot</b> integration and click <b>Connect your HubSpot account</b>.
-  <Frame>
-    <img src="/images/integrations/hubspot/2.png" alt="HubSpot integration card and connect button" />
-  </Frame>
+<Step title="Select HubSpot">
+  Choose the <b>HubSpot</b> integration card.
 </Step>
 
-<Step title="Grant HubSpot OAuth Permissions">
-  Authorize the Dodo Payments app to access your HubSpot account. Grant the necessary scopes including contacts, companies, deals, and custom properties permissions.
-  <Frame>
-    <img src="/images/integrations/hubspot/3.png" alt="HubSpot OAuth permissions screen for CRM access" />
-  </Frame>
+<Step title="Connect HubSpot">
+  Click <b>Connect to HubSpot</b> and authorize the required OAuth scopes.
 </Step>
 
-<Step title="Configure Property Mapping">
-  Map Dodo Payments data fields to HubSpot properties. You can use default mappings or create custom properties for payment-specific data.
-  <Frame>
-    <img src="/images/integrations/hubspot/4.png" alt="Property mapping configuration for payment data" />
-  </Frame>
+<Step title="Configure Transformation">
+  Edit the transformation code to map payment data to HubSpot CRM objects.
 </Step>
 
-<Step title="Customize Transformation Code">
-  Add or edit the transformation code to customize your HubSpot CRM actions for your use case. You can use the pre-made templates or write your own logic.
-  <Frame>
-    <img src="/images/integrations/hubspot/5.png" alt="Transformation code editor for HubSpot integration" />
-  </Frame>
+<Step title="Test & Create">
+  Test with sample payloads and click <b>Create</b> to activate the sync.
 </Step>
 
-<Step title="Test and Create">
-  Test your transformation code with custom or pre-made event payloads. Once you're satisfied, click <b>Create</b> to activate the integration.
-  <Frame>
-    <img src="/images/integrations/hubspot/6.png" alt="Test transformation and create button" />
-  </Frame>
-</Step>
-
-<Step title="Integration Complete!">
-  🎉 You have successfully created the HubSpot integration! Your Dodo Payments events will now sync with your HubSpot CRM in real time.
+<Step title="Done!">
+  🎉 Payment events will now automatically create/update records in your HubSpot CRM.
 </Step>
 </Steps>
 
 ## Transformation Code Examples
 
-### Basic Contact Creation and Updates
+### Create Contact from Payment
 
-This transformation creates or updates contacts in HubSpot when payments are processed:
-
-```javascript contact_sync.js icon="js" expandable
+```javascript create_contact.js icon="js" expandable
 function handler(webhook) {
-  const event = webhook.payload.data;
-  const hubspotClient = webhook.integrations.hubspot;
-  
-  switch (webhook.eventType) {
-    case "payment.succeeded":
-      // Create or update contact
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "email",
-              value: event.customer.email
-            },
-            {
-              property: "firstname", 
-              value: event.customer.first_name || ""
-            },
-            {
-              property: "lastname",
-              value: event.customer.last_name || ""
-            },
-            {
-              property: "total_payment_amount",
-              value: event.total_amount
-            },
-            {
-              property: "last_payment_date",
-              value: new Date(webhook.payload.timestamp).getTime()
-            },
-            {
-              property: "payment_status",
-              value: "Successful"
-            },
-            {
-              property: "dodo_customer_id",
-              value: event.customer.id
-            }
-          ]
-        }
-      };
-      break;
-      
-    case "payment.failed":
-      // Update contact with failed payment info
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "payment_status",
-              value: "Failed"
-            },
-            {
-              property: "last_failed_payment_date",
-              value: new Date(webhook.payload.timestamp).getTime()
-            },
-            {
-              property: "failed_payment_reason",
-              value: event.error_message || "Unknown error"
-            }
-          ]
-        }
-      };
-      break;
-  }
-
-  return webhook;
-}
-```
-
-### Subscription Management with Deal Creation
-
-This transformation manages subscription data and creates deals for new subscriptions:
-
-```javascript subscription_deals.js icon="js" expandable
-function handler(webhook) {
-  const event = webhook.payload.data;
-  
-  switch (webhook.eventType) {
-    case "subscription.active":
-      // First, create or update the contact
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "email",
-              value: event.customer.email
-            },
-            {
-              property: "subscription_status",
-              value: "Active"
-            },
-            {
-              property: "subscription_id",
-              value: event.id
-            },
-            {
-              property: "subscription_amount",
-              value: event.recurring_pre_tax_amount
-            },
-            {
-              property: "billing_frequency",
-              value: event.payment_frequency_interval
-            },
-            {
-              property: "next_billing_date",
-              value: new Date(event.next_billing_date).getTime()
-            }
-          ]
-        },
-        after: [
-          {
-            // Create a deal for the subscription
-            endpoint: "deals/v1/deal",
-            method: "POST",
-            body: {
-              properties: [
-                {
-                  name: "dealname",
-                  value: `Subscription - ${event.product_id} - ${event.customer.email}`
-                },
-                {
-                  name: "amount",
-                  value: event.recurring_pre_tax_amount
-                },
-                {
-                  name: "dealstage",
-                  value: "closedwon"
-                },
-                {
-                  name: "pipeline",
-                  value: "default"
-                },
-                {
-                  name: "closedate",
-                  value: new Date(webhook.payload.timestamp).getTime()
-                },
-                {
-                  name: "subscription_id",
-                  value: event.id
-                },
-                {
-                  name: "recurring_revenue",
-                  value: event.recurring_pre_tax_amount
-                },
-                {
-                  name: "billing_frequency",
-                  value: event.payment_frequency_interval
-                }
-              ]
-            }
-          }
-        ]
-      };
-      break;
-      
-    case "subscription.cancelled":
-      // Update contact and deal status
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "subscription_status",
-              value: "Cancelled"
-            },
-            {
-              property: "cancellation_date",
-              value: new Date(event.cancelled_at).getTime()
-            },
-            {
-              property: "cancel_at_next_billing",
-              value: event.cancel_at_next_billing_date ? "Yes" : "No"
-            }
-          ]
-        }
-      };
-      break;
-      
-    case "subscription.renewed":
-      // Update contact with renewal info and create new deal
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "last_renewal_date",
-              value: new Date(webhook.payload.timestamp).getTime()
-            },
-            {
-              property: "total_subscription_payments",
-              value: event.total_payments || 1
-            },
-            {
-              property: "next_billing_date",
-              value: new Date(event.next_billing_date).getTime()
-            }
-          ]
-        },
-        after: [
-          {
-            // Create renewal deal
-            endpoint: "deals/v1/deal",
-            method: "POST",
-            body: {
-              properties: [
-                {
-                  name: "dealname",
-                  value: `Subscription Renewal - ${event.product_id} - ${event.customer.email}`
-                },
-                {
-                  name: "amount",
-                  value: event.recurring_pre_tax_amount
-                },
-                {
-                  name: "dealstage",
-                  value: "closedwon"
-                },
-                {
-                  name: "pipeline",
-                  value: "default"
-                },
-                {
-                  name: "closedate",
-                  value: new Date(webhook.payload.timestamp).getTime()
-                },
-                {
-                  name: "deal_type",
-                  value: "Renewal"
-                }
-              ]
-            }
-          }
-        ]
-      };
-      break;
-  }
-
-  return webhook;
-}
-```
-
-### Company and Deal Association
-
-This transformation creates companies and associates deals with both contacts and companies:
-
-```javascript company_association.js icon="js" expandable
-function handler(webhook) {
-  const event = webhook.payload.data;
-  
-  switch (webhook.eventType) {
-    case "payment.succeeded":
-      if (event.customer.company) {
-        // Create or update company first
-        webhook.payload = {
-          endpoint: "companies/v2/companies",
-          method: "POST",
-          body: {
-            properties: [
-              {
-                name: "name",
-                value: event.customer.company
-              },
-              {
-                name: "domain",
-                value: event.customer.email.split('@')[1]
-              },
-              {
-                name: "total_revenue",
-                value: event.total_amount
-              },
-              {
-                name: "last_payment_date",
-                value: new Date(webhook.payload.timestamp).getTime()
-              }
-            ]
-          },
-          after: [
-            {
-              // Create/update contact and associate with company
-              endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-              method: "POST",
-              body: {
-                properties: [
-                  {
-                    property: "email",
-                    value: event.customer.email
-                  },
-                  {
-                    property: "company",
-                    value: event.customer.company
-                  },
-                  {
-                    property: "total_payment_amount",
-                    value: event.total_amount
-                  }
-                ]
-              }
-            },
-            {
-              // Create deal and associate with company
-              endpoint: "deals/v1/deal",
-              method: "POST",
-              body: {
-                properties: [
-                  {
-                    name: "dealname",
-                    value: `Payment - ${event.payment_id}`
-                  },
-                  {
-                    name: "amount",
-                    value: event.total_amount
-                  },
-                  {
-                    name: "dealstage",
-                    value: "closedwon"
-                  },
-                  {
-                    name: "closedate",
-                    value: new Date(webhook.payload.timestamp).getTime()
-                  }
-                ],
-                associations: {
-                  associatedCompanyIds: ["{{company_id}}"],
-                  associatedVids: ["{{contact_id}}"]
-                }
-              }
-            }
-          ]
-        };
+  if (webhook.eventType === "payment.succeeded") {
+    const p = webhook.payload.data;
+    webhook.url = "https://api.hubapi.com/crm/v3/objects/contacts";
+    webhook.payload = {
+      properties: {
+        email: p.customer.email,
+        firstname: p.customer.name.split(' ')[0] || '',
+        lastname: p.customer.name.split(' ').slice(1).join(' ') || '',
+        phone: p.customer.phone || '',
+        company: p.customer.company || '',
+        amount: p.total_amount.toString(),
+        payment_method: p.payment_method || '',
+        currency: p.currency || 'USD'
       }
-      break;
+    };
   }
-
   return webhook;
 }
 ```
 
-### Dispute and Refund Management
+### Update Contact with Subscription
 
-This transformation handles disputes and refunds with appropriate CRM updates:
-
-```javascript dispute_refund_management.js icon="js" expandable
+```javascript update_contact.js icon="js" expandable
 function handler(webhook) {
-  const event = webhook.payload.data;
-  
-  switch (webhook.eventType) {
-    case "dispute.opened":
-      // Create a deal for the dispute and update contact
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer?.email),
-        method: "POST",
-        body: {
-          properties: [
+  if (webhook.eventType === "subscription.active") {
+    const s = webhook.payload.data;
+    webhook.url = `https://api.hubapi.com/crm/v3/objects/contacts/${s.customer.customer_id}`;
+    webhook.method = "PATCH";
+    webhook.payload = {
+      properties: {
+        subscription_status: "active",
+        subscription_amount: s.recurring_pre_tax_amount.toString(),
+        subscription_frequency: s.payment_frequency_interval,
+        next_billing_date: s.next_billing_date,
+        product_id: s.product_id
+      }
+    };
+  }
+  return webhook;
+}
+```
+
+### Create Deal from Payment
+
+```javascript create_deal.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType === "payment.succeeded") {
+    const p = webhook.payload.data;
+    webhook.url = "https://api.hubapi.com/crm/v3/objects/deals";
+    webhook.payload = {
+      properties: {
+        dealname: `Payment - ${p.customer.email}`,
+        amount: p.total_amount.toString(),
+        dealstage: "closedwon",
+        closedate: new Date().toISOString(),
+        hs_currency: p.currency || "USD"
+      },
+      associations: [
+        {
+          to: {
+            id: p.customer.customer_id
+          },
+          types: [
             {
-              property: "dispute_status",
-              value: "Open"
-            },
-            {
-              property: "disputed_amount",
-              value: event.amount
-            },
-            {
-              property: "last_dispute_date",
-              value: new Date(webhook.payload.timestamp).getTime()
-            }
-          ]
-        },
-        after: [
-          {
-            // Create dispute tracking deal
-            endpoint: "deals/v1/deal",
-            method: "POST",
-            body: {
-              properties: [
-                {
-                  name: "dealname",
-                  value: `Dispute - ${event.payment_id}`
-                },
-                {
-                  name: "amount",
-                  value: `-${event.amount}`
-                },
-                {
-                  name: "dealstage",
-                  value: "disputeopen"
-                },
-                {
-                  name: "dispute_status",
-                  value: event.dispute_status
-                },
-                {
-                  name: "dispute_stage",
-                  value: event.dispute_stage
-                },
-                {
-                  name: "dispute_remarks",
-                  value: event.remarks || ""
-                }
-              ]
-            }
-          }
-        ]
-      };
-      break;
-      
-    case "dispute.won":
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer?.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "dispute_status",
-              value: "Won"
-            },
-            {
-              property: "dispute_resolution_date",
-              value: new Date(webhook.payload.timestamp).getTime()
+              associationCategory: "HUBSPOT_DEFINED",
+              associationTypeId: 3
             }
           ]
         }
-      };
-      break;
-      
-    case "dispute.lost":
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer?.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "dispute_status",
-              value: "Lost"
-            },
-            {
-              property: "dispute_resolution_date",
-              value: new Date(webhook.payload.timestamp).getTime()
-            },
-            {
-              property: "lost_dispute_amount",
-              value: event.amount
-            }
-          ]
-        }
-      };
-      break;
-      
-    case "refund.succeeded":
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer?.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "last_refund_amount",
-              value: event.amount
-            },
-            {
-              property: "last_refund_date",
-              value: new Date(webhook.payload.timestamp).getTime()
-            },
-            {
-              property: "refund_reason",
-              value: event.reason || "Not specified"
-            },
-            {
-              property: "total_refunded_amount",
-              value: "{{current_total_refunded + " + event.amount + "}}"
-            }
-          ]
-        },
-        after: [
-          {
-            // Create refund deal
-            endpoint: "deals/v1/deal",
-            method: "POST",
-            body: {
-              properties: [
-                {
-                  name: "dealname",
-                  value: `Refund - ${event.refund_id}`
-                },
-                {
-                  name: "amount",
-                  value: `-${event.amount}`
-                },
-                {
-                  name: "dealstage",
-                  value: "refundprocessed"
-                },
-                {
-                  name: "refund_reason",
-                  value: event.reason || "Not specified"
-                },
-                {
-                  name: "original_payment_id",
-                  value: event.payment_id
-                }
-              ]
-            }
-          }
-        ]
-      };
-      break;
+      ]
+    };
   }
-
   return webhook;
 }
 ```
 
-### Comprehensive CRM Automation
+## Tips
 
-This transformation provides complete CRM automation with lead scoring and workflow triggers:
-
-```javascript crm_automation.js icon="js" expandable
-function handler(webhook) {
-  const event = webhook.payload.data;
-  const timestamp = new Date(webhook.payload.timestamp).getTime();
-  
-  // Calculate lead score based on payment behavior
-  function calculateLeadScore(eventType, amount) {
-    let score = 0;
-    switch (eventType) {
-      case "payment.succeeded":
-        score = Math.min(amount / 10, 50); // Max 50 points for payment
-        break;
-      case "subscription.active":
-        score = 75; // High score for subscriptions
-        break;
-      case "subscription.renewed":
-        score = 25; // Loyalty points
-        break;
-      case "payment.failed":
-        score = -10; // Negative points for failures
-        break;
-      case "dispute.opened":
-        score = -25; // Significant negative points
-        break;
-    }
-    return Math.round(score);
-  }
-  
-  const leadScore = calculateLeadScore(webhook.eventType, event.total_amount || event.amount || 0);
-  
-  switch (webhook.eventType) {
-    case "payment.succeeded":
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "email",
-              value: event.customer.email
-            },
-            {
-              property: "firstname",
-              value: event.customer.first_name || ""
-            },
-            {
-              property: "lastname",
-              value: event.customer.last_name || ""
-            },
-            {
-              property: "total_payment_amount",
-              value: event.total_amount
-            },
-            {
-              property: "payment_count",
-              value: "{{current_payment_count + 1}}"
-            },
-            {
-              property: "average_payment_amount",
-              value: "{{total_revenue / payment_count}}"
-            },
-            {
-              property: "last_payment_date",
-              value: timestamp
-            },
-            {
-              property: "payment_status",
-              value: "Successful"
-            },
-            {
-              property: "lead_score",
-              value: `{{current_lead_score + ${leadScore}}}`
-            },
-            {
-              property: "customer_lifetime_value",
-              value: "{{total_revenue}}"
-            },
-            {
-              property: "payment_method",
-              value: event.payment_method || "Unknown"
-            },
-            {
-              property: "currency",
-              value: event.currency || "USD"
-            }
-          ]
-        },
-        workflows: [
-          {
-            trigger: "payment_received",
-            conditions: {
-              payment_amount: event.total_amount,
-              is_first_payment: "{{payment_count == 1}}"
-            }
-          }
-        ]
-      };
-      break;
-      
-    case "subscription.active":
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "subscription_status",
-              value: "Active"
-            },
-            {
-              property: "subscription_tier",
-              value: event.product_id
-            },
-            {
-              property: "monthly_recurring_revenue",
-              value: event.payment_frequency_interval === "month" ? event.recurring_pre_tax_amount : 0
-            },
-            {
-              property: "annual_recurring_revenue",
-              value: event.payment_frequency_interval === "year" ? event.recurring_pre_tax_amount : event.recurring_pre_tax_amount * 12
-            },
-            {
-              property: "lead_score",
-              value: `{{current_lead_score + ${leadScore}}}`
-            },
-            {
-              property: "customer_segment",
-              value: event.recurring_pre_tax_amount > 100 ? "Enterprise" : event.recurring_pre_tax_amount > 50 ? "Professional" : "Basic"
-            }
-          ]
-        },
-        workflows: [
-          {
-            trigger: "new_subscription",
-            conditions: {
-              subscription_tier: event.product_id,
-              mrr_amount: event.recurring_pre_tax_amount
-            }
-          }
-        ]
-      };
-      break;
-      
-    case "license_key.created":
-      webhook.payload = {
-        endpoint: "contacts/v1/contact/createOrUpdate/email/" + encodeURIComponent(event.customer?.email),
-        method: "POST",
-        body: {
-          properties: [
-            {
-              property: "license_key_count",
-              value: "{{current_license_count + 1}}"
-            },
-            {
-              property: "last_license_created",
-              value: timestamp
-            },
-            {
-              property: "active_licenses",
-              value: "{{active_license_count + 1}}"
-            },
-            {
-              property: "license_product_id",
-              value: event.product_id
-            }
-          ]
-        },
-        after: [
-          {
-            // Create deal for license
-            endpoint: "deals/v1/deal",
-            method: "POST",
-            body: {
-              properties: [
-                {
-                  name: "dealname",
-                  value: `License - ${event.product_id} - ${event.customer?.email}`
-                },
-                {
-                  name: "dealstage",
-                  value: "licensedelivered"
-                },
-                {
-                  name: "license_key_id",
-                  value: event.id
-                },
-                {
-                  name: "license_expires",
-                  value: event.expires_at ? new Date(event.expires_at).getTime() : null
-                }
-              ]
-            }
-          }
-        ]
-      };
-      break;
-  }
-
-  return webhook;
-}
-```
-
-## Best Practices
-
-To make your HubSpot integration effective:
-
-- **Use Custom Properties**: Create custom properties in HubSpot for payment-specific data like subscription status, payment frequency, and customer lifetime value.
-- **Implement Lead Scoring**: Use payment behavior to automatically score leads and identify high-value customers.
-- **Create Automated Workflows**: Set up HubSpot workflows that trigger based on payment events to nurture customers and prevent churn.
-- **Maintain Data Consistency**: Always use the customer email as the primary identifier to ensure data consistency across systems.
-- **Track Customer Journey**: Use deal stages to track the complete customer journey from first payment to subscription renewal.
-
-<Warning>
-**API Rate Limits**: HubSpot has API rate limits. For high-volume payment processing, consider batching updates or implementing retry logic. Also, be mindful of sensitive data and comply with data privacy regulations when syncing customer information.
-</Warning>
+- Use HubSpot's API explorer to test object creation
+- Map payment amounts to HubSpot currency fields
+- Include customer IDs for proper associations
+- Set appropriate deal stages based on payment status
 
 ## Troubleshooting
 
 <AccordionGroup>
-<Accordion title="OAuth connection failing">
-    - Verify that your HubSpot account has the necessary permissions for the requested scopes
-    - Check that the OAuth redirect URL is correctly configured in your HubSpot app settings
-    - Ensure your HubSpot account is not in a trial period that restricts API access
-    - Verify that the required HubSpot subscription tier supports the APIs you're trying to use
+<Accordion title="Records not created in HubSpot">
+- Verify OAuth scopes include write permissions
+- Check that required HubSpot properties exist
+- Ensure customer email is valid and unique
+- Review HubSpot API rate limits
 </Accordion>
 
-<Accordion title="Contacts not being created or updated">
-    - Verify that the email address format is valid and consistent
-    - Check that the required contact properties exist in your HubSpot account
-    - Ensure that your API key or OAuth token has write permissions for contacts
-    - Verify that the contact data meets HubSpot's validation requirements
-</Accordion>
-
-<Accordion title="Deals not associating properly">
-    - Confirm that the contact exists before trying to create associated deals
-    - Check that the deal pipeline and stages exist in your HubSpot account
-    - Verify that the association IDs are correct in your transformation code
-    - Ensure that your API permissions include deals and associations
-</Accordion>
-
-<Accordion title="Custom properties not syncing">
-    - Verify that custom properties are created in HubSpot before using them
-    - Check that the property names match exactly (case-sensitive)
-    - Ensure that the property types are compatible with the data being sent
-    - Confirm that your API permissions include custom properties
-</Accordion>
-
-<Accordion title="Workflow triggers not firing">
-    - Verify that HubSpot workflows are enabled and properly configured
-    - Check that the trigger conditions match the data being sent
-    - Ensure that the contact meets all enrollment criteria for the workflow
-    - Confirm that workflow triggers are active in your HubSpot account
+<Accordion title="Transformation errors">
+- Validate JSON structure matches HubSpot API format
+- Check that all required properties are included
+- Ensure property names match HubSpot field names exactly
 </Accordion>
 </AccordionGroup>

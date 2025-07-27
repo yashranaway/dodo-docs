@@ -1,0 +1,143 @@
+---
+title: "Loops"
+description: "Send transactional emails and manage customer communication through Loops based on Dodo Payments events."
+icon: "infinity"
+---
+
+## Introduction
+
+Send transactional emails and manage customer communication automatically when payment events occur. Deliver payment confirmations, subscription updates, and important notifications with Loops' email infrastructure.
+
+<Info>
+This integration requires your Loops API Key for authentication.
+</Info>
+
+## Getting Started
+
+<Steps>
+<Step title="Open the Webhook Section">
+  In your Dodo Payments dashboard, navigate to <b>Webhooks → + Add Endpoint</b> and expand the integrations dropdown.
+  <Frame>
+    <img src="/images/integrations/loops.png" alt="Add Endpoint and integrations dropdown" />
+  </Frame>
+</Step>
+
+<Step title="Select Loops">
+  Choose the <b>Loops</b> integration card.
+</Step>
+
+<Step title="Enter API Key">
+  Provide your Loops API Key in the configuration.
+</Step>
+
+<Step title="Configure Transformation">
+  Edit the transformation code to format emails for Loops' API.
+</Step>
+
+<Step title="Test & Create">
+  Test with sample payloads and click <b>Create</b> to activate the email sending.
+</Step>
+
+<Step title="Done!">
+  🎉 Payment events will now automatically trigger transactional emails via Loops.
+</Step>
+</Steps>
+
+## Transformation Code Examples
+
+### Payment Confirmation Email
+
+```javascript payment_confirmation.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType === "payment.succeeded") {
+    const p = webhook.payload.data;
+    webhook.url = "https://api.loops.so/v1/events/send";
+    webhook.payload = {
+      eventName: "payment_confirmation",
+      email: p.customer.email,
+      properties: {
+        customer_name: p.customer.name,
+        payment_id: p.payment_id,
+        amount: p.total_amount,
+        currency: p.currency || "USD",
+        payment_method: p.payment_method || "unknown",
+        payment_date: new Date(webhook.payload.timestamp).toLocaleDateString()
+      }
+    };
+  }
+  return webhook;
+}
+```
+
+### Subscription Welcome Email
+
+```javascript subscription_welcome.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType === "subscription.active") {
+    const s = webhook.payload.data;
+    webhook.url = "https://api.loops.so/v1/events/send";
+    webhook.payload = {
+      eventName: "subscription_welcome",
+      email: s.customer.email,
+      properties: {
+        customer_name: s.customer.name,
+        subscription_id: s.subscription_id,
+        product_id: s.product_id,
+        amount: s.recurring_pre_tax_amount,
+        frequency: s.payment_frequency_interval,
+        next_billing: s.next_billing_date
+      }
+    };
+  }
+  return webhook;
+}
+```
+
+### Payment Failure Notification
+
+```javascript payment_failure.js icon="js" expandable
+function handler(webhook) {
+  if (webhook.eventType === "payment.failed") {
+    const p = webhook.payload.data;
+    webhook.url = "https://api.loops.so/v1/events/send";
+    webhook.payload = {
+      eventName: "payment_failed",
+      email: p.customer.email,
+      properties: {
+        customer_name: p.customer.name,
+        payment_id: p.payment_id,
+        amount: p.total_amount,
+        error_message: p.error_message || "Payment processing failed",
+        retry_link: `https://yourdomain.com/retry-payment/${p.payment_id}`
+      }
+    };
+  }
+  return webhook;
+}
+```
+
+## Tips
+
+- Use descriptive event names for better email template organization
+- Include relevant customer properties for personalization
+- Set up email templates in Loops dashboard for each event
+- Use consistent property naming across events
+- Test email delivery before going live
+
+## Troubleshooting
+
+<AccordionGroup>
+<Accordion title="Emails not being sent">
+- Verify API Key is correct and active
+- Check that event names match your Loops templates
+- Ensure recipient email addresses are valid
+- Review Loops sending limits and quotas
+</Accordion>
+
+<Accordion title="Transformation errors">
+- Validate JSON structure matches Loops API format
+- Check that all required fields are present
+- Ensure event names are properly formatted
+- Verify API key permissions
+</Accordion>
+</AccordionGroup> 

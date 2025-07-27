@@ -350,6 +350,36 @@
               "integrations/discord",
               "integrations/microsoft-teams"
             ]
+          },
+          {
+            "group": "Workflow Automation",
+            "pages": [
+              "integrations/zapier",
+              "integrations/windmill",
+              "integrations/inngest"
+            ]
+          },
+          {
+            "group": "CRM",
+            "pages": [
+              "integrations/hubspot",
+              "integrations/close-crm"
+            ]
+          },
+          {
+            "group": "Email",
+            "pages": [
+              "integrations/resend",
+              "integrations/loops",
+              "integrations/sendgrid"
+            ]
+          },
+          { 
+            "group": "Analytics",
+            "pages": [
+              "integrations/segment",
+              "integrations/customer-io"
+            ]
           }
         ]
       },
