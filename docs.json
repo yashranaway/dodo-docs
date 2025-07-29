@@ -698,7 +698,7 @@
     },
     {
       "source": "/features/upi",
-      "destination": "features/payment-methods"
+      "destination": "/features/payment-methods"
     },
     {
       "source": "/features/api-keys",
@@ -718,7 +718,7 @@
     },
     {
       "source": "/api-reference/misc/charge-subscriptions",
-      "destination": "features/subscription"
+      "destination": "/features/subscription"
     },
     {
       "source": "/api-reference/outgoing-webhooks/post-your-webhook-url",
