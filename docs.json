@@ -40,12 +40,12 @@
       "group": "Important Links",
       "pages": [
         "features/mor-vs-pg",
-        "miscellaneous/prohibited-businesses-and-locations",
         "miscellaneous/list-of-countries-we-accept-payments-from",
         "miscellaneous/pricing-and-fee-structure",
         "/features/payouts/payout-structure",
         "features/payment-methods",
-        "features/appstore-digital-goods"
+        "features/appstore-digital-goods",
+        "miscellaneous/merchant-acceptance"
       ]
     },
     {
@@ -535,11 +535,6 @@
       "claude"
     ]
   },
-  "error": {
-    "404": {
-      "redirect": true
-    }
-  },
   "redirects": [
     {
       "source": "/guides/license",
@@ -756,6 +751,10 @@
     {
       "source": "/developer-resources/mobile-integration-flutter",
       "destination": "/developer-resources/mobile-integration"
+    },
+    {
+      "source": "/miscellaneous/prohibited-businesses-and-locations",
+      "destination": "/miscellaneous/merchant-acceptance"
     }
   ]
 }
