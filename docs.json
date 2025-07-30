@@ -11,12 +11,6 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Welcome",
-        "pages": [
-          "welcome"
-        ]
-      },
-      {
   "tab": "Setup & Features",
   "groups": [
     {
