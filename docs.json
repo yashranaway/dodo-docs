@@ -98,11 +98,11 @@
           "group": "GTM Tools",
           "icon": "chart-line",
           "pages": [
-            "features/gtm-tools/saas-pricing-calculator",
-            "features/gtm-tools/saas-revenue-and-profit-growth",
-            "features/gtm-tools/saas-kpi-measurement",
-            "features/gtm-tools/freemium-model",
-            "features/gtm-tools/feature-prioritization-tool"
+            "miscellaneous/gtm-tools/saas-pricing-calculator",
+            "miscellaneous/gtm-tools/saas-revenue-and-profit-growth",
+            "miscellaneous/gtm-tools/saas-kpi-measurement",
+            "miscellaneous/gtm-tools/freemium-model",
+            "miscellaneous/gtm-tools/feature-prioritization-tool"
           ]
         },
         "miscellaneous/faq"
@@ -753,8 +753,24 @@
       "destination": "/developer-resources/mobile-integration"
     },
     {
-      "source": "/miscellaneous/prohibited-businesses-and-locations",
-      "destination": "/miscellaneous/merchant-acceptance"
+      "source": "/features/gtm-tools/saas-pricing-calculator",
+      "destination": "/miscellaneous/gtm-tools/saas-pricing-calculator"
+    },
+    {
+      "source": "/features/gtm-tools/saas-revenue-and-profit-growth",
+      "destination": "/miscellaneous/gtm-tools/saas-revenue-and-profit-growth"
+    },
+    {
+      "source": "/features/gtm-tools/saas-kpi-measurement",
+      "destination": "/miscellaneous/gtm-tools/saas-kpi-measurement"
+    },
+    {
+      "source": "/features/gtm-tools/freemium-model",
+      "destination": "/miscellaneous/gtm-tools/freemium-model"
+    },
+    {
+      "source": "/features/gtm-tools/feature-prioritization-tool",
+      "destination": "/miscellaneous/gtm-tools/feature-prioritization-tool"
     }
   ]
 }
