@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.42.5
+  version: 1.44.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -6253,7 +6253,6 @@ paths:
               - pending
               - active
               - on_hold
-              - paused
               - cancelled
               - failed
               - expired
@@ -7058,289 +7057,6 @@ paths:
             response = dodo_payments.subscriptions.charge("subscription_id", product_price: 0)
 
             puts(response)
-  /webhook_events:
-    get:
-      tags:
-        - Webhook Events
-      operationId: list_webhook_events
-      parameters:
-        - name: created_at_gte
-          in: query
-          description: Get events after this created time
-          required: false
-          schema:
-            type: string
-            format: date-time
-          style: form
-        - name: created_at_lte
-          in: query
-          description: Get events created before this time
-          required: false
-          schema:
-            type: string
-            format: date-time
-          style: form
-        - name: limit
-          in: query
-          description: 'Min : 1, Max : 100, default 10'
-          required: false
-          schema:
-            type: integer
-            format: int64
-          style: form
-        - name: object_id
-          in: query
-          description: Get events history of a specific object like payment/subscription/refund/dispute
-          required: false
-          schema:
-            type: string
-          style: form
-        - name: page_size
-          in: query
-          description: Page size default is 10 max is 100
-          required: false
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-          style: form
-        - name: page_number
-          in: query
-          description: Page number default is 0
-          required: false
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-          style: form
-        - name: webhook_id
-          in: query
-          description: Filter by webhook destination
-          required: false
-          schema:
-            type: string
-          style: form
-        - name: webhook_event_id
-          in: query
-          description: Filter by webhook event id
-          required: false
-          schema:
-            type: string
-          style: form
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListWebhookEventsResponse'
-        '500':
-          description: Something went wrong :(
-      security:
-        - API_KEY: []
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import DodoPayments from 'dodopayments';
-
-            const client = new DodoPayments({
-              bearerToken: 'My Bearer Token',
-            });
-
-            // Automatically fetches more pages as needed.
-            for await (const webhookEvent of client.webhookEvents.list()) {
-              console.log(webhookEvent.business_id);
-            }
-        - lang: Python
-          source: |-
-            from dodopayments import DodoPayments
-
-            client = DodoPayments(
-                bearer_token="My Bearer Token",
-            )
-            page = client.webhook_events.list()
-            page = page.items[0]
-            print(page.business_id)
-        - lang: Go
-          source: |
-            package main
-
-            import (
-              "context"
-              "fmt"
-
-              "github.com/dodopayments/dodopayments-go"
-              "github.com/dodopayments/dodopayments-go/option"
-            )
-
-            func main() {
-              client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"),
-              )
-              page, err := client.WebhookEvents.List(context.TODO(), dodopayments.WebhookEventListParams{
-
-              })
-              if err != nil {
-                panic(err.Error())
-              }
-              fmt.Printf("%+v\n", page)
-            }
-        - lang: Java
-          source: |-
-            package com.dodopayments.api.example;
-
-            import com.dodopayments.api.client.DodoPaymentsClient;
-            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
-            import com.dodopayments.api.models.webhookevents.WebhookEventListPage;
-            import com.dodopayments.api.models.webhookevents.WebhookEventListParams;
-
-            public final class Main {
-                private Main() {}
-
-                public static void main(String[] args) {
-                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
-
-                    WebhookEventListPage page = client.webhookEvents().list();
-                }
-            }
-        - lang: Kotlin
-          source: |-
-            package com.dodopayments.api.example
-
-            import com.dodopayments.api.client.DodoPaymentsClient
-            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
-            import com.dodopayments.api.models.webhookevents.WebhookEventListPage
-            import com.dodopayments.api.models.webhookevents.WebhookEventListParams
-
-            fun main() {
-                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
-
-                val page: WebhookEventListPage = client.webhookEvents().list()
-            }
-        - lang: Ruby
-          source: |-
-            require "dodopayments"
-
-            dodo_payments = Dodopayments::Client.new(
-              bearer_token: "My Bearer Token",
-              environment: "test_mode" # defaults to "live_mode"
-            )
-
-            page = dodo_payments.webhook_events.list
-
-            puts(page)
-  /webhook_events/{webhook_event_id}:
-    get:
-      tags:
-        - Webhook Events
-      operationId: get_webhook_event
-      parameters:
-        - name: webhook_event_id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebhookEventLogResponse'
-        '500':
-          description: Something went wrong :(
-      deprecated: true
-      security:
-        - API_KEY: []
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import DodoPayments from 'dodopayments';
-
-            const client = new DodoPayments({
-              bearerToken: 'My Bearer Token',
-            });
-
-            const webhookEvent = await client.webhookEvents.retrieve('webhook_event_id');
-
-            console.log(webhookEvent.business_id);
-        - lang: Python
-          source: |-
-            from dodopayments import DodoPayments
-
-            client = DodoPayments(
-                bearer_token="My Bearer Token",
-            )
-            webhook_event = client.webhook_events.retrieve(
-                "webhook_event_id",
-            )
-            print(webhook_event.business_id)
-        - lang: Go
-          source: |
-            package main
-
-            import (
-              "context"
-              "fmt"
-
-              "github.com/dodopayments/dodopayments-go"
-              "github.com/dodopayments/dodopayments-go/option"
-            )
-
-            func main() {
-              client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"),
-              )
-              webhookEvent, err := client.WebhookEvents.Get(context.TODO(), "webhook_event_id")
-              if err != nil {
-                panic(err.Error())
-              }
-              fmt.Printf("%+v\n", webhookEvent.BusinessID)
-            }
-        - lang: Java
-          source: |-
-            package com.dodopayments.api.example;
-
-            import com.dodopayments.api.client.DodoPaymentsClient;
-            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
-            import com.dodopayments.api.models.webhookevents.WebhookEvent;
-            import com.dodopayments.api.models.webhookevents.WebhookEventRetrieveParams;
-
-            public final class Main {
-                private Main() {}
-
-                public static void main(String[] args) {
-                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
-
-                    WebhookEvent webhookEvent = client.webhookEvents().retrieve("webhook_event_id");
-                }
-            }
-        - lang: Kotlin
-          source: |-
-            package com.dodopayments.api.example
-
-            import com.dodopayments.api.client.DodoPaymentsClient
-            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
-            import com.dodopayments.api.models.webhookevents.WebhookEvent
-            import com.dodopayments.api.models.webhookevents.WebhookEventRetrieveParams
-
-            fun main() {
-                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
-
-                val webhookEvent: WebhookEvent = client.webhookEvents().retrieve("webhook_event_id")
-            }
-        - lang: Ruby
-          source: |-
-            require "dodopayments"
-
-            dodo_payments = Dodopayments::Client.new(
-              bearer_token: "My Bearer Token",
-              environment: "test_mode" # defaults to "live_mode"
-            )
-
-            webhook_event = dodo_payments.webhook_events.retrieve("webhook_event_id")
-
-            puts(webhook_event)
   /your-webhook-url:
     post:
       tags:
@@ -8773,7 +8489,6 @@ components:
         - subscription.active
         - subscription.renewed
         - subscription.on_hold
-        - subscription.paused
         - subscription.cancelled
         - subscription.failed
         - subscription.expired
@@ -9291,15 +9006,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LicenseKeyResponse'
-    ListWebhookEventsResponse:
-      type: object
-      required:
-        - items
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebhookEventLogResponse'
     Metadata:
       type: object
       additionalProperties:
@@ -10144,6 +9850,7 @@ components:
       enum:
         - prorated_immediately
         - full_immediately
+        - difference_immediately
     RecurringPrice:
       type: object
       required:
@@ -10477,7 +10184,6 @@ components:
         - pending
         - active
         - on_hold
-        - paused
         - cancelled
         - failed
         - expired
@@ -10598,39 +10304,6 @@ components:
         valid:
           type: boolean
           example: true
-    WebhookEventLogResponse:
-      type: object
-      required:
-        - event_id
-        - business_id
-        - event_type
-        - object_id
-        - created_at
-      properties:
-        business_id:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        event_id:
-          type: string
-        event_type:
-          type: string
-        latest_attempted_at:
-          type:
-            - string
-            - 'null'
-          format: date-time
-        object_id:
-          type: string
-        request:
-          type:
-            - string
-            - 'null'
-        response:
-          type:
-            - string
-            - 'null'
   securitySchemes:
     API_KEY:
       type: http
@@ -11524,52 +11197,6 @@ x-webhooks:
         '401':
           description: Invalid webhook signature
       summary: Subscription on hold webhook
-  subscription.paused:
-    post:
-      description: Sent when a subscription is paused
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                business_id:
-                  description: The business identifier
-                  type: string
-                data:
-                  allOf:
-                    - $ref: '#/components/schemas/SubscriptionResponse'
-                  description: Event-specific data
-                  properties:
-                    payload_type:
-                      description: The type of payload in the data field
-                      enum:
-                        - Subscription
-                      type: string
-                  type: object
-                timestamp:
-                  description: The timestamp of when the event occurred
-                  format: date-time
-                  type: string
-                type:
-                  description: The event type
-                  enum:
-                    - subscription.paused
-                  type: string
-              required:
-                - business_id
-                - type
-                - timestamp
-                - data
-              type: object
-        required: true
-      responses:
-        '200':
-          description: Webhook received successfully
-        '400':
-          description: Invalid request
-        '401':
-          description: Invalid webhook signature
-      summary: Subscription paused webhook
   subscription.plan_changed:
     post:
       description: Sent when a subscription plan is changed

@@ -259,13 +259,6 @@
             ]
           },
           {
-            "group": "Webhooks",
-            "pages": [
-              "api-reference/webhooks/get-webhook_events",
-              "api-reference/webhooks/get-webhook_event-detail"
-            ]
-          },
-          {
             "group": "Products",
             "pages": [
               "api-reference/products/get-products",
@@ -387,6 +380,12 @@
             "group": "Changelog",
             "pages": [
               "changelog/introduction"
+            ]
+          },
+          {
+            "group": "August 2025",
+            "pages": [
+              "changelog/v1.44.0"
             ]
           },
           {
