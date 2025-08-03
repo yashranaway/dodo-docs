@@ -1,52 +1,108 @@
 ---
-title: Introduction
-description: Welcome to the Dodo Payments API. Our APIs makes it easy to integrate secure, scalable, and versatile payment solutions into your applications.
+title: "Introduction"
+description: "The Dodo Payments API provides comprehensive endpoints for payment processing, subscription management, and digital product delivery. Our RESTful API follows industry standards with detailed responses for all operations."
 icon: "book-open"
 ---
 
+<CardGroup cols={2}>
+<Card title="Integration Quickstart Guide" icon="rocket" href="/developer-resources/introduction">
+Refer to the comprehensive guide for setting up your first API call efficiently.
+</Card>
 
-## Authentication
-
-All API requests require authentication using your API keys. You can find your API keys in the [Dodo Payments Dashboard](https://app.dodopayments.com/developer/api-keys).
-
-<CodeGroup>
-```bash Test Mode
-Authorization: Bearer sk_test_your_test_key
-```
-
-```bash Live Mode
-Authorization: Bearer sk_live_your_live_key
-```
-</CodeGroup>
-
-<Warning>
-Never expose your secret API keys in client-side code or public repositories. Always use test keys for development and testing.
-</Warning>
+<Card title="SDKs & Libraries" icon="code" href="/developer-resources/dodo-payments-sdks">
+Use our official SDKs for TypeScript, Python, Go, and more.
+</Card>
+</CardGroup>
 
 ## Environment URLs
 
-Use the appropriate base URL for your environment:
-
-- Test Mode: [`https://test.dodopayments.com`](https://test.dodopayments.com)
-- Live Mode: [`https://live.dodopayments.com`](https://live.dodopayments.com)
-
-Learn more about [Test Mode vs Live Mode](/miscellaneous/test-mode-vs-live-mode).
-
-## API Key Generation
-
-1. Open Developer → API Keys
-2. Click on Add API Key button and API Key Pop up will open
-3. Enter API Key name and click Create API Key
-4. Copy API Key and keep it safe
-
-
-
-## API Status
-
-Monitor our API status and get real-time updates:
-[status.dodopayments.com](https://status.dodopayments.com)
+- **Test Mode**: [`https://test.dodopayments.com`](https://test.dodopayments.com)
+- **Live Mode**: [`https://live.dodopayments.com`](https://live.dodopayments.com)
 
 <Note>
-Our API implements rate limiting to ensure stable service for all users.
+Learn more about [Test Mode vs Live Mode](/miscellaneous/test-mode-vs-live-mode).
 </Note>
 
+## API Key Management and Authentication
+
+<Steps>
+<Step title="Access API Keys">
+Navigate to **Developer → API Keys** in your dashboard to manage your keys.
+</Step>
+
+<Step title="Generate a New Key">
+Select **Add API Key**, provide a descriptive name, and generate your key.
+</Step>
+
+<Step title="Store Your Key Securely">
+Copy the generated key immediately and ensure it is stored securely.
+</Step>
+
+<Step title="Authenticate Your API Requests">
+Use your API keys to authenticate all requests. Apply the following authorization format:
+<CodeGroup>
+```bash Test Mode
+Authorization: Bearer test_mode_key
+```
+
+```bash Live Mode
+Authorization: Bearer live_mode_key
+```
+</CodeGroup>
+<Warning>
+Never expose your secret API keys in client-side code or public repositories.
+</Warning>
+</Step>
+</Steps>
+
+## Response Format
+
+<CodeGroup>
+```json Success Response
+{
+  "id": "pay_1234567890",
+  "status": "completed",
+  "amount": 2999,
+  "currency": "USD",
+  "created_at": "2024-01-15T10:30:00Z"
+}
+```
+
+```json Error Response
+{
+  "code": "INVALID_REQUEST",
+  "message": "The request contains invalid parameters"
+}
+```
+</CodeGroup>
+
+## Rate Limits
+
+- **Standard**: 100 requests per minute per API key
+- **Burst**: Up to 10 requests per second
+- **Webhooks**: 1000 deliveries per minute
+
+<Note>
+Monitor `X-RateLimit-Remaining` header to track usage.
+</Note>
+
+## Error Handling
+To effectively manage errors, consult the _Error Codes_ and _Transaction Failures_ sections for detailed guidance.
+
+<CardGroup cols={2}>
+<Card title="Error Codes" icon="triangle-exclamation" href="/api-reference/error-codes">
+Delve into comprehensive error details and their resolutions.
+</Card>
+
+<Card title="Transaction Failures" icon="circle-exclamation" href="/api-reference/transaction-failures">
+Gain insights into common transaction issues and their solutions.
+</Card>
+</CardGroup>
+
+## Webhooks
+
+Receive real-time notifications about payment events. See our [Webhook Guide](/developer-resources/webhooks) for setup instructions.
+
+<Card title="Webhook Guide" icon="webhook" href="/developer-resources/webhooks">
+Set up webhooks for real-time notifications and event handling.
+</Card>

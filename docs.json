@@ -120,7 +120,7 @@
         "tab": "Developer Resources",
         "groups": [
           {
-            "group": "Overview",
+            "group": "Developer Resources",
             "pages": [
               "developer-resources/introduction"
             ]
@@ -190,7 +190,7 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Introduction",
+            "group": "API Reference",
             "pages": [
               "api-reference/introduction",
               "api-reference/error-codes",
