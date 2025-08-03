@@ -11,187 +11,182 @@
   "navigation": {
     "tabs": [
       {
-  "tab": "Setup & Features",
-  "groups": [
-    {
-      "group": "Getting Started",
-      "pages": [
-        "introduction",
-        {
-          "group": "Verification",
-          "icon": "id-card",
-          "pages": [
-            "miscellaneous/verification-process",
-            "features/payouts/compliance",
-            "miscellaneous/tax-forms",
-            "features/payouts/link-bank-account"
-          ]
-        }
-      ]
-    },
-
-    {
-      "group": "Important Links",
-      "pages": [
-        "features/mor-vs-pg",
-        "miscellaneous/list-of-countries-we-accept-payments-from",
-        "miscellaneous/pricing-and-fee-structure",
-        "/features/payouts/payout-structure",
-        "features/payment-methods",
-        "features/appstore-digital-goods",
-        "miscellaneous/merchant-acceptance"
-      ]
-    },
-    {
-      "group": "Features",
-      "pages": [
-        "features/one-time-payment-products",
-        "features/subscription",
-        "features/pricing",
-        "features/discount-codes",
-        {
-          "group": "Transactions",
-          "icon": "credit-card",
-          "pages": [
-            "features/transactions/payments",
-            "features/transactions/refunds",
-            "features/transactions/disputes"
-          ]
-        },
-        "features/account-summary-payout-wallet",
-        "features/customers",
-        "features/adaptive-currency",
-        "features/license-keys",
-        "features/storefront",
-        "/features/digital-product-delivery",
-        "features/invoice-generation",
-        "features/b2b-payments",
-        "features/multi-brands",
-        "features/team",
-        "miscellaneous/accounts",
-        "features/analytics-and-reporting",
-        "features/purchasing-power-parity",
-        "features/affiliates",
-        "features/mobile-app"
-      ]
-    },
-    {
-      "group": "Testing & Demo Tools",
-      "pages": [
-        "miscellaneous/test-mode-vs-live-mode",
-        "miscellaneous/testing-process",
-        "features/atlas-demo-website"
-      ]
-    },
-    {
-      "group": "Miscellaneous",
-      "pages": [
-        {
-          "group": "Support Channels",
-          "icon": "headset",
-          "pages": [
-            "miscellaneous/help-support",
-            "features/feature-request"
-          ]
-        },
-        {
-          "group": "GTM Tools",
-          "icon": "chart-line",
-          "pages": [
-            "miscellaneous/gtm-tools/saas-pricing-calculator",
-            "miscellaneous/gtm-tools/saas-revenue-and-profit-growth",
-            "miscellaneous/gtm-tools/saas-kpi-measurement",
-            "miscellaneous/gtm-tools/freemium-model",
-            "miscellaneous/gtm-tools/feature-prioritization-tool"
-          ]
-        },
-        "miscellaneous/faq"
-      ]
-    },
-    {
-      "group": "Security & Compliance",
-      "pages": [
-        "features/fraud-detection",
-        "miscellaneous/security-policy"
-      ]
-    }
-  ]
-},
-
-
-
-      {
-  "tab": "Developer Resources",
-  "groups": [
-    {
-      "group": "Overview",
-      "pages": [
-        "developer-resources/introduction"
-      ]
-    },
-    {
-      "group": "Integration Guides",
-      "pages": [
-        "developer-resources/integration-guide",
-        "developer-resources/subscription-integration-guide",
-        "developer-resources/integration-tutorial",
-        "developer-resources/overlay-checkout",
-        "developer-resources/mobile-integration",
-        "developer-resources/mcp-server"
-      ]
-    },
-    {
-        "group": "Webhooks",
-        "pages": [
-          "developer-resources/webhooks",
-          "developer-resources/webhooks/intents/webhook-events-guide",
+        "tab": "Setup & Features",
+        "groups": [
           {
-            "group": "Webhook Payloads",
-            "icon": "code",
+            "group": "Getting Started",
             "pages": [
-              "developer-resources/webhooks/intents/payment",
-              "developer-resources/webhooks/intents/subscription",
-              "developer-resources/webhooks/intents/refund",
-              "developer-resources/webhooks/intents/dispute",
-              "developer-resources/webhooks/intents/license-key"
+              "introduction",
+              {
+                "group": "Verification",
+                "icon": "id-card",
+                "pages": [
+                  "miscellaneous/verification-process",
+                  "features/payouts/compliance",
+                  "miscellaneous/tax-forms",
+                  "features/payouts/link-bank-account"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Important Links",
+            "pages": [
+              "features/mor-vs-pg",
+              "miscellaneous/list-of-countries-we-accept-payments-from",
+              "miscellaneous/pricing-and-fee-structure",
+              "/features/payouts/payout-structure",
+              "features/payment-methods",
+              "features/appstore-digital-goods",
+              "miscellaneous/merchant-acceptance"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "features/one-time-payment-products",
+              "features/subscription",
+              "features/pricing",
+              "features/discount-codes",
+              {
+                "group": "Transactions",
+                "icon": "credit-card",
+                "pages": [
+                  "features/transactions/payments",
+                  "features/transactions/refunds",
+                  "features/transactions/disputes"
+                ]
+              },
+              "features/account-summary-payout-wallet",
+              "features/customers",
+              "features/adaptive-currency",
+              "features/license-keys",
+              "features/storefront",
+              "/features/digital-product-delivery",
+              "features/invoice-generation",
+              "features/b2b-payments",
+              "features/multi-brands",
+              "features/team",
+              "miscellaneous/accounts",
+              "features/analytics-and-reporting",
+              "features/purchasing-power-parity",
+              "features/affiliates",
+              "features/mobile-app"
+            ]
+          },
+          {
+            "group": "Testing & Demo Tools",
+            "pages": [
+              "miscellaneous/test-mode-vs-live-mode",
+              "miscellaneous/testing-process",
+              "features/atlas-demo-website"
+            ]
+          },
+          {
+            "group": "Miscellaneous",
+            "pages": [
+              {
+                "group": "Support Channels",
+                "icon": "headset",
+                "pages": [
+                  "miscellaneous/help-support",
+                  "features/feature-request"
+                ]
+              },
+              {
+                "group": "GTM Tools",
+                "icon": "chart-line",
+                "pages": [
+                  "miscellaneous/gtm-tools/saas-pricing-calculator",
+                  "miscellaneous/gtm-tools/saas-revenue-and-profit-growth",
+                  "miscellaneous/gtm-tools/saas-kpi-measurement",
+                  "miscellaneous/gtm-tools/freemium-model",
+                  "miscellaneous/gtm-tools/feature-prioritization-tool"
+                ]
+              },
+              "miscellaneous/faq"
+            ]
+          },
+          {
+            "group": "Security & Compliance",
+            "pages": [
+              "features/fraud-detection",
+              "miscellaneous/security-policy"
             ]
           }
         ]
-     },
-    {
-      "group": "API Usage & How-Tos",
-      "pages": [
-        "developer-resources/managing-products",
-        "developer-resources/license-keys-api-usage",
-        "developer-resources/allowed-payment-methods"
-      ]
-    },
-    {
-      "group": "SDKs",
-      "pages": [
-        "developer-resources/dodo-payments-sdks",
-        "developer-resources/react-native-integration"
-      ]
-    },
-    {
-      "group": "Framework Adaptors",
-      "pages": [
-        "developer-resources/nextjs-adaptor",
-        "developer-resources/nuxt-adaptor",
-        "developer-resources/better-auth-adaptor",
-        "developer-resources/express-adaptor",
-        "developer-resources/astro-adaptor",
-        "developer-resources/sveltekit-adaptor",
-        "developer-resources/hono-adaptor",
-        "developer-resources/remix-adaptor",
-        "developer-resources/tanstack-adaptor",
-        "developer-resources/fastify-adaptor"
-      ]
-    }
-  ]
-},
-
-       {
+      },
+      {
+        "tab": "Developer Resources",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "developer-resources/introduction"
+            ]
+          },
+          {
+            "group": "Integration Guides",
+            "pages": [
+              "developer-resources/integration-guide",
+              "developer-resources/subscription-integration-guide",
+              "developer-resources/integration-tutorial",
+              "developer-resources/overlay-checkout",
+              "developer-resources/mobile-integration",
+              "developer-resources/mcp-server"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "developer-resources/webhooks",
+              "developer-resources/webhooks/intents/webhook-events-guide",
+              {
+                "group": "Webhook Payloads",
+                "icon": "code",
+                "pages": [
+                  "developer-resources/webhooks/intents/payment",
+                  "developer-resources/webhooks/intents/subscription",
+                  "developer-resources/webhooks/intents/refund",
+                  "developer-resources/webhooks/intents/dispute",
+                  "developer-resources/webhooks/intents/license-key"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "API Usage & How-Tos",
+            "pages": [
+              "developer-resources/managing-products",
+              "developer-resources/license-keys-api-usage",
+              "developer-resources/allowed-payment-methods"
+            ]
+          },
+          {
+            "group": "SDKs",
+            "pages": [
+              "developer-resources/dodo-payments-sdks",
+              "developer-resources/react-native-integration"
+            ]
+          },
+          {
+            "group": "Framework Adaptors",
+            "pages": [
+              "developer-resources/nextjs-adaptor",
+              "developer-resources/nuxt-adaptor",
+              "developer-resources/better-auth-adaptor",
+              "developer-resources/express-adaptor",
+              "developer-resources/astro-adaptor",
+              "developer-resources/sveltekit-adaptor",
+              "developer-resources/hono-adaptor",
+              "developer-resources/remix-adaptor",
+              "developer-resources/tanstack-adaptor",
+              "developer-resources/fastify-adaptor"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "API Reference",
         "groups": [
           {
@@ -364,7 +359,7 @@
               "integrations/sendgrid"
             ]
           },
-          { 
+          {
             "group": "Analytics",
             "pages": [
               "integrations/segment",
@@ -533,7 +528,9 @@
       "copy",
       "view",
       "chatgpt",
-      "claude"
+      "claude",
+      "perplexity",
+      "cursor"
     ]
   },
   "redirects": [
