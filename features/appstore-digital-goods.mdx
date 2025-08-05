@@ -57,9 +57,6 @@ Dodo Payments serves as your **Merchant of Record (MoR)**, managing critical asp
 
 ## 3. Integration Flow
 
-For a complete developer walkthrough, refer to our [Mobile Integration Guide](/developer-resources/mobile-integration).
-
-### A. In-App Browser Integration
 You can integrate Dodo Payments into your app using our hosted checkout or in-app browser solution.
 
 ```mermaid
@@ -70,3 +67,13 @@ flowchart LR
   C -->|Redirects / Webhooks| D[Your Server]
   D -->|Grant Access| A
 ```
+
+1. **Mobile App to Dodo API**: The process begins with the mobile app creating a payment link by interacting with the Dodo API.
+2. **Dodo API to Mobile App**: The Dodo API responds by providing a checkout URL back to the mobile app.
+3. **Mobile App to Checkout Page**: The mobile app then opens this checkout URL within a WebView, leading the user to the checkout page.
+4. **Checkout Page to Your Server**: Upon completion of the checkout process, the checkout page communicates with your server through redirects or webhooks.
+5. **Your Server to Mobile App**: Finally, your server grants access to the purchased content or service, completing the transaction cycle back in the mobile app.
+
+<Card title="Mobile Integration Guide" icon="mobile" href="/developer-resources/mobile-integration">
+    For a complete developer walkthrough, explore our Mobile Integration Guide.
+</Card>
