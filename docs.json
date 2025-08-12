@@ -75,14 +75,6 @@
             ]
           },
           {
-            "group": "Testing & Demo Tools",
-            "pages": [
-              "miscellaneous/test-mode-vs-live-mode",
-              "miscellaneous/testing-process",
-              "features/atlas-demo-website"
-            ]
-          },
-          {
             "group": "Miscellaneous",
             "pages": [
               {
@@ -153,6 +145,14 @@
                   "developer-resources/webhooks/intents/license-key"
                 ]
               }
+            ]
+          },
+          {
+            "group": "Testing & Demo Tools",
+            "pages": [
+              "miscellaneous/test-mode-vs-live-mode",
+              "miscellaneous/testing-process",
+              "features/atlas-demo-website"
             ]
           },
           {
