@@ -1,0 +1,471 @@
+---
+title: "On-Demand Subscriptions Guide"
+description: "Integrate on-demand subscriptions by authorizing mandates, creating variable charges, handling webhooks, and implementing safe retry policies."
+icon: "bolt"
+---
+
+## Overview
+
+On-demand subscriptions let you authorize a customer’s payment method once and then charge variable amounts whenever you need, instead of on a fixed schedule.
+
+<Info>
+This feature may need to be enabled on your account. Contact support if you don’t see it in your dashboard.
+</Info>
+
+Use this guide to:
+- Create an on-demand subscription (authorize a mandate with optional initial price)
+- Trigger subsequent charges with custom amounts
+- Track outcomes using webhooks
+
+For a general subscription setup, see the [Subscription Integration Guide](/developer-resources/subscription-integration-guide).
+
+## Prerequisites
+
+- Dodo Payments merchant account and API key
+- Webhook secret configured and an endpoint to receive events
+- A subscription product in your catalog
+
+<Tip>
+If you want the customer to approve the mandate via hosted checkout, set `payment_link: true` and provide a `return_url`.
+</Tip>
+
+## How on-demand works
+
+1. You create a subscription with the `on_demand` object to authorize a payment method and optionally collect an initial charge.
+2. Later, you create charges against that subscription with custom amounts using the dedicated charge endpoint.
+3. You listen to webhooks (e.g., `payment.succeeded`, `payment.failed`) to update your system.
+
+## Create an on-demand subscription
+
+Endpoint: [POST /subscriptions](/api-reference/subscriptions/post-subscriptions)
+
+Key request fields (body):
+
+<AccordionGroup>
+<Accordion title="Request Body Parameters">
+  <ParamField body="product_id" type="string" required>
+    Product ID for the subscription.
+  </ParamField>
+
+  <ParamField body="quantity" type="integer" required>
+    Number of units. Minimum 1.
+  </ParamField>
+
+  <ParamField body="billing" type="object" required>
+    Billing address for the customer.
+  </ParamField>
+
+  <ParamField body="customer" type="object" required>
+    Either attach an existing customer or provide customer details.
+  </ParamField>
+
+  <ParamField body="payment_link" type="boolean" default="false">
+    If true, creates a hosted checkout link for mandate authorization and optional initial payment.
+  </ParamField>
+
+  <ParamField body="return_url" type="string">
+    Where to redirect the customer after completing hosted checkout.
+  </ParamField>
+
+  <ParamField body="on_demand.mandate_only" type="boolean" required>
+    If true, authorizes the payment method without charging the customer during creation.
+  </ParamField>
+
+  <ParamField body="on_demand.product_price" type="integer">
+    Initial charge amount (in the smallest currency unit). If specified, this value overrides the product’s original price set during product creation. If omitted, the product’s stored price is used. Example: to charge $1.00, pass <code>100</code>.
+  </ParamField>
+
+  <ParamField body="on_demand.product_currency" type="string">
+    Optional currency override for the initial charge. Defaults to the product currency.
+  </ParamField>
+
+  <ParamField body="on_demand.product_description" type="string">
+    Optional description override for billing and line items.
+  </ParamField>
+
+  <ParamField body="on_demand.adaptive_currency_fees_inclusive" type="boolean">
+    If true, includes adaptive currency fees within <code>product_price</code>. If false, fees are added on top. Ignored when adaptive pricing is disabled.
+  </ParamField>
+</Accordion>
+</AccordionGroup>
+
+### Create an on-demand subscription
+
+<Tabs>
+<Tab title="Node.js SDK">
+
+```javascript
+import DodoPayments from 'dodopayments';
+
+const client = new DodoPayments({
+  bearerToken: process.env.DODO_PAYMENTS_API_KEY,
+});
+
+async function main() {
+  const subscription = await client.subscriptions.create({
+    billing: { city: 'SF', country: 'US', state: 'CA', street: '1 Market St', zipcode: '94105' },
+    customer: { customer_id: 'customer_123' },
+    product_id: 'prod_sub_123',
+    quantity: 1,
+    payment_link: true,
+    return_url: 'https://example.com/billing/success',
+    on_demand: {
+      mandate_only: true, // set false to collect an initial charge
+      // product_price: 1000, // optional: charge $10.00 now if mandate_only is false
+      // product_currency: 'USD',
+      // product_description: 'Custom initial charge',
+      // adaptive_currency_fees_inclusive: false,
+    },
+  });
+
+  // If payment_link was true, redirect the customer to authorize the mandate
+  console.log(subscription.payment_link);
+}
+
+main().catch(console.error);
+```
+
+</Tab>
+<Tab title="Python SDK">
+
+```python
+import os
+from dodopayments import DodoPayments
+
+client = DodoPayments(bearer_token=os.environ.get('DODO_PAYMENTS_API_KEY'))
+
+subscription = client.subscriptions.create(
+    billing={
+        "city": "SF",
+        "country": "US",
+        "state": "CA",
+        "street": "1 Market St",
+        "zipcode": "94105",
+    },
+    customer={"customer_id": "customer_123"},
+    product_id="prod_sub_123",
+    quantity=1,
+    payment_link=True,
+    return_url="https://example.com/billing/success",
+    on_demand={
+        "mandate_only": True,
+        # "product_price": 1000,
+        # "product_currency": "USD",
+        # "product_description": "Custom initial charge",
+        # "adaptive_currency_fees_inclusive": False,
+    },
+)
+
+print(subscription.payment_link)
+```
+
+</Tab>
+<Tab title="Go SDK">
+
+```go
+package main
+
+import (
+  "context"
+  "fmt"
+  "github.com/dodopayments/dodopayments-go"
+  "github.com/dodopayments/dodopayments-go/option"
+)
+
+func main() {
+  client := dodopayments.NewClient(
+    option.WithBearerToken("YOUR_API_KEY"),
+  )
+  subscription, err := client.Subscriptions.New(context.TODO(), dodopayments.SubscriptionNewParams{
+    Billing: dodopayments.F(dodopayments.BillingAddressParam{
+      City:    dodopayments.F("SF"),
+      Country: dodopayments.F(dodopayments.CountryCodeUs),
+      State:   dodopayments.F("CA"),
+      Street:  dodopayments.F("1 Market St"),
+      Zipcode: dodopayments.F("94105"),
+    }),
+    Customer: dodopayments.F[dodopayments.CustomerRequestUnionParam](dodopayments.AttachExistingCustomerParam{
+      CustomerID: dodopayments.F("customer_123"),
+    }),
+    ProductID:  dodopayments.F("prod_sub_123"),
+    Quantity:   dodopayments.F(int64(1)),
+    PaymentLink: dodopayments.F(true),
+    ReturnURL:   dodopayments.F("https://example.com/billing/success"),
+    OnDemand: dodopayments.F(dodopayments.OnDemandSubscriptionReqParam{
+      MandateOnly: dodopayments.F(true),
+      // ProductPrice: dodopayments.F(int64(1000)),
+      // ProductCurrency: dodopayments.F(dodopayments.CurrencyUsd),
+      // ProductDescription: dodopayments.F("Custom initial charge"),
+      // AdaptiveCurrencyFeesInclusive: dodopayments.F(false),
+    }),
+  })
+  if err != nil { panic(err) }
+  fmt.Println(subscription.PaymentLink)
+}
+```
+
+</Tab>
+<Tab title="cURL">
+
+```bash
+curl -X POST "$DODO_API/subscriptions" \
+  -H "Authorization: Bearer $DODO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "billing": {"city": "SF", "country": "US", "state": "CA", "street": "1 Market St", "zipcode": "94105"},
+    "customer": {"customer_id": "customer_123"},
+    "product_id": "prod_sub_123",
+    "quantity": 1,
+    "payment_link": true,
+    "return_url": "https://example.com/billing/success",
+    "on_demand": {
+      "mandate_only": true
+    }
+  }'
+```
+
+</Tab>
+</Tabs>
+
+<Check>
+Set `payment_link: true`, redirect the customer to `payment_link` to complete mandate authorization.
+</Check>
+
+```json Success
+{
+  "subscription_id": "sub_123",
+  "payment_link": "https://pay.dodopayments.com/checkout/...",
+  "customer": { "customer_id": "customer_123", "email": "alex@example.com", "name": "Alex Doe" },
+  "metadata": {},
+  "recurring_pre_tax_amount": 0,
+  "addons": []
+}
+```
+
+## Charge an on-demand subscription
+
+After the mandate is authorized, create charges as needed.
+
+Endpoint: [POST /subscriptions/\{subscription_id\}/charge](/api-reference/subscriptions/create-charge)
+
+Key request fields (body):
+
+<AccordionGroup>
+  <Accordion title="Charge request body parameters">
+    <ParamField body="product_price" type="integer" required>
+      Amount to charge (in the smallest currency unit). Example: to charge $25.00, pass <code>2500</code>.
+    </ParamField>
+
+    <ParamField body="product_currency" type="string">
+      Optional currency override for the charge.
+    </ParamField>
+
+    <ParamField body="product_description" type="string">
+      Optional description override for this charge.
+    </ParamField>
+
+    <ParamField body="adaptive_currency_fees_inclusive" type="boolean">
+      If true, includes adaptive currency fees within <code>product_price</code>. If false, fees are added on top.
+    </ParamField>
+
+    <ParamField body="metadata" type="object">
+      Additional metadata for the payment. If omitted, the subscription metadata is used.
+    </ParamField>
+  </Accordion>
+</AccordionGroup>
+
+<Tabs>
+<Tab title="Node.js SDK">
+
+```javascript
+import DodoPayments from 'dodopayments';
+
+const client = new DodoPayments({ bearerToken: process.env.DODO_PAYMENTS_API_KEY });
+
+async function chargeNow(subscriptionId) {
+  const res = await client.subscriptions.charge(subscriptionId, { product_price: 2500 });
+  console.log(res.payment_id);
+}
+
+chargeNow('sub_123').catch(console.error);
+```
+
+</Tab>
+<Tab title="Python SDK">
+
+```python
+import os
+from dodopayments import DodoPayments
+
+client = DodoPayments(bearer_token=os.environ.get('DODO_PAYMENTS_API_KEY'))
+
+response = client.subscriptions.charge(
+    subscription_id="sub_123",
+    product_price=2500,
+)
+
+print(response.payment_id)
+```
+
+</Tab>
+<Tab title="Go SDK">
+
+```go
+package main
+
+import (
+  "context"
+  "fmt"
+  "github.com/dodopayments/dodopayments-go"
+  "github.com/dodopayments/dodopayments-go/option"
+)
+
+func main() {
+  client := dodopayments.NewClient(option.WithBearerToken("YOUR_API_KEY"))
+  res, err := client.Subscriptions.Charge(context.TODO(), "sub_123", dodopayments.SubscriptionChargeParams{
+    ProductPrice: dodopayments.F(int64(2500)),
+  })
+  if err != nil { panic(err) }
+  fmt.Println(res.PaymentID)
+}
+```
+
+</Tab>
+<Tab title="cURL">
+
+```bash
+curl -X POST "$DODO_API/subscriptions/sub_123/charge" \
+  -H "Authorization: Bearer $DODO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product_price": 2500,
+    "product_description": "Extra usage for March"
+  }'
+```
+
+</Tab>
+</Tabs>
+
+
+```json Success
+{ "payment_id": "pay_abc123" }
+```
+
+<Warning>
+Charging a subscription that is not on-demand may fail. Ensure the subscription has `on_demand: true` in its details before charging.
+</Warning>
+
+## Payment retries
+
+Our fraud detection system may block aggressive retry patterns (and can flag them as potential card testing). Follow a safe retry policy.
+
+### Principles for safe retry policies
+
+- **Backoff mechanism**: Use exponential backoff between retries.
+- **Retry limits**: Cap total retries (3–4 attempts max).
+- **Intelligent filtering**: Retry only on retryable failures (e.g., network/issuer errors, insufficient funds); never retry hard declines.
+- **Card testing prevention**: Do not retry failures like `DO_NOT_HONOR`, `STOLEN_CARD`, `LOST_CARD`, `PICKUP_CARD`, `FRAUDULENT`, `AUTHENTICATION_FAILURE`.
+- **Vary metadata (optional)**: If you maintain your own retry system, differentiate retries via metadata (e.g., `retry_attempt`).
+
+### Suggested retry schedule (subscriptions)
+
+- **1st attempt**: Immediate when you create the charge
+- **2nd attempt**: After 3 days
+- **3rd attempt**: After 7 more days (10 days total)
+- **4th attempt (final)**: After another 7 days (17 days total)
+
+Final step: if still unpaid, mark the subscription as unpaid or cancel it, based on your policy. Notify the customer during the window to update their payment method.
+
+### Decline codes you should not retry
+
+- `STOLEN_CARD`
+- `DO_NOT_HONOR`
+- `FRAUDULENT`
+- `PICKUP_CARD`
+- `AUTHENTICATION_FAILURE`
+- `LOST_CARD`
+
+<Note>
+For a comprehensive list of decline reasons and whether they are user-correctable, see the
+[Transaction Failures](/api-reference/transaction-failures) documentation.
+</Note>
+
+<Tip>
+Only retry on soft/temporary issues (e.g., `insufficient_funds`, `issuer_unavailable`, `processing_error`, network timeouts). If the same decline repeats, pause further retries.
+</Tip>
+
+### Adding retry context in charges
+
+Include metadata in your retry charges to track attempts.
+
+<CodeGroup>
+
+```javascript Node.js
+import DodoPayments from 'dodopayments';
+
+const client = new DodoPayments({ bearerToken: process.env.DODO_PAYMENTS_API_KEY });
+
+const SKIP_RETRY_CODES = [
+  'STOLEN_CARD',
+  'DO_NOT_HONOR',
+  'FRAUDULENT',
+  'PICKUP_CARD',
+  'AUTHENTICATION_FAILURE',
+  'LOST_CARD',
+];
+
+async function retryCharge(subscriptionId, amount, attempt, lastDeclineCode) {
+  if (SKIP_RETRY_CODES.includes(lastDeclineCode)) return;
+  await client.subscriptions.charge(subscriptionId, {
+    product_price: amount,
+    metadata: { retry_attempt: attempt },
+  });
+}
+```
+
+```curl cURL
+curl -X POST "$DODO_API/subscriptions/sub_123/charge" \
+  -H "Authorization: Bearer $DODO_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product_price": 2500,
+    "metadata": { "retry_attempt": 2 }
+  }'
+```
+
+</CodeGroup>
+
+## Track outcomes with webhooks
+
+Implement webhook handling to track the customer journey. See [Implementing Webhooks](/developer-resources/integration-guide#implementing-webhooks).
+
+- **subscription.active**: Mandate authorized and subscription activated
+- **subscription.failed**: Creation failed (e.g., mandate failure)
+- **subscription.on_hold**: Subscription placed on hold (e.g., unpaid state)
+- **payment.succeeded**: Charge succeeded
+- **payment.failed**: Charge failed
+
+<Tip>
+For on-demand flows, focus on `payment.succeeded` and `payment.failed` to reconcile usage-based charges.
+</Tip>
+
+## Testing and next steps
+
+<Steps>
+<Step title="Create in test mode">
+Use your test API key to create the subscription with `payment_link: true`, then open the link and complete the mandate.
+</Step>
+<Step title="Trigger a charge">
+Call the charge endpoint with a small `product_price` (e.g., `100`) and verify you receive `payment.succeeded`.
+</Step>
+<Step title="Go live">
+Switch to your live API key once you have validated events and internal state updates.
+</Step>
+</Steps>
+
+## Troubleshooting
+
+- **422 Invalid Request**: Ensure `on_demand.mandate_only` is provided on creation and `product_price` is provided for charges.
+- **Currency errors**: If you override `product_currency`, confirm it’s supported for your account and customer.
+- **No webhooks received**: Verify your webhook URL and signature secret configuration.
+
