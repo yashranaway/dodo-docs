@@ -317,7 +317,8 @@
               "api-reference/webhooks/update-webhook",
               "api-reference/webhooks/delete-webhook",
               "api-reference/webhooks/get-webhook-headers",
-              "api-reference/webhooks/update-webhook-headers"
+              "api-reference/webhooks/update-webhook-headers",
+              "api-reference/webhooks/get-webhook-signing-key"
             ]
           },
           {
