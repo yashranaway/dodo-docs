@@ -113,7 +113,9 @@
         "groups": [
           {
             "group": "Developer Resources",
-            "pages": ["developer-resources/introduction"]
+            "pages": [
+              "developer-resources/introduction"
+            ]
           },
           {
             "group": "Integration Guides",
@@ -292,7 +294,9 @@
           },
           {
             "group": "Payouts",
-            "pages": ["api-reference/payouts/get-payouts"]
+            "pages": [
+              "api-reference/payouts/get-payouts"
+            ]
           },
           {
             "group": "Brands",
@@ -357,7 +361,10 @@
           },
           {
             "group": "CRM",
-            "pages": ["integrations/hubspot", "integrations/close-crm"]
+            "pages": [
+              "integrations/hubspot",
+              "integrations/close-crm"
+            ]
           },
           {
             "group": "Email",
@@ -369,7 +376,10 @@
           },
           {
             "group": "Analytics",
-            "pages": ["integrations/segment", "integrations/customer-io"]
+            "pages": [
+              "integrations/segment",
+              "integrations/customer-io"
+            ]
           }
         ]
       },
@@ -378,11 +388,16 @@
         "groups": [
           {
             "group": "Changelog",
-            "pages": ["changelog/introduction"]
+            "pages": [
+              "changelog/introduction"
+            ]
           },
           {
             "group": "August 2025",
-            "pages": ["changelog/v1.47.0", "changelog/v1.44.0"]
+            "pages": [
+              "changelog/v1.47.0",
+              "changelog/v1.44.0"
+            ]
           },
           {
             "group": "July 2025",
@@ -460,7 +475,9 @@
           },
           {
             "group": "November 2024",
-            "pages": ["changelog/v0.1.0"]
+            "pages": [
+              "changelog/v0.1.0"
+            ]
           }
         ]
       }
@@ -523,7 +540,14 @@
     }
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude", "perplexity", "cursor"]
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "cursor"
+    ]
   },
   "redirects": [
     {
