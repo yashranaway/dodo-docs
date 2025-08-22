@@ -200,6 +200,12 @@
             ]
           },
           {
+            "group": "Checkout Sessions",
+            "pages": [
+              "api-reference/checkout-sessions/create"
+            ]
+          },
+          {
             "group": "Payments",
             "pages": [
               "api-reference/payments/get-payments",

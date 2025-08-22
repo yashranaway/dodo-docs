@@ -4,7 +4,7 @@ info:
   description: ''
   license:
     name: Apache 2.0
-  version: 1.49.0
+  version: 1.51.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -854,30 +854,6 @@ paths:
             response = dodo_payments.brands.update_images("id")
 
             puts(response)
-  /checkout/sessions:
-    post:
-      tags:
-        - Checkout Sessions
-      operationId: create_session
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateCheckoutSessionRequest'
-        required: true
-      responses:
-        '200':
-          description: Checkout session successfully created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateSessionResponse'
-        '422':
-          description: Invalid Request Object or Parameters
-        '500':
-          description: Something went wrong :(
-      security:
-        - API_KEY: []
   /checkout/supported_countries:
     get:
       tags:
@@ -949,6 +925,103 @@ paths:
             country_codes = dodo_payments.misc.list_supported_countries
 
             puts(country_codes)
+  /checkouts:
+    post:
+      tags:
+        - Checkout Sessions
+      operationId: create_session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCheckoutSessionRequest'
+        required: true
+      responses:
+        '200':
+          description: Checkout session successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSessionResponse'
+        '422':
+          description: Invalid Request Object or Parameters
+        '500':
+          description: Something went wrong :(
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: 'My Bearer Token',
+            });
+
+            const checkoutSessionResponse = await client.checkoutSessions.create({
+              product_cart: [{ product_id: 'product_id', quantity: 0 }],
+            });
+
+            console.log(checkoutSessionResponse.session_id);
+        - lang: Python
+          source: |-
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token="My Bearer Token",
+            )
+            checkout_session_response = client.checkout_sessions.create(
+                product_cart=[{
+                    "product_id": "product_id",
+                    "quantity": 0,
+                }],
+            )
+            print(checkout_session_response.session_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"),
+              )
+              checkoutSessionResponse, err := client.CheckoutSessions.New(context.TODO(), dodopayments.CheckoutSessionNewParams{
+                CheckoutSessionRequest: dodopayments.CheckoutSessionRequestParam{
+                  ProductCart: dodopayments.F([]dodopayments.CheckoutSessionRequestProductCartParam{dodopayments.CheckoutSessionRequestProductCartParam{
+                    ProductID: dodopayments.F("product_id"),
+                    Quantity: dodopayments.F(int64(0)),
+                  }}),
+                },
+              })
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", checkoutSessionResponse.SessionID)
+            }
+        - lang: Ruby
+          source: >-
+            require "dodopayments"
+
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token",
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+
+            checkout_session_response = dodo_payments.checkout_sessions.create(product_cart: [{product_id:
+            "product_id", quantity: 0}])
+
+
+            puts(checkout_session_response)
   /customers:
     get:
       tags:
@@ -2061,6 +2134,119 @@ paths:
             get_dispute = dodo_payments.disputes.retrieve("dispute_id")
 
             puts(get_dispute)
+  /events:
+    get:
+      tags:
+        - Events
+      summary: Get events endpoint
+      operationId: get_events
+      parameters:
+        - name: customer_id
+          in: query
+          required: false
+          schema:
+            type: string
+          style: form
+        - name: event_name
+          in: query
+          required: false
+          schema:
+            type: string
+          style: form
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+          style: form
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+          style: form
+        - name: start
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          style: form
+        - name: end
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+          style: form
+      responses:
+        '200':
+          description: Events retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEventsResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+      security:
+        - API_KEY: []
+  /events/ingest:
+    post:
+      tags:
+        - Events
+      summary: Ingest events endpoint
+      operationId: ingest_events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngestEventsRequest'
+        required: true
+      responses:
+        '200':
+          description: Events ingested successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestEventsResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+      security:
+        - API_KEY: []
+  /events/{event_id}:
+    get:
+      tags:
+        - Events
+      summary: Get single event by ID endpoint
+      operationId: get_event_by_id
+      parameters:
+        - name: event_id
+          in: path
+          description: Event ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Event retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Event not found
+      security:
+        - API_KEY: []
   /invoices/payments/{payment_id}:
     get:
       tags:
@@ -5178,8 +5364,8 @@ paths:
             });
 
             // Automatically fetches more pages as needed.
-            for await (const webhookListResponse of client.webhooks.list()) {
-              console.log(webhookListResponse.id);
+            for await (const webhookDetails of client.webhooks.list()) {
+              console.log(webhookDetails.id);
             }
         - lang: Python
           source: |-
@@ -5256,9 +5442,9 @@ paths:
               bearerToken: 'My Bearer Token',
             });
 
-            const webhook = await client.webhooks.create({ url: 'url' });
+            const webhookDetails = await client.webhooks.create({ url: 'url' });
 
-            console.log(webhook.id);
+            console.log(webhookDetails.id);
         - lang: Python
           source: |-
             from dodopayments import DodoPayments
@@ -5266,10 +5452,10 @@ paths:
             client = DodoPayments(
                 bearer_token="My Bearer Token",
             )
-            webhook = client.webhooks.create(
+            webhook_details = client.webhooks.create(
                 url="url",
             )
-            print(webhook.id)
+            print(webhook_details.id)
         - lang: Go
           source: |
             package main
@@ -5286,13 +5472,13 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"),
               )
-              webhook, err := client.Webhooks.New(context.TODO(), dodopayments.WebhookNewParams{
+              webhookDetails, err := client.Webhooks.New(context.TODO(), dodopayments.WebhookNewParams{
                 URL: dodopayments.F("url"),
               })
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", webhook.ID)
+              fmt.Printf("%+v\n", webhookDetails.ID)
             }
         - lang: Ruby
           source: |-
@@ -5303,9 +5489,9 @@ paths:
               environment: "test_mode" # defaults to "live_mode"
             )
 
-            webhook = dodo_payments.webhooks.create(url: "url")
+            webhook_details = dodo_payments.webhooks.create(url: "url")
 
-            puts(webhook)
+            puts(webhook_details)
   /webhooks/{webhook_id}:
     get:
       tags:
@@ -5340,9 +5526,9 @@ paths:
               bearerToken: 'My Bearer Token',
             });
 
-            const webhook = await client.webhooks.retrieve('webhook_id');
+            const webhookDetails = await client.webhooks.retrieve('webhook_id');
 
-            console.log(webhook.id);
+            console.log(webhookDetails.id);
         - lang: Python
           source: |-
             from dodopayments import DodoPayments
@@ -5350,10 +5536,10 @@ paths:
             client = DodoPayments(
                 bearer_token="My Bearer Token",
             )
-            webhook = client.webhooks.retrieve(
+            webhook_details = client.webhooks.retrieve(
                 "webhook_id",
             )
-            print(webhook.id)
+            print(webhook_details.id)
         - lang: Go
           source: |
             package main
@@ -5370,11 +5556,11 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"),
               )
-              webhook, err := client.Webhooks.Get(context.TODO(), "webhook_id")
+              webhookDetails, err := client.Webhooks.Get(context.TODO(), "webhook_id")
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", webhook.ID)
+              fmt.Printf("%+v\n", webhookDetails.ID)
             }
         - lang: Ruby
           source: |-
@@ -5385,9 +5571,9 @@ paths:
               environment: "test_mode" # defaults to "live_mode"
             )
 
-            webhook = dodo_payments.webhooks.retrieve("webhook_id")
+            webhook_details = dodo_payments.webhooks.retrieve("webhook_id")
 
-            puts(webhook)
+            puts(webhook_details)
     delete:
       tags:
         - Webhooks
@@ -5499,9 +5685,9 @@ paths:
               bearerToken: 'My Bearer Token',
             });
 
-            const webhook = await client.webhooks.update('webhook_id');
+            const webhookDetails = await client.webhooks.update('webhook_id');
 
-            console.log(webhook.id);
+            console.log(webhookDetails.id);
         - lang: Python
           source: |-
             from dodopayments import DodoPayments
@@ -5509,10 +5695,10 @@ paths:
             client = DodoPayments(
                 bearer_token="My Bearer Token",
             )
-            webhook = client.webhooks.update(
+            webhook_details = client.webhooks.update(
                 webhook_id="webhook_id",
             )
-            print(webhook.id)
+            print(webhook_details.id)
         - lang: Go
           source: |
             package main
@@ -5529,7 +5715,7 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"),
               )
-              webhook, err := client.Webhooks.Update(
+              webhookDetails, err := client.Webhooks.Update(
                 context.TODO(),
                 "webhook_id",
                 dodopayments.WebhookUpdateParams{
@@ -5539,7 +5725,7 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", webhook.ID)
+              fmt.Printf("%+v\n", webhookDetails.ID)
             }
         - lang: Ruby
           source: |-
@@ -5550,9 +5736,9 @@ paths:
               environment: "test_mode" # defaults to "live_mode"
             )
 
-            webhook = dodo_payments.webhooks.update("webhook_id")
+            webhook_details = dodo_payments.webhooks.update("webhook_id")
 
-            puts(webhook)
+            puts(webhook_details)
   /webhooks/{webhook_id}/headers:
     get:
       tags:
@@ -5843,254 +6029,6 @@ paths:
           description: Invalid request
         '401':
           description: Invalid webhook signature
-      x-codeSamples:
-        - lang: JavaScript
-          source: |-
-            import DodoPayments from 'dodopayments';
-
-            const client = new DodoPayments({
-              bearerToken: 'My Bearer Token',
-            });
-
-            await client.yourWebhookURL.create({
-              business_id: 'business_id',
-              data: {
-                billing: { city: 'city', country: 'AF', state: 'state', street: 'street', zipcode: 'zipcode' },
-                brand_id: 'brand_id',
-                business_id: 'business_id',
-                created_at: '2019-12-27T18:11:19.117Z',
-                currency: 'AED',
-                customer: { customer_id: 'customer_id', email: 'email', name: 'name' },
-                digital_products_delivered: true,
-                disputes: [
-                  {
-                    amount: 'amount',
-                    business_id: 'business_id',
-                    created_at: '2019-12-27T18:11:19.117Z',
-                    currency: 'currency',
-                    dispute_id: 'dispute_id',
-                    dispute_stage: 'pre_dispute',
-                    dispute_status: 'dispute_opened',
-                    payment_id: 'payment_id',
-                  },
-                ],
-                metadata: { foo: 'string' },
-                payment_id: 'payment_id',
-                refunds: [
-                  {
-                    business_id: 'business_id',
-                    created_at: '2019-12-27T18:11:19.117Z',
-                    is_partial: true,
-                    payment_id: 'payment_id',
-                    refund_id: 'refund_id',
-                    status: 'succeeded',
-                  },
-                ],
-                settlement_amount: 0,
-                settlement_currency: 'AED',
-                total_amount: 0,
-                payload_type: 'Payment',
-              },
-              timestamp: '2019-12-27T18:11:19.117Z',
-              type: 'payment.succeeded',
-              'webhook-id': 'webhook-id',
-              'webhook-signature': 'webhook-signature',
-              'webhook-timestamp': 'webhook-timestamp',
-            });
-        - lang: Python
-          source: |-
-            from datetime import datetime
-            from dodopayments import DodoPayments
-
-            client = DodoPayments(
-                bearer_token="My Bearer Token",
-            )
-            client.your_webhook_url.create(
-                business_id="business_id",
-                data={
-                    "billing": {
-                        "city": "city",
-                        "country": "AF",
-                        "state": "state",
-                        "street": "street",
-                        "zipcode": "zipcode",
-                    },
-                    "brand_id": "brand_id",
-                    "business_id": "business_id",
-                    "created_at": datetime.fromisoformat("2019-12-27T18:11:19.117"),
-                    "currency": "AED",
-                    "customer": {
-                        "customer_id": "customer_id",
-                        "email": "email",
-                        "name": "name",
-                    },
-                    "digital_products_delivered": True,
-                    "disputes": [{
-                        "amount": "amount",
-                        "business_id": "business_id",
-                        "created_at": datetime.fromisoformat("2019-12-27T18:11:19.117"),
-                        "currency": "currency",
-                        "dispute_id": "dispute_id",
-                        "dispute_stage": "pre_dispute",
-                        "dispute_status": "dispute_opened",
-                        "payment_id": "payment_id",
-                    }],
-                    "metadata": {
-                        "foo": "string"
-                    },
-                    "payment_id": "payment_id",
-                    "refunds": [{
-                        "business_id": "business_id",
-                        "created_at": datetime.fromisoformat("2019-12-27T18:11:19.117"),
-                        "is_partial": True,
-                        "payment_id": "payment_id",
-                        "refund_id": "refund_id",
-                        "status": "succeeded",
-                    }],
-                    "settlement_amount": 0,
-                    "settlement_currency": "AED",
-                    "total_amount": 0,
-                    "payload_type": "Payment",
-                },
-                timestamp=datetime.fromisoformat("2019-12-27T18:11:19.117"),
-                type="payment.succeeded",
-                webhook_id="webhook-id",
-                webhook_signature="webhook-signature",
-                webhook_timestamp="webhook-timestamp",
-            )
-        - lang: Go
-          source: |
-            package main
-
-            import (
-              "context"
-              "time"
-
-              "github.com/dodopayments/dodopayments-go"
-              "github.com/dodopayments/dodopayments-go/option"
-            )
-
-            func main() {
-              client := dodopayments.NewClient(
-                option.WithBearerToken("My Bearer Token"),
-              )
-              err := client.YourWebhookURL.New(context.TODO(), dodopayments.YourWebhookURLNewParams{
-                WebhookPayload: dodopayments.WebhookPayloadParam{
-                  BusinessID: dodopayments.F("business_id"),
-                  Data: dodopayments.F[dodopayments.WebhookPayloadDataUnionParam](dodopayments.WebhookPayloadDataPaymentParam(dodopayments.WebhookPayloadDataPaymentParam{
-                    PaymentParam: dodopayments.PaymentParam{
-                      Billing: dodopayments.F(dodopayments.BillingAddressParam{
-                        City: dodopayments.F("city"),
-                        Country: dodopayments.F(dodopayments.CountryCodeAf),
-                        State: dodopayments.F("state"),
-                        Street: dodopayments.F("street"),
-                        Zipcode: dodopayments.F("zipcode"),
-                      }),
-                      BrandID: dodopayments.F("brand_id"),
-                      BusinessID: dodopayments.F("business_id"),
-                      CreatedAt: dodopayments.F(time.Now()),
-                      Currency: dodopayments.F(dodopayments.CurrencyAed),
-                      Customer: dodopayments.F(dodopayments.CustomerLimitedDetailsParam{
-                        CustomerID: dodopayments.F("customer_id"),
-                        Email: dodopayments.F("email"),
-                        Name: dodopayments.F("name"),
-                      }),
-                      DigitalProductsDelivered: dodopayments.F(true),
-                      Disputes: dodopayments.F([]dodopayments.DisputeParam{dodopayments.DisputeParam{
-                        Amount: dodopayments.F("amount"),
-                        BusinessID: dodopayments.F("business_id"),
-                        CreatedAt: dodopayments.F(time.Now()),
-                        Currency: dodopayments.F("currency"),
-                        DisputeID: dodopayments.F("dispute_id"),
-                        DisputeStage: dodopayments.F(dodopayments.DisputeStagePreDispute),
-                        DisputeStatus: dodopayments.F(dodopayments.DisputeStatusDisputeOpened),
-                        PaymentID: dodopayments.F("payment_id"),
-                      }}),
-                      Metadata: dodopayments.F(map[string]string{
-                      "foo": "string",
-                      }),
-                      PaymentID: dodopayments.F("payment_id"),
-                      Refunds: dodopayments.F([]dodopayments.RefundParam{dodopayments.RefundParam{
-                        BusinessID: dodopayments.F("business_id"),
-                        CreatedAt: dodopayments.F(time.Now()),
-                        IsPartial: dodopayments.F(true),
-                        PaymentID: dodopayments.F("payment_id"),
-                        RefundID: dodopayments.F("refund_id"),
-                        Status: dodopayments.F(dodopayments.RefundStatusSucceeded),
-                      }}),
-                      SettlementAmount: dodopayments.F(int64(0)),
-                      SettlementCurrency: dodopayments.F(dodopayments.CurrencyAed),
-                      TotalAmount: dodopayments.F(int64(0)),
-                    },
-                    PayloadType: dodopayments.F(dodopayments.WebhookPayloadDataPaymentPayloadTypePayment),
-                  })),
-                  Timestamp: dodopayments.F(time.Now()),
-                  Type: dodopayments.F(dodopayments.WebhookEventTypePaymentSucceeded),
-                },
-                WebhookID: dodopayments.F("webhook-id"),
-                WebhookSignature: dodopayments.F("webhook-signature"),
-                WebhookTimestamp: dodopayments.F("webhook-timestamp"),
-              })
-              if err != nil {
-                panic(err.Error())
-              }
-            }
-        - lang: Ruby
-          source: |-
-            require "dodopayments"
-
-            dodo_payments = Dodopayments::Client.new(
-              bearer_token: "My Bearer Token",
-              environment: "test_mode" # defaults to "live_mode"
-            )
-
-            result = dodo_payments.your_webhook_url.create(
-              business_id: "business_id",
-              data: {
-                billing: {city: "city", country: :AF, state: "state", street: "street", zipcode: "zipcode"},
-                brand_id: "brand_id",
-                business_id: "business_id",
-                created_at: "2019-12-27T18:11:19.117Z",
-                currency: :AED,
-                customer: {customer_id: "customer_id", email: "email", name: "name"},
-                digital_products_delivered: true,
-                disputes: [
-                  {
-                    amount: "amount",
-                    business_id: "business_id",
-                    created_at: "2019-12-27T18:11:19.117Z",
-                    currency: "currency",
-                    dispute_id: "dispute_id",
-                    dispute_stage: :pre_dispute,
-                    dispute_status: :dispute_opened,
-                    payment_id: "payment_id"
-                  }
-                ],
-                metadata: {foo: "string"},
-                payment_id: "payment_id",
-                refunds: [
-                  {
-                    business_id: "business_id",
-                    created_at: "2019-12-27T18:11:19.117Z",
-                    is_partial: true,
-                    payment_id: "payment_id",
-                    refund_id: "refund_id",
-                    status: :succeeded
-                  }
-                ],
-                settlement_amount: 0,
-                settlement_currency: :AED,
-                total_amount: 0,
-                payload_type: :Payment
-              },
-              timestamp: "2019-12-27T18:11:19.117Z",
-              type: :"payment.succeeded",
-              webhook_id: "webhook-id",
-              webhook_signature: "webhook-signature",
-              webhook_timestamp: "webhook-timestamp"
-            )
-
-            puts(result)
 components:
   schemas:
     ActivateLicenseKeyRequest:
@@ -6312,13 +6250,22 @@ components:
       properties:
         show_on_demand_tag:
           type: boolean
-          description: Show on demand tag
+          description: |-
+            Show on demand tag
+
+            Default is true
         show_order_details:
           type: boolean
-          description: Show order details by default
+          description: |-
+            Show order details by default
+
+            Default is true
         theme:
           $ref: '#/components/schemas/CheckoutTheme'
-          description: Theme of hte page
+          description: |-
+            Theme of the page
+
+            Default is `System`.
     CheckoutSessionFlags:
       type: object
       properties:
@@ -6358,6 +6305,7 @@ components:
       enum:
         - dark
         - light
+        - system
     Conjunction:
       type: string
       enum:
@@ -6669,13 +6617,21 @@ components:
       type: object
       required:
         - product_cart
-        - feature_flags
       properties:
-        auto_confirm:
-          type: boolean
+        allowed_payment_method_types:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/PaymentMethodTypes'
           description: |-
-            If all the data is available at session create time and auto_confirm is true,
-            directly redirect to payment
+            Customers will never see payment methods that are not in this list.
+            However, adding a method here does not guarantee customers will see it.
+            Availability still depends on other factors (e.g., customer location, merchant settings).
+
+            Disclaimar: Always provide 'credit' and 'debit' as a fallback.
+            If all payment methods are unavailable, checkout session will fail.
+          uniqueItems: true
         billing_address:
           oneOf:
             - type: 'null'
@@ -6685,6 +6641,12 @@ components:
           oneOf:
             - type: 'null'
             - $ref: '#/components/schemas/Currency'
+              description: This field is ingored if adaptive pricing is disabled
+        confirm:
+          type: boolean
+          description: >-
+            If confirm is true, all the details will be finalized. If required data is missing, an API error
+            is thrown.
         customer:
           oneOf:
             - type: 'null'
@@ -6699,7 +6661,6 @@ components:
             - 'null'
         feature_flags:
           $ref: '#/components/schemas/CheckoutSessionFlags'
-          description: Configuration flags for API validation
         metadata:
           oneOf:
             - type: 'null'
@@ -6713,6 +6674,7 @@ components:
           type:
             - string
             - 'null'
+          description: The url to redirect after payment failure or success.
         show_saved_payment_methods:
           type: boolean
           description: Display saved payment methods of a returning customer False by default
@@ -6720,11 +6682,6 @@ components:
           oneOf:
             - type: 'null'
             - $ref: '#/components/schemas/SubscriptionData'
-        tax_id:
-          type:
-            - string
-            - 'null'
-          description: Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
     CreateCustomerPortalSessionResponse:
       type: object
       required:
@@ -7710,6 +7667,58 @@ components:
         - dispute_challenged
         - dispute_won
         - dispute_lost
+    Event:
+      type: object
+      required:
+        - event_id
+        - business_id
+        - customer_id
+        - event_name
+        - timestamp
+      properties:
+        business_id:
+          type: string
+        customer_id:
+          type: string
+        event_id:
+          type: string
+        event_name:
+          type: string
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties: {}
+          propertyNames:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+    EventInput:
+      type: object
+      required:
+        - event_id
+        - customer_id
+        - event_name
+      properties:
+        customer_id:
+          type: string
+        event_id:
+          type: string
+        event_name:
+          type: string
+        metadata:
+          type:
+            - object
+            - 'null'
+          additionalProperties: {}
+          propertyNames:
+            type: string
+        timestamp:
+          type:
+            - string
+            - 'null'
+          format: date-time
     EventType:
       type: string
       description: Event types for Dodo events
@@ -7735,6 +7744,27 @@ components:
         - subscription.expired
         - subscription.plan_changed
         - license_key.created
+    FailedEvent:
+      type: object
+      required:
+        - event_id
+        - error
+      properties:
+        error:
+          type: string
+        event_id:
+          type: string
+    FilterOperator:
+      type: string
+      enum:
+        - equals
+        - not_equals
+        - greater_than
+        - greater_than_or_equals
+        - less_than
+        - less_than_or_equals
+        - contains
+        - does_not_contain
     GetCustomersListResponse:
       type: object
       required:
@@ -7814,6 +7844,48 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ListDisputeResponse'
+    GetEventsQuery:
+      type: object
+      properties:
+        customer_id:
+          type:
+            - string
+            - 'null'
+        end:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        event_name:
+          type:
+            - string
+            - 'null'
+        page_number:
+          type:
+            - integer
+            - 'null'
+          format: int32
+          minimum: 0
+        page_size:
+          type:
+            - integer
+            - 'null'
+          format: int32
+          minimum: 0
+        start:
+          type:
+            - string
+            - 'null'
+          format: date-time
+    GetEventsResponse:
+      type: object
+      required:
+        - events
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
     GetPaymentsListResponse:
       type: object
       required:
@@ -8101,6 +8173,23 @@ components:
       properties:
         secret:
           type: string
+    IngestEventsRequest:
+      type: object
+      required:
+        - events
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventInput'
+    IngestEventsResponse:
+      type: object
+      required:
+        - ingested_count
+      properties:
+        ingested_count:
+          type: integer
+          minimum: 0
     IntentStatus:
       type: string
       enum:
@@ -8315,6 +8404,19 @@ components:
         type: string
       propertyNames:
         type: string
+    MeterAggregation:
+      type: object
+      required:
+        - type
+      properties:
+        key:
+          type:
+            - string
+            - 'null'
+          description: Required when type is not COUNT
+        type:
+          $ref: '#/components/schemas/AggregationType'
+          description: Aggregation type for the meter
     NewCustomer:
       type: object
       required:
@@ -8829,6 +8931,7 @@ components:
           type:
             - boolean
             - 'null'
+          description: When set, the subscription will remain active until the end of billing period
         disable_on_demand:
           oneOf:
             - type: 'null'
@@ -9248,6 +9351,9 @@ components:
             Represented in the lowest denomination of the currency (e.g., cents for USD).
             For example, to charge $1.00, pass `100`.
             Only applicable for one time payments
+
+            If amount is not set for pay_what_you_want product,
+            customer is allowed to select the amount.
         product_id:
           type: string
           description: unique id of the product
@@ -9563,6 +9669,12 @@ components:
             - string
             - 'null'
           description: The discount id if discount is applied
+        expires_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+          description: Timestamp when the subscription will expire
         metadata:
           $ref: '#/components/schemas/Metadata'
           description: Additional custom data associated with the subscription
@@ -9822,6 +9934,7 @@ tags:
   - name: Customers
   - name: Refunds
   - name: Disputes
+  - name: Events
   - name: License Keys
   - name: Licenses
   - name: Discounts
@@ -10872,6 +10985,7 @@ x-webhooks:
                   name: Test user
                 discount_cycles_remaining: 3
                 discount_id: null
+                expires_at: null
                 metadata: {}
                 next_billing_date: '2025-08-23T12:01:14.672875Z'
                 on_demand: false
@@ -10956,6 +11070,7 @@ x-webhooks:
                   name: Test user
                 discount_cycles_remaining: 3
                 discount_id: null
+                expires_at: null
                 metadata: {}
                 next_billing_date: '2025-08-23T12:01:14.672875Z'
                 on_demand: false
@@ -11040,6 +11155,7 @@ x-webhooks:
                   name: Test user
                 discount_cycles_remaining: 3
                 discount_id: null
+                expires_at: null
                 metadata: {}
                 next_billing_date: '2025-08-23T12:01:14.672875Z'
                 on_demand: false
@@ -11124,6 +11240,7 @@ x-webhooks:
                   name: Test user
                 discount_cycles_remaining: 3
                 discount_id: null
+                expires_at: null
                 metadata: {}
                 next_billing_date: '2025-08-23T12:01:14.672875Z'
                 on_demand: false
@@ -11208,6 +11325,7 @@ x-webhooks:
                   name: john doe
                 discount_cycles_remaining: 3
                 discount_id: null
+                expires_at: null
                 metadata: {}
                 next_billing_date: '2025-08-23T12:01:14.672875Z'
                 on_demand: false
@@ -11292,6 +11410,7 @@ x-webhooks:
                   name: Test user
                 discount_cycles_remaining: 3
                 discount_id: null
+                expires_at: null
                 metadata: {}
                 next_billing_date: '2025-08-23T12:01:14.672875Z'
                 on_demand: false
@@ -11376,6 +11495,7 @@ x-webhooks:
                   name: Test user
                 discount_cycles_remaining: 3
                 discount_id: null
+                expires_at: null
                 metadata: {}
                 next_billing_date: '2025-08-23T12:01:14.672875Z'
                 on_demand: false
