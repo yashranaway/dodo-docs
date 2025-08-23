@@ -402,6 +402,7 @@
           {
             "group": "August 2025",
             "pages": [
+              "changelog/v1.51.0",
               "changelog/v1.47.0",
               "changelog/v1.44.0"
             ]

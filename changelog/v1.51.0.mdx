@@ -1,0 +1,38 @@
+---
+title: v1.51.0 (23rd August 2025)
+description: "Powerful Checkout Sessions API, Metadata in Payments Export, and Subscription Next Billing Date Update"
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+### Checkout Sessions API
+Introducing our new **Checkout Sessions API** - a powerful, hosted checkout solution that provides a complete payment flow for both one-time purchases and subscriptions. This new API replaces the previous Dynamic Links approach with enhanced flexibility and improved user experience.
+
+**Key Benefits:**
+- **Simplified Integration**: No need to provide complete billing addresses upfront - we handle missing details automatically
+- **Enhanced Customization**: Full control over payment methods, currencies, themes, and feature flags
+- **Better UX**: Pre-fill customer information to reduce checkout friction and improve conversion rates
+- **Flexible Configuration**: Support for multi-product carts, subscription trials, discount codes, and more
+
+**What's Changed:**
+- **Before**: Required complete billing address information when creating payment links
+- **Now**: Pass whatever customer information you have available - we'll collect the rest during checkout
+- **Migration**: Simple API endpoint change with no additional handling required
+
+<CardGroup cols={2}>
+  <Card title="Get Started with Checkout Sessions" icon="rocket" href="/developer-resources/checkout-session">
+    Complete guide with code examples in Node.js, Python, and REST API
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/checkout-sessions/create">
+    Full API documentation with live testing
+  </Card>
+</CardGroup>
+
+### Minor Improvements
+
+- Payments export reports now include metadata for enhanced data analysis.
+- You can now update the next billing date for subscriptions directly via the API.
+
+
+
