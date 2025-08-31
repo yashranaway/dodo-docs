@@ -1,7 +1,7 @@
-# Dodo Payments Docs
+# Dodo Payments Documentation
 
 <p align="center">
-  <img src="./images/cover-images/DodoPayments.webp" alt="Dodo Payments documentation cover image" width="600" />
+  <img src="./images/cover-images/readme-cover.png" alt="Dodo Payments documentation cover image"/>
 </p>
 
 <div align="center">
@@ -141,7 +141,6 @@ This documentation is licensed under the GNU General Public License v3.0 (GPL-3.
 ## 🤝 Support
 
 - **Documentation Issues**: Open an issue in this repository
-- **Product Support**: Visit [help.dodopayments.com](https://help.dodopayments.com)
 - **Community**: Join our [Discord server](https://discord.gg/bYqAp4ayYh)
 - **API Status**: Check [status.dodopayments.com](https://status.dodopayments.com)
 
