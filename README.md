@@ -1,32 +1,159 @@
-# Mintlify Starter Kit
+# Dodo Payments Docs
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+<p align="center">
+  <img src="./images/cover-images/DodoPayments.webp" alt="Dodo Payments documentation cover image" width="600" />
+</p>
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+<div align="center">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="License: GPLv3" />
+  </a>
+  <a href="https://docs.dodopayments.com">
+    <img src="https://img.shields.io/badge/docs-live-brightgreen.svg" alt="Live Documentation" />
+  </a>
+  <a href="https://discord.gg/bYqAp4ayYh">
+    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Chat on Discord" />
+  </a>
+</div>
 
-### Development
+## 🚀 Overview
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+Welcome to the official documentation repository for [Dodo Payments](https://dodopayments.com), a comprehensive Merchant of Record solution for global payment processing of digital products. This documentation is built with [Mintlify](https://mintlify.com) and covers everything from quick start guides to detailed API references.
 
-```
-npm i -g mintlify
-```
+## 📚 Documentation Site
 
-Run the following command at the root of your documentation (where mint.json is)
+Visit our live documentation at [docs.dodopayments.com](https://docs.dodopayments.com)
 
-```
-mintlify dev
-```
+## 🏗️ Documentation Structure
 
-### Publishing Changes
+Our documentation is organized into five main sections:
 
-Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
+### 1. **Setup & Features** 
+- Getting started guides
+- Platform features (subscriptions, one-time payments, licensing, etc.)
+- Security & compliance information
+- Business verification and payout setup
 
-#### Troubleshooting
+### 2. **Developer Resources**
+- Integration guides and tutorials
+- Framework adaptors (Next.js, Nuxt, SvelteKit, etc.)
+- SDKs and mobile integration
+- Webhook implementation
+- Testing tools
 
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `mint.json`
+### 3. **API Reference**
+- Complete API documentation
+- Endpoint references for all resources
+- Error codes and troubleshooting
+- Code examples and best practices
+
+### 4. **External Integrations**
+- Third-party integrations (Zapier, Slack, Discord, etc.)
+- CRM connections (HubSpot, Close)
+- Email service providers
+- Analytics platforms
+
+### 5. **Changelog**
+- Version history
+- Feature updates
+- Breaking changes
+- Migration guides
+
+## 🛠️ Development Setup
+
+### Prerequisites
+
+- Node.js 18.x or higher
+- npm or yarn package manager
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/dodopayments/dodo-docs.git
+   cd dodo-docs
+   ```
+
+2. **Install the Mintlify CLI**
+   ```bash
+   npm i -g mintlify
+   # or
+   yarn global add mintlify
+   ```
+
+3. **Run the development server**
+   ```bash
+   mintlify dev
+   ```
+
+   The documentation will be available at `http://localhost:3000`
+
+### Configuration
+
+The documentation is configured through `docs.json` which includes:
+- Navigation structure
+- Theme customization
+- SEO settings
+- Integration configurations
+- Redirect rules
+
+## 📝 Contributing
+
+Want to help improve our docs? Read our [contribution guidelines](./CONTRIBUTING.md) for details on how to get started.
+
+- Fix typos, clarify explanations, or add examples
+- Create new guides or update API docs
+- Help with translations
+
+All docs use MDX with frontmatter. Test changes locally with `mintlify dev` before submitting a pull request.
+
+Thank you for contributing!
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Mintlify dev isn't running**
+- Run `mintlify install` to reinstall dependencies
+- Ensure you're in the directory containing `docs.json`
+
+**Page loads as 404**
+- Check that your file is included in the navigation structure in `docs.json`
+- Verify the file path matches the navigation entry
+
+**Images not displaying**
+- Ensure images are in the `/images` directory
+- Use absolute paths starting with `/images/`
+
+## 🚀 Deployment
+
+Documentation is automatically deployed when changes are pushed to the main branch. The deployment process:
+
+1. Push changes to the `main` branch
+2. GitHub Actions trigger the build process
+3. Mintlify deploys the updated documentation
+4. Changes are live at [docs.dodopayments.com](https://docs.dodopayments.com)
+
+## 📄 License
+
+This documentation is licensed under the GNU General Public License v3.0 (GPL-3.0). See the [LICENSE](LICENSE) file for details.
+
+## 🤝 Support
+
+- **Documentation Issues**: Open an issue in this repository
+- **Product Support**: Visit [help.dodopayments.com](https://help.dodopayments.com)
+- **Community**: Join our [Discord server](https://discord.gg/bYqAp4ayYh)
+- **API Status**: Check [status.dodopayments.com](https://status.dodopayments.com)
+
+## 🔗 Useful Links
+
+- [Dodo Payments Dashboard](https://app.dodopayments.com)
+- [API Reference](https://docs.dodopayments.com/api-reference/introduction)
+- [Developer Blog](https://blog.dodopayments.com)
+- [Changelog](https://docs.dodopayments.com/changelog/introduction)
+
+---
+
+<div align="center">
+  Made with ❤️ by the Dodo Payments team
+</div>

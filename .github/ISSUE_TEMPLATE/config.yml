@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discord Community
+    url: https://discord.gg/bYqAp4ayYh
+    about: Get help from the community and discuss ideas
+  - name: 📧 Email Support
+    url: mailto:docs@dodopayments.com
+    about: Contact us directly for sensitive documentation issues
+  - name: 🚀 Dodo Payments Dashboard
+    url: https://app.dodopayments.com
+    about: Access your Dodo Payments account
+  - name: 📖 Documentation
+    url: https://docs.dodopayments.com
+    about: View the live documentation

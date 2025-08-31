@@ -3,7 +3,7 @@ info:
   title: public
   description: ''
   license:
-    name: Apache 2.0
+    name: GPL-3.0
   version: 1.51.0
 servers:
   - url: https://test.dodopayments.com/

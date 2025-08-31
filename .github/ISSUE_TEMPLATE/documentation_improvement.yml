@@ -1,0 +1,133 @@
+name: 📝 Documentation Improvement
+description: Suggest improvements to existing documentation
+title: "[Docs]: "
+labels: ["documentation", "improvement", "needs-triage"]
+assignees:
+  - dodopayments/documentation-team
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us improve our documentation! Whether it's clarifying confusing sections, adding missing details, or improving examples, we appreciate your feedback.
+
+  - type: input
+    id: page-url
+    attributes:
+      label: Page URL
+      description: Which documentation page needs improvement?
+      placeholder: https://docs.dodopayments.com/developer-resources/webhooks
+    validations:
+      required: true
+
+  - type: dropdown
+    id: improvement-type
+    attributes:
+      label: Type of Improvement
+      description: What kind of improvement are you suggesting?
+      multiple: true
+      options:
+        - Clarity (make it easier to understand)
+        - Completeness (add missing information)
+        - Accuracy (correct mistakes)
+        - Examples (add or improve code examples)
+        - Structure (reorganize content)
+        - Visuals (add diagrams or screenshots)
+        - Navigation (improve discoverability)
+        - SEO (improve searchability)
+        - Accessibility (improve for all users)
+        - Performance (page load speed)
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-content
+    attributes:
+      label: Current Content Issue
+      description: What's wrong with the current documentation?
+      placeholder: |
+        The webhook section doesn't explain how to verify webhook signatures, which is crucial for security...
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-improvement
+    attributes:
+      label: Suggested Improvement
+      description: How would you improve this documentation?
+      placeholder: |
+        Add a section on webhook signature verification that includes:
+        - Why it's important
+        - Step-by-step implementation
+        - Code examples in multiple languages
+        - Common pitfalls to avoid
+    validations:
+      required: true
+
+  - type: textarea
+    id: code-examples
+    attributes:
+      label: Code Examples
+      description: If applicable, provide improved code examples
+      render: markdown
+      placeholder: |
+        ```javascript
+        // Example of improved code
+        function verifyWebhookSignature(payload, signature) {
+          // Implementation here
+        }
+        ```
+
+  - type: dropdown
+    id: user-impact
+    attributes:
+      label: User Impact
+      description: How many users would this improvement help?
+      options:
+        - All users
+        - Most users
+        - Some users
+        - Few users
+    validations:
+      required: true
+
+  - type: dropdown
+    id: clarity-rating
+    attributes:
+      label: Current Clarity Rating
+      description: How clear is the current documentation?
+      options:
+        - 1 - Very confusing
+        - 2 - Somewhat confusing
+        - 3 - Adequate
+        - 4 - Mostly clear
+        - 5 - Very clear
+
+  - type: textarea
+    id: search-terms
+    attributes:
+      label: Search Terms
+      description: What terms did you search for to find this content?
+      placeholder: |
+        - webhook security
+        - verify webhook signature
+        - webhook authentication
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      description: Please confirm the following
+      options:
+        - label: I've checked that this improvement hasn't already been suggested
+          required: true
+        - label: This improvement would genuinely help developers
+          required: true
+        - label: I'm willing to help improve this documentation
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that might be helpful
+      placeholder: This confused our entire team during integration...

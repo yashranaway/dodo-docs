@@ -1,0 +1,141 @@
+name: ✨ Feature Request
+description: Suggest new documentation, guides, or improvements
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees:
+  - dodopayments/documentation-team
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting improvements to our documentation! Your feedback helps us create better resources for developers.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: Describe what documentation or feature you'd like to see added
+      placeholder: |
+        I would like to see a comprehensive guide on implementing webhooks with retry logic...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feature-type
+    attributes:
+      label: Type of Request
+      description: What kind of documentation are you requesting?
+      options:
+        - New guide or tutorial
+        - API documentation improvement
+        - Code examples
+        - Integration guide
+        - Video tutorial
+        - Interactive demo
+        - Troubleshooting guide
+        - Best practices guide
+        - Migration guide
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem it Solves
+      description: What problem would this documentation solve?
+      placeholder: |
+        Currently, developers struggle to understand how to properly implement webhook retry logic when webhooks fail...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like to see this documented?
+      placeholder: |
+        A step-by-step guide that covers:
+        1. Setting up webhook endpoints
+        2. Implementing exponential backoff
+        3. Handling different failure scenarios
+        4. Code examples in multiple languages
+    validations:
+      required: true
+
+  - type: dropdown
+    id: target-audience
+    attributes:
+      label: Target Audience
+      description: Who would benefit from this documentation?
+      multiple: true
+      options:
+        - Beginners
+        - Intermediate developers
+        - Advanced developers
+        - Frontend developers
+        - Backend developers
+        - Mobile developers
+        - DevOps engineers
+        - Product managers
+    validations:
+      required: true
+
+  - type: dropdown
+    id: programming-languages
+    attributes:
+      label: Preferred Programming Languages
+      description: Which languages should the examples cover?
+      multiple: true
+      options:
+        - JavaScript/TypeScript
+        - Python
+        - Ruby
+        - PHP
+        - Java
+        - C#/.NET
+        - Go
+        - Rust
+        - Swift
+        - Kotlin
+        - Other
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples or References
+      description: Links to similar documentation or examples you find helpful
+      placeholder: |
+        - Stripe's webhook guide: https://stripe.com/docs/webhooks
+        - Similar implementation in another project...
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this documentation?
+      options:
+        - 🚨 Critical (blocking development)
+        - 🔴 High (significantly improves developer experience)
+        - 🟡 Medium (nice to have)
+        - 🟢 Low (minor improvement)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to help with this documentation?
+      options:
+        - label: I'm willing to contribute to writing this documentation
+        - label: I can provide code examples
+        - label: I can review and provide feedback
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that might be helpful
+      placeholder: This would help onboard new developers faster...
