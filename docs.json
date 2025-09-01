@@ -519,6 +519,19 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Community Projects",
+        "groups": [
+          {
+            "group": "Community Projects",
+            "pages": [
+              "community/overview",
+              "community/projects",
+              "community/submit"
+            ]
+          }
+        ]
       }
     ]
   },
