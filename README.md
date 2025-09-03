@@ -107,7 +107,13 @@ Want to help improve our docs? Read our [contribution guidelines](./CONTRIBUTING
 
 All docs use MDX with frontmatter. Test changes locally with `mintlify dev` before submitting a pull request.
 
-Thank you for contributing!
+## 💙 Contributors
+
+A heartfelt thank you to all our contributors for their valuable contributions and ongoing support!
+
+<a href="https://github.com/dodopayments/dodo-docs/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=dodopayments/dodo-docs" />
+</a>
 
 ## 🔧 Troubleshooting
 
