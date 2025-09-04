@@ -32,13 +32,11 @@
           {
             "group": "Important Links",
             "pages": [
-              "features/mor-vs-pg",
-              "miscellaneous/list-of-countries-we-accept-payments-from",
               "miscellaneous/pricing-and-fee-structure",
-              "/features/payouts/payout-structure",
               "features/payment-methods",
-              "features/appstore-digital-goods",
-              "miscellaneous/merchant-acceptance"
+              "/features/payouts/payout-structure",
+              "features/mor-vs-pg",
+              "miscellaneous/list-of-countries-we-accept-payments-from"
             ]
           },
           {
@@ -48,6 +46,7 @@
               "features/subscription",
               "features/usage-based-billing",
               "features/pricing",
+              "features/appstore-digital-goods",
               "features/discount-codes",
               {
                 "group": "Transactions",
@@ -103,7 +102,8 @@
           {
             "group": "Security & Compliance",
             "pages": [
-              "features/fraud-detection",
+              "miscellaneous/merchant-acceptance",
+              "miscellaneous/review-monitoring-policy",
               "miscellaneous/security-policy"
             ]
           }
