@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-  version: 1.52.4
+  version: 1.53.2
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -1478,6 +1478,310 @@ paths:
             customer_portal_session = dodo_payments.customers.customer_portal.create("customer_id")
 
             puts(customer_portal_session)
+  /customers/{customer_id}/wallets:
+    get:
+      tags:
+        - Customers
+      operationId: get_customer_wallets
+      parameters:
+        - name: customer_id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerWalletsResponse'
+        '500':
+          description: Something went wrong :(
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: 'My Bearer Token',
+            });
+
+            const wallets = await client.customers.wallets.list('customer_id');
+
+            console.log(wallets.items);
+        - lang: Python
+          source: |-
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token="My Bearer Token",
+            )
+            wallets = client.customers.wallets.list(
+                "customer_id",
+            )
+            print(wallets.items)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"),
+              )
+              wallets, err := client.Customers.Wallets.List(context.TODO(), "customer_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", wallets.Items)
+            }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token",
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            wallets = dodo_payments.customers.wallets.list("customer_id")
+
+            puts(wallets)
+  /customers/{customer_id}/wallets/ledger-entries:
+    get:
+      tags:
+        - Customers
+      operationId: get_customer_wallet_transactions
+      parameters:
+        - name: customer_id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: string
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+          style: form
+        - name: page_number
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+          style: form
+        - name: currency
+          in: query
+          description: Optional currency filter
+          required: false
+          schema:
+            $ref: '#/components/schemas/Currency'
+          style: form
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerWalletTransactionsResponse'
+        '500':
+          description: Something went wrong :(
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: >-
+            import DodoPayments from 'dodopayments';
+
+
+            const client = new DodoPayments({
+              bearerToken: 'My Bearer Token',
+            });
+
+
+            // Automatically fetches more pages as needed.
+
+            for await (const customerWalletTransaction of
+            client.customers.wallets.ledgerEntries.list('customer_id')) {
+              console.log(customerWalletTransaction.id);
+            }
+        - lang: Python
+          source: |-
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token="My Bearer Token",
+            )
+            page = client.customers.wallets.ledger_entries.list(
+                customer_id="customer_id",
+            )
+            page = page.items[0]
+            print(page.id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"),
+              )
+              page, err := client.Customers.Wallets.LedgerEntries.List(
+                context.TODO(),
+                "customer_id",
+                dodopayments.CustomerWalletLedgerEntryListParams{
+
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", page)
+            }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token",
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            page = dodo_payments.customers.wallets.ledger_entries.list("customer_id")
+
+            puts(page)
+    post:
+      tags:
+        - Customers
+      operationId: create_customer_ledger_entry
+      parameters:
+        - name: customer_id
+          in: path
+          description: Customer ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerLedgerEntryRequest'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerWalletResponse'
+        '400':
+          description: Insufficient balance for debit
+        '422':
+          description: Invalid Request Object or Parameters
+        '500':
+          description: Something went wrong :(
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: 'My Bearer Token',
+            });
+
+            const customerWallet = await client.customers.wallets.ledgerEntries.create('customer_id', {
+              amount: 0,
+              currency: 'AED',
+              entry_type: 'credit',
+            });
+
+            console.log(customerWallet.customer_id);
+        - lang: Python
+          source: |-
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token="My Bearer Token",
+            )
+            customer_wallet = client.customers.wallets.ledger_entries.create(
+                customer_id="customer_id",
+                amount=0,
+                currency="AED",
+                entry_type="credit",
+            )
+            print(customer_wallet.customer_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"),
+              )
+              customerWallet, err := client.Customers.Wallets.LedgerEntries.New(
+                context.TODO(),
+                "customer_id",
+                dodopayments.CustomerWalletLedgerEntryNewParams{
+                  Amount: dodopayments.F(int64(0)),
+                  Currency: dodopayments.F(dodopayments.CurrencyAed),
+                  EntryType: dodopayments.F(dodopayments.CustomerWalletLedgerEntryNewParamsEntryTypeCredit),
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", customerWallet.CustomerID)
+            }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token",
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            customer_wallet = dodo_payments.customers.wallets.ledger_entries.create(
+              "customer_id",
+              amount: 0,
+              currency: :AED,
+              entry_type: :credit
+            )
+
+            puts(customer_wallet)
   /discounts:
     get:
       tags:
@@ -3372,7 +3676,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LicenseKeyInstanceResponse'
+                $ref: '#/components/schemas/ActivateLicenseKeyResponse'
         '403':
           description: License key cannot be activated (inactive)
         '404':
@@ -3383,20 +3687,16 @@ paths:
           description: Something went wrong :(
       x-codeSamples:
         - lang: JavaScript
-          source: >-
+          source: |-
             import DodoPayments from 'dodopayments';
-
 
             const client = new DodoPayments({
               bearerToken: 'My Bearer Token',
             });
 
+            const response = await client.licenses.activate({ license_key: 'license_key', name: 'name' });
 
-            const licenseKeyInstance = await client.licenses.activate({ license_key: 'license_key', name:
-            'name' });
-
-
-            console.log(licenseKeyInstance.id);
+            console.log(response.id);
         - lang: Python
           source: |-
             from dodopayments import DodoPayments
@@ -3404,11 +3704,11 @@ paths:
             client = DodoPayments(
                 bearer_token="My Bearer Token",
             )
-            license_key_instance = client.licenses.activate(
+            response = client.licenses.activate(
                 license_key="license_key",
                 name="name",
             )
-            print(license_key_instance.id)
+            print(response.id)
         - lang: Go
           source: |
             package main
@@ -3425,14 +3725,14 @@ paths:
               client := dodopayments.NewClient(
                 option.WithBearerToken("My Bearer Token"),
               )
-              licenseKeyInstance, err := client.Licenses.Activate(context.TODO(), dodopayments.LicenseActivateParams{
+              response, err := client.Licenses.Activate(context.TODO(), dodopayments.LicenseActivateParams{
                 LicenseKey: dodopayments.F("license_key"),
                 Name: dodopayments.F("name"),
               })
               if err != nil {
                 panic(err.Error())
               }
-              fmt.Printf("%+v\n", licenseKeyInstance.ID)
+              fmt.Printf("%+v\n", response.ID)
             }
         - lang: Ruby
           source: |-
@@ -3443,9 +3743,9 @@ paths:
               environment: "test_mode" # defaults to "live_mode"
             )
 
-            license_key_instance = dodo_payments.licenses.activate(license_key: "license_key", name: "name")
+            response = dodo_payments.licenses.activate(license_key: "license_key", name: "name")
 
-            puts(license_key_instance)
+            puts(response)
   /licenses/deactivate:
     post:
       tags:
@@ -5359,8 +5659,8 @@ paths:
             });
 
             // Automatically fetches more pages as needed.
-            for await (const refund of client.refunds.list()) {
-              console.log(refund.business_id);
+            for await (const refundListResponse of client.refunds.list()) {
+              console.log(refundListResponse.business_id);
             }
         - lang: Python
           source: |-
@@ -7080,6 +7380,19 @@ paths:
           description: Invalid webhook signature
 components:
   schemas:
+    ActivateLicenseKeyProductInfo:
+      type: object
+      required:
+        - product_id
+      properties:
+        name:
+          type:
+            - string
+            - 'null'
+          description: Name of the product, if set by the merchant.
+        product_id:
+          type: string
+          description: Unique identifier for the product.
     ActivateLicenseKeyRequest:
       type: object
       required:
@@ -7090,6 +7403,43 @@ components:
           type: string
         name:
           type: string
+    ActivateLicenseKeyResponse:
+      type: object
+      required:
+        - id
+        - business_id
+        - name
+        - license_key_id
+        - created_at
+        - product
+        - customer
+      properties:
+        business_id:
+          type: string
+          description: Business ID
+        created_at:
+          type: string
+          format: date-time
+          description: Creation timestamp
+          example: '2024-01-01T00:00:00Z'
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+          description: Limited customer details associated with the license key.
+        id:
+          type: string
+          description: License key instance ID
+          example: lki_123
+        license_key_id:
+          type: string
+          description: Associated license key ID
+          example: lic_123
+        name:
+          type: string
+          description: Instance name
+          example: Production Server 1
+        product:
+          $ref: '#/components/schemas/ActivateLicenseKeyProductInfo'
+          description: Related product info. Present if the license key is tied to a product.
     AddMeterToPrice:
       type: object
       title: Add Meter To Price
@@ -8165,6 +8515,11 @@ components:
             (false).
 
             This field is ignored if adaptive pricing is not enabled for the business.
+        customer_balance_config:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/CustomerBalanceConfig'
+              description: Specify how customer balance is used for the payment
         metadata:
           oneOf:
             - type: 'null'
@@ -8558,6 +8913,59 @@ components:
         - YER
         - ZAR
         - ZMW
+    CustomerBalanceConfig:
+      type: object
+      properties:
+        allow_customer_credits_purchase:
+          type:
+            - boolean
+            - 'null'
+          description: Allows Customer Credit to be purchased to settle payments
+        allow_customer_credits_usage:
+          type:
+            - boolean
+            - 'null'
+          description: Allows Customer Credit Balance to be used to settle payments
+    CustomerLedgerEntryRequest:
+      type: object
+      required:
+        - entry_type
+        - currency
+        - amount
+      properties:
+        amount:
+          type: integer
+          format: int64
+        currency:
+          $ref: '#/components/schemas/Currency'
+          description: Currency of the wallet to adjust
+        entry_type:
+          $ref: '#/components/schemas/CustomerLedgerEntryType'
+          description: Type of ledger entry - credit or debit
+        idempotency_key:
+          type:
+            - string
+            - 'null'
+          description: Optional idempotency key to prevent duplicate entries
+        reason:
+          type:
+            - string
+            - 'null'
+    CustomerLedgerEntryType:
+      type: string
+      enum:
+        - credit
+        - debit
+    CustomerLedgerEventType:
+      type: string
+      enum:
+        - payment
+        - payment_reversal
+        - refund
+        - refund_reversal
+        - dispute
+        - dispute_reversal
+        - merchant_adjustment
     CustomerLimitedDetailsResponse:
       type: object
       required:
@@ -8603,6 +9011,97 @@ components:
           type:
             - string
             - 'null'
+    CustomerWalletResponse:
+      type: object
+      required:
+        - customer_id
+        - currency
+        - balance
+        - created_at
+        - updated_at
+      properties:
+        balance:
+          type: integer
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          $ref: '#/components/schemas/Currency'
+        customer_id:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    CustomerWalletTransactionResponse:
+      type: object
+      required:
+        - id
+        - business_id
+        - customer_id
+        - currency
+        - amount
+        - is_credit
+        - event_type
+        - created_at
+        - before_balance
+        - after_balance
+      properties:
+        after_balance:
+          type: integer
+          format: int64
+        amount:
+          type: integer
+          format: int64
+        before_balance:
+          type: integer
+          format: int64
+        business_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        currency:
+          $ref: '#/components/schemas/Currency'
+        customer_id:
+          type: string
+        event_type:
+          $ref: '#/components/schemas/CustomerLedgerEventType'
+        id:
+          type: string
+        is_credit:
+          type: boolean
+        reason:
+          type:
+            - string
+            - 'null'
+        reference_object_id:
+          type:
+            - string
+            - 'null'
+    CustomerWalletTransactionsResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerWalletTransactionResponse'
+    CustomerWalletsResponse:
+      type: object
+      required:
+        - items
+        - total_balance_usd
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerWalletResponse'
+        total_balance_usd:
+          type: integer
+          format: int64
+          description: Sum of all wallet balances converted to USD (in smallest unit)
     DeactivateLicenseKeyRequest:
       type: object
       required:
@@ -9458,7 +9957,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/RefundResponse'
+            $ref: '#/components/schemas/RefundListItem'
     GetSubscriptionsListResponse:
       type: object
       required:
@@ -10720,7 +11219,7 @@ components:
         refunds:
           type: array
           items:
-            $ref: '#/components/schemas/RefundResponse'
+            $ref: '#/components/schemas/RefundListItem'
           description: List of refunds issued for this payment
         settlement_amount:
           type: integer
@@ -10996,7 +11495,7 @@ components:
           type: integer
           format: int32
           description: Number of days for the trial period. A value of `0` indicates no trial period.
-    RefundResponse:
+    RefundListItem:
       type: object
       required:
         - refund_id
@@ -11024,6 +11523,55 @@ components:
             - type: 'null'
             - $ref: '#/components/schemas/Currency'
               description: The currency of the refund, represented as an ISO 4217 currency code.
+        is_partial:
+          type: boolean
+          description: If true the refund is a partial refund
+        payment_id:
+          type: string
+          description: The unique identifier of the payment associated with the refund.
+        reason:
+          type:
+            - string
+            - 'null'
+          description: The reason provided for the refund, if any. Optional.
+        refund_id:
+          type: string
+          description: The unique identifier of the refund.
+        status:
+          $ref: '#/components/schemas/RefundStatus'
+          description: The current status of the refund.
+    RefundResponse:
+      type: object
+      required:
+        - refund_id
+        - payment_id
+        - business_id
+        - status
+        - created_at
+        - is_partial
+        - customer
+      properties:
+        amount:
+          type:
+            - integer
+            - 'null'
+          format: int32
+          description: The refunded amount.
+        business_id:
+          type: string
+          description: The unique identifier of the business issuing the refund.
+        created_at:
+          type: string
+          format: date-time
+          description: The timestamp of when the refund was created in UTC.
+        currency:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Currency'
+              description: The currency of the refund, represented as an ISO 4217 currency code.
+        customer:
+          $ref: '#/components/schemas/CustomerLimitedDetailsResponse'
+          description: Details about the customer for this refund (from the associated payment)
         is_partial:
           type: boolean
           description: If true the refund is a partial refund
@@ -12517,6 +13065,10 @@ x-webhooks:
                 business_id: bus_P3SXLcppjXgagmHSVaH3N
                 created_at: '2025-08-04T05:50:32.873493Z'
                 currency: USD
+                customer:
+                  customer_id: cus_123
+                  email: jane@example.com
+                  name: Jane Doe
                 is_partial: false
                 payload_type: Refund
                 payment_id: pay_aTkzUDRuc7Rb3kVJXE17z
@@ -12578,6 +13130,10 @@ x-webhooks:
                 business_id: bus_P3SXLcppjXgagmHSVaH3N
                 created_at: '2025-08-04T05:50:32.873493Z'
                 currency: USD
+                customer:
+                  customer_id: cus_123
+                  email: jane@example.com
+                  name: Jane Doe
                 is_partial: false
                 payload_type: Refund
                 payment_id: pay_aTkzUDRuc7Rb3kVJXE17z
