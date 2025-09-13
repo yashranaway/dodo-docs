@@ -430,6 +430,7 @@
           {
             "group": "September 2025",
             "pages": [
+              "changelog/v1.53.2",
               "changelog/v1.52.4"
             ]
           },

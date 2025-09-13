@@ -1,0 +1,54 @@
+---
+title: v1.53.2 (13th September 2025)
+description: "Customer credits, enhanced refund details, higher meter limits, license activation context, and $0 downgrades"
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+### Customer Credits
+  Credits are now **automatically applied to recurring subscription invoices**, making it easy to:
+
+  - Reward loyal customers
+  - Issue service credits
+  - Handle manual adjustments without disrupting billing cycles
+
+  <Tip>
+  Use customer credits for:
+  - Promotional incentives
+  - Compensation for service interruptions
+  - Pre-paid account balances
+  </Tip>
+
+  You can **add or remove credits from a customer's wallet using the API**, enabling automated workflows for customer support, retention, or loyalty programs.
+
+  **Example use cases:**
+  - Credit a customer's wallet after a successful referral
+  - Debit credits as part of a custom upgrade path
+
+  Explore the new and updated customer wallet APIs:  
+  - [Get Customer Wallets](/api-reference/customers/get-customer-wallets)  
+  - [List Customer Wallet Ledger Entries](/api-reference/customers/get-customer-wallets-ledger-entries)  
+  - [Create Customer Wallet Ledger Entry for Adding and Removing Credits](/api-reference/customers/post-customer-wallets-ledger-entries)
+
+   <Info>
+  Credit application during Checkout will be available in the next release, allowing customers to redeem their wallet balance directly at the point of purchase.
+  </Info>
+
+## Improvements & Updates ✨
+
+- **Customer details in Get Refund API**  
+  The refund retrieval endpoint now returns associated customer information, streamlining reconciliation and support workflows.  
+  Learn more: [Get Refund API](/api-reference/refunds/get-refunds-1)
+
+- **Increased meter limit to 50**  
+  You can now create up to 50 meters per account, enabling more granular usage tracking across your products and features.  
+  Learn more: [Get Meters API](/api-reference/meters/get-meters)
+
+- **Product and customer context in Activate License Key API**  
+  License activation responses now include detailed product and customer context, improving entitlement checks and downstream integrations.  
+  Learn more: [Activate License Key API](/api-reference/licenses/activate-license)
+
+- **Subscriptions can be downgraded to \$0**  
+  You can now downgrade subscriptions to free or $0 plans, making it easier to support trials, community tiers, and sponsorships.  
+  Manage subscriptions: [Update Subscription API](/api-reference/subscriptions/patch-subscriptions)
