@@ -94,6 +94,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.addons.AddonListPage;
+            import com.dodopayments.api.models.addons.AddonListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    AddonListPage page = client.addons().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.addons.AddonListPage
+            import com.dodopayments.api.models.addons.AddonListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: AddonListPage = client.addons().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -187,6 +219,54 @@ paths:
               }
               fmt.Printf("%+v\n", addonResponse.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.addons.AddonCreateParams;
+            import com.dodopayments.api.models.addons.AddonResponse;
+            import com.dodopayments.api.models.misc.Currency;
+            import com.dodopayments.api.models.misc.TaxCategory;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    AddonCreateParams params = AddonCreateParams.builder()
+                        .currency(Currency.AED)
+                        .name("name")
+                        .price(0)
+                        .taxCategory(TaxCategory.DIGITAL_PRODUCTS)
+                        .build();
+                    AddonResponse addonResponse = client.addons().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.addons.AddonCreateParams
+            import com.dodopayments.api.models.addons.AddonResponse
+            import com.dodopayments.api.models.misc.Currency
+            import com.dodopayments.api.models.misc.TaxCategory
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: AddonCreateParams = AddonCreateParams.builder()
+                    .currency(Currency.AED)
+                    .name("name")
+                    .price(0)
+                    .taxCategory(TaxCategory.DIGITAL_PRODUCTS)
+                    .build()
+                val addonResponse: AddonResponse = client.addons().create(params)
+            }
         - lang: Ruby
           source: >-
             require "dodopayments"
@@ -270,6 +350,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", addonResponse.ID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.addons.AddonResponse;
+            import com.dodopayments.api.models.addons.AddonRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    AddonResponse addonResponse = client.addons().retrieve("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.addons.AddonResponse
+            import com.dodopayments.api.models.addons.AddonRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val addonResponse: AddonResponse = client.addons().retrieve("id")
             }
         - lang: Ruby
           source: |-
@@ -364,6 +476,38 @@ paths:
               }
               fmt.Printf("%+v\n", addonResponse.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.addons.AddonResponse;
+            import com.dodopayments.api.models.addons.AddonUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    AddonResponse addonResponse = client.addons().update("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.addons.AddonResponse
+            import com.dodopayments.api.models.addons.AddonUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val addonResponse: AddonResponse = client.addons().update("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -446,6 +590,38 @@ paths:
               }
               fmt.Printf("%+v\n", response.ImageID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.addons.AddonUpdateImagesParams;
+            import com.dodopayments.api.models.addons.AddonUpdateImagesResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    AddonUpdateImagesResponse response = client.addons().updateImages("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.addons.AddonUpdateImagesParams
+            import com.dodopayments.api.models.addons.AddonUpdateImagesResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val response: AddonUpdateImagesResponse = client.addons().updateImages("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -514,6 +690,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", brands.Items)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.BrandListParams;
+            import com.dodopayments.api.models.brands.BrandListResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    BrandListResponse brands = client.brands().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.BrandListParams
+            import com.dodopayments.api.models.brands.BrandListResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val brands: BrandListResponse = client.brands().list()
             }
         - lang: Ruby
           source: |-
@@ -590,6 +798,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", brand.BrandID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.Brand;
+            import com.dodopayments.api.models.brands.BrandCreateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Brand brand = client.brands().create();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.Brand
+            import com.dodopayments.api.models.brands.BrandCreateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val brand: Brand = client.brands().create()
             }
         - lang: Ruby
           source: |-
@@ -671,6 +911,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", brand.BrandID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.Brand;
+            import com.dodopayments.api.models.brands.BrandRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Brand brand = client.brands().retrieve("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.Brand
+            import com.dodopayments.api.models.brands.BrandRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val brand: Brand = client.brands().retrieve("id")
             }
         - lang: Ruby
           source: |-
@@ -765,6 +1037,38 @@ paths:
               }
               fmt.Printf("%+v\n", brand.BrandID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.Brand;
+            import com.dodopayments.api.models.brands.BrandUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Brand brand = client.brands().update("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.Brand
+            import com.dodopayments.api.models.brands.BrandUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val brand: Brand = client.brands().update("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -843,6 +1147,38 @@ paths:
               }
               fmt.Printf("%+v\n", response.ImageID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.brands.BrandUpdateImagesParams;
+            import com.dodopayments.api.models.brands.BrandUpdateImagesResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    BrandUpdateImagesResponse response = client.brands().updateImages("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.brands.BrandUpdateImagesParams
+            import com.dodopayments.api.models.brands.BrandUpdateImagesResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val response: BrandUpdateImagesResponse = client.brands().updateImages("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -913,6 +1249,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", countryCodes)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.misc.CountryCode;
+            import com.dodopayments.api.models.misc.MiscListSupportedCountriesParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    List<CountryCode> countryCodes = client.misc().listSupportedCountries();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.misc.CountryCode
+            import com.dodopayments.api.models.misc.MiscListSupportedCountriesParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val countryCodes: List<CountryCode> = client.misc().listSupportedCountries()
             }
         - lang: Ruby
           source: |-
@@ -1006,6 +1374,56 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", checkoutSessionResponse.SessionID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionCreateParams;
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionRequest;
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    CheckoutSessionCreateParams params = CheckoutSessionCreateParams.builder()
+                        .checkoutSessionRequest(CheckoutSessionRequest.builder()
+                            .addProductCart(CheckoutSessionRequest.ProductCart.builder()
+                                .productId("product_id")
+                                .quantity(0)
+                                .build())
+                            .build())
+                        .build();
+                    CheckoutSessionResponse checkoutSessionResponse = client.checkoutSessions().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionCreateParams
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionRequest
+            import com.dodopayments.api.models.checkoutsessions.CheckoutSessionResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: CheckoutSessionCreateParams = CheckoutSessionCreateParams.builder()
+                    .checkoutSessionRequest(CheckoutSessionRequest.builder()
+                        .addProductCart(CheckoutSessionRequest.ProductCart.builder()
+                            .productId("product_id")
+                            .quantity(0)
+                            .build())
+                        .build())
+                    .build()
+                val checkoutSessionResponse: CheckoutSessionResponse = client.checkoutSessions().create(params)
             }
         - lang: Ruby
           source: >-
@@ -1114,6 +1532,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.CustomerListPage;
+            import com.dodopayments.api.models.customers.CustomerListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    CustomerListPage page = client.customers().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.CustomerListPage
+            import com.dodopayments.api.models.customers.CustomerListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: CustomerListPage = client.customers().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -1198,6 +1648,46 @@ paths:
               }
               fmt.Printf("%+v\n", customer.BusinessID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.Customer;
+            import com.dodopayments.api.models.customers.CustomerCreateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    CustomerCreateParams params = CustomerCreateParams.builder()
+                        .email("email")
+                        .name("name")
+                        .build();
+                    Customer customer = client.customers().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.Customer
+            import com.dodopayments.api.models.customers.CustomerCreateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: CustomerCreateParams = CustomerCreateParams.builder()
+                    .email("email")
+                    .name("name")
+                    .build()
+                val customer: Customer = client.customers().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -1277,6 +1767,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", customer.BusinessID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.Customer;
+            import com.dodopayments.api.models.customers.CustomerRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Customer customer = client.customers().retrieve("customer_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.Customer
+            import com.dodopayments.api.models.customers.CustomerRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val customer: Customer = client.customers().retrieve("customer_id")
             }
         - lang: Ruby
           source: |-
@@ -1370,6 +1892,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", customer.BusinessID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.Customer;
+            import com.dodopayments.api.models.customers.CustomerUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Customer customer = client.customers().update("customer_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.Customer
+            import com.dodopayments.api.models.customers.CustomerUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val customer: Customer = client.customers().update("customer_id")
             }
         - lang: Ruby
           source: |-
@@ -1466,6 +2020,38 @@ paths:
               }
               fmt.Printf("%+v\n", customerPortalSession.Link)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.CustomerPortalSession;
+            import com.dodopayments.api.models.customers.customerportal.CustomerPortalCreateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    CustomerPortalSession customerPortalSession = client.customers().customerPortal().create("customer_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.CustomerPortalSession
+            import com.dodopayments.api.models.customers.customerportal.CustomerPortalCreateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val customerPortalSession: CustomerPortalSession = client.customers().customerPortal().create("customer_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -1545,6 +2131,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", wallets.Items)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.wallets.WalletListParams;
+            import com.dodopayments.api.models.customers.wallets.WalletListResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    WalletListResponse wallets = client.customers().wallets().list("customer_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.wallets.WalletListParams
+            import com.dodopayments.api.models.customers.wallets.WalletListResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val wallets: WalletListResponse = client.customers().wallets().list("customer_id")
             }
         - lang: Ruby
           source: |-
@@ -1661,6 +2279,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.wallets.ledgerentries.LedgerEntryListPage;
+            import com.dodopayments.api.models.customers.wallets.ledgerentries.LedgerEntryListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LedgerEntryListPage page = client.customers().wallets().ledgerEntries().list("customer_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.wallets.ledgerentries.LedgerEntryListPage
+            import com.dodopayments.api.models.customers.wallets.ledgerentries.LedgerEntryListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: LedgerEntryListPage = client.customers().wallets().ledgerEntries().list("customer_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -1765,6 +2415,52 @@ paths:
               }
               fmt.Printf("%+v\n", customerWallet.CustomerID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.wallets.CustomerWallet;
+            import com.dodopayments.api.models.customers.wallets.ledgerentries.LedgerEntryCreateParams;
+            import com.dodopayments.api.models.misc.Currency;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LedgerEntryCreateParams params = LedgerEntryCreateParams.builder()
+                        .customerId("customer_id")
+                        .amount(0L)
+                        .currency(Currency.AED)
+                        .entryType(LedgerEntryCreateParams.EntryType.CREDIT)
+                        .build();
+                    CustomerWallet customerWallet = client.customers().wallets().ledgerEntries().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.wallets.CustomerWallet
+            import com.dodopayments.api.models.customers.wallets.ledgerentries.LedgerEntryCreateParams
+            import com.dodopayments.api.models.misc.Currency
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: LedgerEntryCreateParams = LedgerEntryCreateParams.builder()
+                    .customerId("customer_id")
+                    .amount(0L)
+                    .currency(Currency.AED)
+                    .entryType(LedgerEntryCreateParams.EntryType.CREDIT)
+                    .build()
+                val customerWallet: CustomerWallet = client.customers().wallets().ledgerEntries().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -1867,6 +2563,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.discounts.DiscountListPage;
+            import com.dodopayments.api.models.discounts.DiscountListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    DiscountListPage page = client.discounts().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.discounts.DiscountListPage
+            import com.dodopayments.api.models.discounts.DiscountListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: DiscountListPage = client.discounts().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -1954,6 +2682,48 @@ paths:
               }
               fmt.Printf("%+v\n", discount.BusinessID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.discounts.Discount;
+            import com.dodopayments.api.models.discounts.DiscountCreateParams;
+            import com.dodopayments.api.models.discounts.DiscountType;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    DiscountCreateParams params = DiscountCreateParams.builder()
+                        .amount(0)
+                        .type(DiscountType.PERCENTAGE)
+                        .build();
+                    Discount discount = client.discounts().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.discounts.Discount
+            import com.dodopayments.api.models.discounts.DiscountCreateParams
+            import com.dodopayments.api.models.discounts.DiscountType
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: DiscountCreateParams = DiscountCreateParams.builder()
+                    .amount(0)
+                    .type(DiscountType.PERCENTAGE)
+                    .build()
+                val discount: Discount = client.discounts().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -2037,6 +2807,38 @@ paths:
               }
               fmt.Printf("%+v\n", discount.BusinessID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.discounts.Discount;
+            import com.dodopayments.api.models.discounts.DiscountRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Discount discount = client.discounts().retrieve("discount_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.discounts.Discount
+            import com.dodopayments.api.models.discounts.DiscountRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val discount: Discount = client.discounts().retrieve("discount_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -2109,6 +2911,36 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.discounts.DiscountDeleteParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    client.discounts().delete("discount_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.discounts.DiscountDeleteParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                client.discounts().delete("discount_id")
             }
         - lang: Ruby
           source: |-
@@ -2203,6 +3035,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", discount.BusinessID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.discounts.Discount;
+            import com.dodopayments.api.models.discounts.DiscountUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Discount discount = client.discounts().update("discount_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.discounts.Discount
+            import com.dodopayments.api.models.discounts.DiscountUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val discount: Discount = client.discounts().update("discount_id")
             }
         - lang: Ruby
           source: |-
@@ -2347,6 +3211,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.disputes.DisputeListPage;
+            import com.dodopayments.api.models.disputes.DisputeListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    DisputeListPage page = client.disputes().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.disputes.DisputeListPage
+            import com.dodopayments.api.models.disputes.DisputeListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: DisputeListPage = client.disputes().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -2426,6 +3322,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", getDispute.BusinessID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.disputes.DisputeRetrieveParams;
+            import com.dodopayments.api.models.disputes.GetDispute;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    GetDispute getDispute = client.disputes().retrieve("dispute_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.disputes.DisputeRetrieveParams
+            import com.dodopayments.api.models.disputes.GetDispute
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val getDispute: GetDispute = client.disputes().retrieve("dispute_id")
             }
         - lang: Ruby
           source: |-
@@ -2617,6 +3545,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.usageevents.UsageEventListPage;
+            import com.dodopayments.api.models.usageevents.UsageEventListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    UsageEventListPage page = client.usageEvents().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.usageevents.UsageEventListPage
+            import com.dodopayments.api.models.usageevents.UsageEventListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: UsageEventListPage = client.usageEvents().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -2761,6 +3721,54 @@ paths:
               }
               fmt.Printf("%+v\n", response.IngestedCount)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.usageevents.EventInput;
+            import com.dodopayments.api.models.usageevents.UsageEventIngestParams;
+            import com.dodopayments.api.models.usageevents.UsageEventIngestResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    UsageEventIngestParams params = UsageEventIngestParams.builder()
+                        .addEvent(EventInput.builder()
+                            .customerId("customer_id")
+                            .eventId("event_id")
+                            .eventName("event_name")
+                            .build())
+                        .build();
+                    UsageEventIngestResponse response = client.usageEvents().ingest(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.usageevents.EventInput
+            import com.dodopayments.api.models.usageevents.UsageEventIngestParams
+            import com.dodopayments.api.models.usageevents.UsageEventIngestResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: UsageEventIngestParams = UsageEventIngestParams.builder()
+                    .addEvent(EventInput.builder()
+                        .customerId("customer_id")
+                        .eventId("event_id")
+                        .eventName("event_name")
+                        .build())
+                    .build()
+                val response: UsageEventIngestResponse = client.usageEvents().ingest(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -2889,6 +3897,38 @@ paths:
               }
               fmt.Printf("%+v\n", event.BusinessID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.usageevents.Event;
+            import com.dodopayments.api.models.usageevents.UsageEventRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Event event = client.usageEvents().retrieve("event_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.usageevents.Event
+            import com.dodopayments.api.models.usageevents.UsageEventRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val event: Event = client.usageEvents().retrieve("event_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -2977,6 +4017,38 @@ paths:
               }
               fmt.Printf("%+v\n", payment)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.core.http.HttpResponse;
+            import com.dodopayments.api.models.invoices.payments.PaymentRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    HttpResponse payment = client.invoices().payments().retrieve("payment_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.core.http.HttpResponse
+            import com.dodopayments.api.models.invoices.payments.PaymentRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val payment: HttpResponse = client.invoices().payments().retrieve("payment_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -3064,6 +4136,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", response)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.core.http.HttpResponse;
+            import com.dodopayments.api.models.invoices.payments.PaymentRetrieveRefundParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    HttpResponse response = client.invoices().payments().retrieveRefund("refund_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.core.http.HttpResponse
+            import com.dodopayments.api.models.invoices.payments.PaymentRetrieveRefundParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val response: HttpResponse = client.invoices().payments().retrieveRefund("refund_id")
             }
         - lang: Ruby
           source: |-
@@ -3169,6 +4273,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceListPage;
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseKeyInstanceListPage page = client.licenseKeyInstances().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceListPage
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: LicenseKeyInstanceListPage = client.licenseKeyInstances().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -3251,6 +4387,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", licenseKeyInstance.ID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstance;
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseKeyInstance licenseKeyInstance = client.licenseKeyInstances().retrieve("lki_123");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstance
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val licenseKeyInstance: LicenseKeyInstance = client.licenseKeyInstances().retrieve("lki_123")
             }
         - lang: Ruby
           source: |-
@@ -3346,6 +4514,46 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", licenseKeyInstance.ID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstance;
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseKeyInstanceUpdateParams params = LicenseKeyInstanceUpdateParams.builder()
+                        .id("lki_123")
+                        .name("name")
+                        .build();
+                    LicenseKeyInstance licenseKeyInstance = client.licenseKeyInstances().update(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstance
+            import com.dodopayments.api.models.licensekeyinstances.LicenseKeyInstanceUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: LicenseKeyInstanceUpdateParams = LicenseKeyInstanceUpdateParams.builder()
+                    .id("lki_123")
+                    .name("name")
+                    .build()
+                val licenseKeyInstance: LicenseKeyInstance = client.licenseKeyInstances().update(params)
             }
         - lang: Ruby
           source: |-
@@ -3466,6 +4674,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licensekeys.LicenseKeyListPage;
+            import com.dodopayments.api.models.licensekeys.LicenseKeyListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseKeyListPage page = client.licenseKeys().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licensekeys.LicenseKeyListPage
+            import com.dodopayments.api.models.licensekeys.LicenseKeyListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: LicenseKeyListPage = client.licenseKeys().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -3548,6 +4788,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", licenseKey.ID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licensekeys.LicenseKey;
+            import com.dodopayments.api.models.licensekeys.LicenseKeyRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseKey licenseKey = client.licenseKeys().retrieve("lic_123");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licensekeys.LicenseKey
+            import com.dodopayments.api.models.licensekeys.LicenseKeyRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val licenseKey: LicenseKey = client.licenseKeys().retrieve("lic_123")
             }
         - lang: Ruby
           source: |-
@@ -3647,6 +4919,38 @@ paths:
               }
               fmt.Printf("%+v\n", licenseKey.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licensekeys.LicenseKey;
+            import com.dodopayments.api.models.licensekeys.LicenseKeyUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseKey licenseKey = client.licenseKeys().update("lic_123");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licensekeys.LicenseKey
+            import com.dodopayments.api.models.licensekeys.LicenseKeyUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val licenseKey: LicenseKey = client.licenseKeys().update("lic_123")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -3734,6 +5038,46 @@ paths:
               }
               fmt.Printf("%+v\n", response.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licenses.LicenseActivateParams;
+            import com.dodopayments.api.models.licenses.LicenseActivateResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseActivateParams params = LicenseActivateParams.builder()
+                        .licenseKey("license_key")
+                        .name("name")
+                        .build();
+                    LicenseActivateResponse response = client.licenses().activate(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licenses.LicenseActivateParams
+            import com.dodopayments.api.models.licenses.LicenseActivateResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: LicenseActivateParams = LicenseActivateParams.builder()
+                    .licenseKey("license_key")
+                    .name("name")
+                    .build()
+                val response: LicenseActivateResponse = client.licenses().activate(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -3812,6 +5156,44 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licenses.LicenseDeactivateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseDeactivateParams params = LicenseDeactivateParams.builder()
+                        .licenseKey("license_key")
+                        .licenseKeyInstanceId("license_key_instance_id")
+                        .build();
+                    client.licenses().deactivate(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licenses.LicenseDeactivateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: LicenseDeactivateParams = LicenseDeactivateParams.builder()
+                    .licenseKey("license_key")
+                    .licenseKeyInstanceId("license_key_instance_id")
+                    .build()
+                client.licenses().deactivate(params)
             }
         - lang: Ruby
           source: |-
@@ -3900,6 +5282,44 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", response.Valid)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.licenses.LicenseValidateParams;
+            import com.dodopayments.api.models.licenses.LicenseValidateResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    LicenseValidateParams params = LicenseValidateParams.builder()
+                        .licenseKey("2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43")
+                        .build();
+                    LicenseValidateResponse response = client.licenses().validate(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.licenses.LicenseValidateParams
+            import com.dodopayments.api.models.licenses.LicenseValidateResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: LicenseValidateParams = LicenseValidateParams.builder()
+                    .licenseKey("2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43")
+                    .build()
+                val response: LicenseValidateResponse = client.licenses().validate(params)
             }
         - lang: Ruby
           source: |-
@@ -4004,6 +5424,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.meters.MeterListPage;
+            import com.dodopayments.api.models.meters.MeterListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    MeterListPage page = client.meters().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.meters.MeterListPage
+            import com.dodopayments.api.models.meters.MeterListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: MeterListPage = client.meters().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -4101,6 +5553,56 @@ paths:
               }
               fmt.Printf("%+v\n", meter.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.meters.Meter;
+            import com.dodopayments.api.models.meters.MeterAggregation;
+            import com.dodopayments.api.models.meters.MeterCreateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    MeterCreateParams params = MeterCreateParams.builder()
+                        .aggregation(MeterAggregation.builder()
+                            .type(MeterAggregation.Type.COUNT)
+                            .build())
+                        .eventName("event_name")
+                        .measurementUnit("measurement_unit")
+                        .name("name")
+                        .build();
+                    Meter meter = client.meters().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.meters.Meter
+            import com.dodopayments.api.models.meters.MeterAggregation
+            import com.dodopayments.api.models.meters.MeterCreateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: MeterCreateParams = MeterCreateParams.builder()
+                    .aggregation(MeterAggregation.builder()
+                        .type(MeterAggregation.Type.COUNT)
+                        .build())
+                    .eventName("event_name")
+                    .measurementUnit("measurement_unit")
+                    .name("name")
+                    .build()
+                val meter: Meter = client.meters().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -4188,6 +5690,38 @@ paths:
               }
               fmt.Printf("%+v\n", meter.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.meters.Meter;
+            import com.dodopayments.api.models.meters.MeterRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Meter meter = client.meters().retrieve("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.meters.Meter
+            import com.dodopayments.api.models.meters.MeterRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val meter: Meter = client.meters().retrieve("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -4260,6 +5794,36 @@ paths:
                 panic(err.Error())
               }
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.meters.MeterArchiveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    client.meters().archive("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.meters.MeterArchiveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                client.meters().archive("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -4330,6 +5894,36 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.meters.MeterUnarchiveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    client.meters().unarchive("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.meters.MeterUnarchiveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                client.meters().unarchive("id")
             }
         - lang: Ruby
           source: |-
@@ -4481,6 +6075,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.payments.PaymentListPage;
+            import com.dodopayments.api.models.payments.PaymentListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    PaymentListPage page = client.payments().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.payments.PaymentListPage
+            import com.dodopayments.api.models.payments.PaymentListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: PaymentListPage = client.payments().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -4593,6 +6219,78 @@ paths:
               }
               fmt.Printf("%+v\n", payment.PaymentID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.misc.CountryCode;
+            import com.dodopayments.api.models.payments.AttachExistingCustomer;
+            import com.dodopayments.api.models.payments.BillingAddress;
+            import com.dodopayments.api.models.payments.OneTimeProductCartItem;
+            import com.dodopayments.api.models.payments.PaymentCreateParams;
+            import com.dodopayments.api.models.payments.PaymentCreateResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    PaymentCreateParams params = PaymentCreateParams.builder()
+                        .billing(BillingAddress.builder()
+                            .city("city")
+                            .country(CountryCode.AF)
+                            .state("state")
+                            .street("street")
+                            .zipcode("zipcode")
+                            .build())
+                        .customer(AttachExistingCustomer.builder()
+                            .customerId("customer_id")
+                            .build())
+                        .addProductCart(OneTimeProductCartItem.builder()
+                            .productId("product_id")
+                            .quantity(0)
+                            .build())
+                        .build();
+                    PaymentCreateResponse payment = client.payments().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.misc.CountryCode
+            import com.dodopayments.api.models.payments.AttachExistingCustomer
+            import com.dodopayments.api.models.payments.BillingAddress
+            import com.dodopayments.api.models.payments.OneTimeProductCartItem
+            import com.dodopayments.api.models.payments.PaymentCreateParams
+            import com.dodopayments.api.models.payments.PaymentCreateResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: PaymentCreateParams = PaymentCreateParams.builder()
+                    .billing(BillingAddress.builder()
+                        .city("city")
+                        .country(CountryCode.AF)
+                        .state("state")
+                        .street("street")
+                        .zipcode("zipcode")
+                        .build())
+                    .customer(AttachExistingCustomer.builder()
+                        .customerId("customer_id")
+                        .build())
+                    .addProductCart(OneTimeProductCartItem.builder()
+                        .productId("product_id")
+                        .quantity(0)
+                        .build())
+                    .build()
+                val payment: PaymentCreateResponse = client.payments().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -4677,6 +6375,38 @@ paths:
               }
               fmt.Printf("%+v\n", payment.BrandID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.payments.Payment;
+            import com.dodopayments.api.models.payments.PaymentRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Payment payment = client.payments().retrieve("payment_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.payments.Payment
+            import com.dodopayments.api.models.payments.PaymentRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val payment: Payment = client.payments().retrieve("payment_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -4754,6 +6484,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", response.Currency)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.payments.PaymentRetrieveLineItemsParams;
+            import com.dodopayments.api.models.payments.PaymentRetrieveLineItemsResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    PaymentRetrieveLineItemsResponse response = client.payments().retrieveLineItems("payment_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.payments.PaymentRetrieveLineItemsParams
+            import com.dodopayments.api.models.payments.PaymentRetrieveLineItemsResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val response: PaymentRetrieveLineItemsResponse = client.payments().retrieveLineItems("payment_id")
             }
         - lang: Ruby
           source: |-
@@ -4848,6 +6610,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", page)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.payouts.PayoutListPage;
+            import com.dodopayments.api.models.payouts.PayoutListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    PayoutListPage page = client.payouts().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.payouts.PayoutListPage
+            import com.dodopayments.api.models.payouts.PayoutListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: PayoutListPage = client.payouts().list()
             }
         - lang: Ruby
           source: |-
@@ -4970,6 +6764,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.products.ProductListPage;
+            import com.dodopayments.api.models.products.ProductListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    ProductListPage page = client.products().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.products.ProductListPage
+            import com.dodopayments.api.models.products.ProductListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: ProductListPage = client.products().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -5069,6 +6895,64 @@ paths:
               }
               fmt.Printf("%+v\n", product.BrandID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.misc.Currency;
+            import com.dodopayments.api.models.misc.TaxCategory;
+            import com.dodopayments.api.models.products.Price;
+            import com.dodopayments.api.models.products.Product;
+            import com.dodopayments.api.models.products.ProductCreateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    ProductCreateParams params = ProductCreateParams.builder()
+                        .price(Price.OneTimePrice.builder()
+                            .currency(Currency.AED)
+                            .discount(0L)
+                            .price(0)
+                            .purchasingPowerParity(true)
+                            .type(Price.OneTimePrice.Type.ONE_TIME_PRICE)
+                            .build())
+                        .taxCategory(TaxCategory.DIGITAL_PRODUCTS)
+                        .build();
+                    Product product = client.products().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.misc.Currency
+            import com.dodopayments.api.models.misc.TaxCategory
+            import com.dodopayments.api.models.products.Price
+            import com.dodopayments.api.models.products.Product
+            import com.dodopayments.api.models.products.ProductCreateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: ProductCreateParams = ProductCreateParams.builder()
+                    .price(Price.OneTimePrice.builder()
+                        .currency(Currency.AED)
+                        .discount(0L)
+                        .price(0)
+                        .purchasingPowerParity(true)
+                        .type(Price.OneTimePrice.Type.ONE_TIME_PRICE)
+                        .build())
+                    .taxCategory(TaxCategory.DIGITAL_PRODUCTS)
+                    .build()
+                val product: Product = client.products().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -5152,6 +7036,38 @@ paths:
               }
               fmt.Printf("%+v\n", product.BrandID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.products.Product;
+            import com.dodopayments.api.models.products.ProductRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Product product = client.products().retrieve("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.products.Product
+            import com.dodopayments.api.models.products.ProductRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val product: Product = client.products().retrieve("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -5224,6 +7140,36 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.products.ProductArchiveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    client.products().archive("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.products.ProductArchiveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                client.products().archive("id")
             }
         - lang: Ruby
           source: |-
@@ -5307,6 +7253,36 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.products.ProductUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    client.products().update("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.products.ProductUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                client.products().update("id")
             }
         - lang: Ruby
           source: |-
@@ -5403,6 +7379,46 @@ paths:
               }
               fmt.Printf("%+v\n", response.FileID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.products.ProductUpdateFilesParams;
+            import com.dodopayments.api.models.products.ProductUpdateFilesResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    ProductUpdateFilesParams params = ProductUpdateFilesParams.builder()
+                        .id("id")
+                        .fileName("file_name")
+                        .build();
+                    ProductUpdateFilesResponse response = client.products().updateFiles(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.products.ProductUpdateFilesParams
+            import com.dodopayments.api.models.products.ProductUpdateFilesResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: ProductUpdateFilesParams = ProductUpdateFilesParams.builder()
+                    .id("id")
+                    .fileName("file_name")
+                    .build()
+                val response: ProductUpdateFilesResponse = client.products().updateFiles(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -5497,6 +7513,38 @@ paths:
               }
               fmt.Printf("%+v\n", image.ImageID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.products.images.ImageUpdateParams;
+            import com.dodopayments.api.models.products.images.ImageUpdateResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    ImageUpdateResponse image = client.products().images().update("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.products.images.ImageUpdateParams
+            import com.dodopayments.api.models.products.images.ImageUpdateResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val image: ImageUpdateResponse = client.products().images().update("id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -5566,6 +7614,36 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.products.ProductUnarchiveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    client.products().unarchive("id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.products.ProductUnarchiveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                client.products().unarchive("id")
             }
         - lang: Ruby
           source: |-
@@ -5696,6 +7774,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.refunds.RefundListPage;
+            import com.dodopayments.api.models.refunds.RefundListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    RefundListPage page = client.refunds().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.refunds.RefundListPage
+            import com.dodopayments.api.models.refunds.RefundListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: RefundListPage = client.refunds().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -5780,6 +7890,44 @@ paths:
               }
               fmt.Printf("%+v\n", refund.BusinessID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.refunds.Refund;
+            import com.dodopayments.api.models.refunds.RefundCreateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    RefundCreateParams params = RefundCreateParams.builder()
+                        .paymentId("payment_id")
+                        .build();
+                    Refund refund = client.refunds().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.refunds.Refund
+            import com.dodopayments.api.models.refunds.RefundCreateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: RefundCreateParams = RefundCreateParams.builder()
+                    .paymentId("payment_id")
+                    .build()
+                val refund: Refund = client.refunds().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -5859,6 +8007,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", refund.BusinessID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.refunds.Refund;
+            import com.dodopayments.api.models.refunds.RefundRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Refund refund = client.refunds().retrieve("refund_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.refunds.Refund
+            import com.dodopayments.api.models.refunds.RefundRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val refund: Refund = client.refunds().retrieve("refund_id")
             }
         - lang: Ruby
           source: |-
@@ -5998,6 +8178,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.SubscriptionListPage;
+            import com.dodopayments.api.models.subscriptions.SubscriptionListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    SubscriptionListPage page = client.subscriptions().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.SubscriptionListPage
+            import com.dodopayments.api.models.subscriptions.SubscriptionListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: SubscriptionListPage = client.subscriptions().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -6107,6 +8319,72 @@ paths:
               }
               fmt.Printf("%+v\n", subscription.PaymentID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.misc.CountryCode;
+            import com.dodopayments.api.models.payments.AttachExistingCustomer;
+            import com.dodopayments.api.models.payments.BillingAddress;
+            import com.dodopayments.api.models.subscriptions.SubscriptionCreateParams;
+            import com.dodopayments.api.models.subscriptions.SubscriptionCreateResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    SubscriptionCreateParams params = SubscriptionCreateParams.builder()
+                        .billing(BillingAddress.builder()
+                            .city("city")
+                            .country(CountryCode.AF)
+                            .state("state")
+                            .street("street")
+                            .zipcode("zipcode")
+                            .build())
+                        .customer(AttachExistingCustomer.builder()
+                            .customerId("customer_id")
+                            .build())
+                        .productId("product_id")
+                        .quantity(0)
+                        .build();
+                    SubscriptionCreateResponse subscription = client.subscriptions().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.misc.CountryCode
+            import com.dodopayments.api.models.payments.AttachExistingCustomer
+            import com.dodopayments.api.models.payments.BillingAddress
+            import com.dodopayments.api.models.subscriptions.SubscriptionCreateParams
+            import com.dodopayments.api.models.subscriptions.SubscriptionCreateResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: SubscriptionCreateParams = SubscriptionCreateParams.builder()
+                    .billing(BillingAddress.builder()
+                        .city("city")
+                        .country(CountryCode.AF)
+                        .state("state")
+                        .street("street")
+                        .zipcode("zipcode")
+                        .build())
+                    .customer(AttachExistingCustomer.builder()
+                        .customerId("customer_id")
+                        .build())
+                    .productId("product_id")
+                    .quantity(0)
+                    .build()
+                val subscription: SubscriptionCreateResponse = client.subscriptions().create(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -6191,6 +8469,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", subscription.ProductID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.Subscription;
+            import com.dodopayments.api.models.subscriptions.SubscriptionRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Subscription subscription = client.subscriptions().retrieve("subscription_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.Subscription
+            import com.dodopayments.api.models.subscriptions.SubscriptionRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val subscription: Subscription = client.subscriptions().retrieve("subscription_id")
             }
         - lang: Ruby
           source: |-
@@ -6285,6 +8595,38 @@ paths:
               }
               fmt.Printf("%+v\n", subscription.ProductID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.Subscription;
+            import com.dodopayments.api.models.subscriptions.SubscriptionUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    Subscription subscription = client.subscriptions().update("subscription_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.Subscription
+            import com.dodopayments.api.models.subscriptions.SubscriptionUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val subscription: Subscription = client.subscriptions().update("subscription_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -6376,6 +8718,48 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.SubscriptionChangePlanParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    SubscriptionChangePlanParams params = SubscriptionChangePlanParams.builder()
+                        .subscriptionId("subscription_id")
+                        .productId("product_id")
+                        .prorationBillingMode(SubscriptionChangePlanParams.ProrationBillingMode.PRORATED_IMMEDIATELY)
+                        .quantity(0)
+                        .build();
+                    client.subscriptions().changePlan(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.SubscriptionChangePlanParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: SubscriptionChangePlanParams = SubscriptionChangePlanParams.builder()
+                    .subscriptionId("subscription_id")
+                    .productId("product_id")
+                    .prorationBillingMode(SubscriptionChangePlanParams.ProrationBillingMode.PRORATED_IMMEDIATELY)
+                    .quantity(0)
+                    .build()
+                client.subscriptions().changePlan(params)
             }
         - lang: Ruby
           source: |-
@@ -6476,6 +8860,46 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", response.PaymentID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.SubscriptionChargeParams;
+            import com.dodopayments.api.models.subscriptions.SubscriptionChargeResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    SubscriptionChargeParams params = SubscriptionChargeParams.builder()
+                        .subscriptionId("subscription_id")
+                        .productPrice(0)
+                        .build();
+                    SubscriptionChargeResponse response = client.subscriptions().charge(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.SubscriptionChargeParams
+            import com.dodopayments.api.models.subscriptions.SubscriptionChargeResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: SubscriptionChargeParams = SubscriptionChargeParams.builder()
+                    .subscriptionId("subscription_id")
+                    .productPrice(0)
+                    .build()
+                val response: SubscriptionChargeResponse = client.subscriptions().charge(params)
             }
         - lang: Ruby
           source: |-
@@ -6658,6 +9082,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.SubscriptionRetrieveUsageHistoryPage;
+            import com.dodopayments.api.models.subscriptions.SubscriptionRetrieveUsageHistoryParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    SubscriptionRetrieveUsageHistoryPage page = client.subscriptions().retrieveUsageHistory("subscription_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.SubscriptionRetrieveUsageHistoryPage
+            import com.dodopayments.api.models.subscriptions.SubscriptionRetrieveUsageHistoryParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: SubscriptionRetrieveUsageHistoryPage = client.subscriptions().retrieveUsageHistory("subscription_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -6750,6 +9206,38 @@ paths:
               }
               fmt.Printf("%+v\n", page)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.webhooks.WebhookListPage;
+            import com.dodopayments.api.models.webhooks.WebhookListParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    WebhookListPage page = client.webhooks().list();
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.webhooks.WebhookListPage
+            import com.dodopayments.api.models.webhooks.WebhookListParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val page: WebhookListPage = client.webhooks().list()
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -6828,6 +9316,44 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", webhookDetails.ID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.webhooks.WebhookCreateParams;
+            import com.dodopayments.api.models.webhooks.WebhookDetails;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    WebhookCreateParams params = WebhookCreateParams.builder()
+                        .url("url")
+                        .build();
+                    WebhookDetails webhookDetails = client.webhooks().create(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.webhooks.WebhookCreateParams
+            import com.dodopayments.api.models.webhooks.WebhookDetails
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: WebhookCreateParams = WebhookCreateParams.builder()
+                    .url("url")
+                    .build()
+                val webhookDetails: WebhookDetails = client.webhooks().create(params)
             }
         - lang: Ruby
           source: |-
@@ -6911,6 +9437,38 @@ paths:
               }
               fmt.Printf("%+v\n", webhookDetails.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.webhooks.WebhookDetails;
+            import com.dodopayments.api.models.webhooks.WebhookRetrieveParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    WebhookDetails webhookDetails = client.webhooks().retrieve("webhook_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.webhooks.WebhookDetails
+            import com.dodopayments.api.models.webhooks.WebhookRetrieveParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val webhookDetails: WebhookDetails = client.webhooks().retrieve("webhook_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -6982,6 +9540,36 @@ paths:
               if err != nil {
                 panic(err.Error())
               }
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.webhooks.WebhookDeleteParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    client.webhooks().delete("webhook_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.webhooks.WebhookDeleteParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                client.webhooks().delete("webhook_id")
             }
         - lang: Ruby
           source: |-
@@ -7076,6 +9664,38 @@ paths:
               }
               fmt.Printf("%+v\n", webhookDetails.ID)
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.webhooks.WebhookDetails;
+            import com.dodopayments.api.models.webhooks.WebhookUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    WebhookDetails webhookDetails = client.webhooks().update("webhook_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.webhooks.WebhookDetails
+            import com.dodopayments.api.models.webhooks.WebhookUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val webhookDetails: WebhookDetails = client.webhooks().update("webhook_id")
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -7157,6 +9777,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", header.Headers)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.webhooks.headers.HeaderRetrieveParams;
+            import com.dodopayments.api.models.webhooks.headers.HeaderRetrieveResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    HeaderRetrieveResponse header = client.webhooks().headers().retrieve("webhook_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.webhooks.headers.HeaderRetrieveParams
+            import com.dodopayments.api.models.webhooks.headers.HeaderRetrieveResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val header: HeaderRetrieveResponse = client.webhooks().headers().retrieve("webhook_id")
             }
         - lang: Ruby
           source: |-
@@ -7247,6 +9899,50 @@ paths:
                 panic(err.Error())
               }
             }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.core.JsonValue;
+            import com.dodopayments.api.models.webhooks.headers.HeaderUpdateParams;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    HeaderUpdateParams params = HeaderUpdateParams.builder()
+                        .webhookId("webhook_id")
+                        .headers(HeaderUpdateParams.Headers.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build())
+                        .build();
+                    client.webhooks().headers().update(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.core.JsonValue
+            import com.dodopayments.api.models.webhooks.headers.HeaderUpdateParams
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: HeaderUpdateParams = HeaderUpdateParams.builder()
+                    .webhookId("webhook_id")
+                    .headers(HeaderUpdateParams.Headers.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build())
+                    .build()
+                client.webhooks().headers().update(params)
+            }
         - lang: Ruby
           source: |-
             require "dodopayments"
@@ -7328,6 +10024,38 @@ paths:
                 panic(err.Error())
               }
               fmt.Printf("%+v\n", response.Secret)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.webhooks.WebhookRetrieveSecretParams;
+            import com.dodopayments.api.models.webhooks.WebhookRetrieveSecretResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    WebhookRetrieveSecretResponse response = client.webhooks().retrieveSecret("webhook_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.webhooks.WebhookRetrieveSecretParams
+            import com.dodopayments.api.models.webhooks.WebhookRetrieveSecretResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val response: WebhookRetrieveSecretResponse = client.webhooks().retrieveSecret("webhook_id")
             }
         - lang: Ruby
           source: |-
