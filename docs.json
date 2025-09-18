@@ -178,7 +178,7 @@
             "pages": [
               "developer-resources/dodo-payments-sdks",
               "developer-resources/react-native-integration",
-              "developer-resources/supabase-adaptor"
+              "developer-resources/supabase-boilerplate"
             ]
           },
           {
