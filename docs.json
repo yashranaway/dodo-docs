@@ -199,6 +199,12 @@
               "developer-resources/fastify-adaptor",
               "developer-resources/convex-component"
             ]
+          },
+          {
+            "group": "Blueprints",
+            "pages": [
+              "developer-resources/blueprints/llm"
+            ]
           }
         ]
       },
