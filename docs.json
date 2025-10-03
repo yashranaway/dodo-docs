@@ -161,6 +161,13 @@
             ]
           },
           {
+            "group": "Ingestion Blueprints",
+            "tag": "New",
+            "pages": [
+              "developer-resources/ingestion-blueprints/llm"
+            ]
+          },
+          {
             "group": "Testing & Demo Tools",
             "pages": [
               "miscellaneous/test-mode-vs-live-mode",
@@ -198,12 +205,6 @@
               "developer-resources/tanstack-adaptor",
               "developer-resources/fastify-adaptor",
               "developer-resources/convex-component"
-            ]
-          },
-          {
-            "group": "Blueprints",
-            "pages": [
-              "developer-resources/blueprints/llm"
             ]
           }
         ]
