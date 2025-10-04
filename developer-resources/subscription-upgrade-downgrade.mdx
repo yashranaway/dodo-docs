@@ -69,7 +69,7 @@ Select the billing approach that aligns with your business needs:
 <Tab title="Fair Billing - prorated_immediately">
 Best for: SaaS applications wanting to charge fairly for unused time
 - Calculates exact prorated amount based on remaining cycle time
-- Charges only the difference between plans
+- Charges a prorated amount based on unused time remaining in the cycle
 - Provides transparent billing to customers
 </Tab>
 
@@ -117,6 +117,7 @@ Optional addons for the new plan. Leaving this empty removes any existing addons
 Set up webhook handling to track plan change outcomes:
 
 - `subscription.active`: Plan change successful, subscription updated
+- `subscription.plan_changed`: Subscription plan changed (upgrade/downgrade/addon update)
 - `subscription.on_hold`: Plan change charge failed, subscription paused
 - `payment.succeeded`: Immediate charge for plan change succeeded
 - `payment.failed`: Immediate charge failed
@@ -239,6 +240,10 @@ Use the Change Plan API to modify product, quantity, and proration behavior for 
 }
 ```
 </ResponseExample>
+<Note>
+Fields like <code>invoice_id</code> and <code>payment_id</code> are returned only when an immediate charge and/or invoice is created during the plan change. Always rely on webhook events (e.g., <code>payment.succeeded</code>, <code>subscription.plan_changed</code>) to confirm outcomes.
+</Note>
+
 
 <Warning>
 If the immediate charge fails, the subscription may move to `subscription.on_hold` until payment succeeds.
@@ -279,10 +284,15 @@ Choose how to bill the customer when changing plans:
 #### `prorated_immediately`
 - Charges for the partial difference in the current cycle
 - If in trial, charges immediately and switches to the new plan now
+- Downgrade: may generate a prorated credit applied to future renewals
 
 #### `full_immediately`
 - Charges the full amount of the new plan immediately
 - Ignores remaining time from the old plan
+
+<Info>
+Credits created by downgrades using <code>difference_immediately</code> are subscription-scoped and distinct from <a href="/features/customer-credit">Customer Credits</a>. They automatically apply to future renewals of the same subscription and are not transferable between subscriptions.
+</Info>
 
 #### `difference_immediately`
 - Upgrade: immediately charge the price difference between old and new plans
@@ -343,6 +353,7 @@ Track subscription state through webhooks to confirm plan changes and payments.
 
 ### Event types to handle
 - `subscription.active`: subscription activated
+- `subscription.plan_changed`: subscription plan changed (upgrade/downgrade/addon changes)
 - `subscription.on_hold`: charge failed, subscription paused
 - `subscription.renewed`: renewal succeeded
 - `payment.succeeded`: payment for plan change or renewal succeeded
@@ -358,19 +369,28 @@ We recommend driving business logic from subscription events and using payment e
   <Tab title="Next.js Route Handler">
     ```javascript
     import { NextRequest, NextResponse } from 'next/server';
-
+    
     export async function POST(req) {
-      const signature = req.headers.get('x-dodo-signature');
+      const webhookId = req.headers.get('webhook-id');
+      const webhookSignature = req.headers.get('webhook-signature');
+      const webhookTimestamp = req.headers.get('webhook-timestamp');
       const secret = process.env.DODO_WEBHOOK_SECRET;
-
+    
       const payload = await req.text();
-      // verifySignature is a placeholder – use your SDK/helper
-      const { valid, event } = await verifySignature(payload, signature, secret);
+      // verifySignature is a placeholder – in production, use a Standard Webhooks library
+      const { valid, event } = await verifySignature(
+        payload,
+        { id: webhookId, signature: webhookSignature, timestamp: webhookTimestamp },
+        secret
+      );
       if (!valid) return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
-
+    
       switch (event.type) {
         case 'subscription.active':
           // mark subscription active in your DB
+          break;
+        case 'subscription.plan_changed':
+          // refresh entitlements and reflect the new plan in your UI
           break;
         case 'subscription.on_hold':
           // notify user to update payment method
@@ -388,7 +408,7 @@ We recommend driving business logic from subscription events and using payment e
           // ignore unknown events
           break;
       }
-
+    
       return NextResponse.json({ received: true });
     }
     ```
@@ -396,20 +416,26 @@ We recommend driving business logic from subscription events and using payment e
   <Tab title="Express.js">
     ```javascript
     import express from 'express';
-
+    
     const app = express();
     app.post('/webhooks/dodo', express.raw({ type: 'application/json' }), async (req, res) => {
-      const signature = req.header('x-dodo-signature');
+      const webhookId = req.header('webhook-id');
+      const webhookSignature = req.header('webhook-signature');
+      const webhookTimestamp = req.header('webhook-timestamp');
       const secret = process.env.DODO_WEBHOOK_SECRET;
       const payload = req.body.toString('utf8');
-
-      const { valid, event } = await verifySignature(payload, signature, secret);
+    
+      const { valid, event } = await verifySignature(
+        payload,
+        { id: webhookId, signature: webhookSignature, timestamp: webhookTimestamp },
+        secret
+      );
       if (!valid) return res.status(400).send('Invalid signature');
-
+    
       // handle events like above
       res.json({ received: true });
     });
-
+    
     app.listen(3000);
     ```
   </Tab>
@@ -465,7 +491,7 @@ Resolve typical problems encountered during subscription plan changes:
 **Symptoms**: Customer downgrades but doesn't see credit balance
 
 **Common causes**:
-- Using wrong proration mode (credits only apply with `difference_immediately`)
+- Proration mode expectations: downgrades credit the full plan price difference with `difference_immediately`, while `prorated_immediately` creates a prorated credit based on remaining time in the cycle
 - Credits are subscription-specific and don't transfer between subscriptions
 - Credit balance not visible in customer dashboard
 
