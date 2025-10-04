@@ -66,21 +66,21 @@ Test plan changes thoroughly in test mode before implementing in production.
 Select the billing approach that aligns with your business needs:
 
 <Tabs>
-<Tab title="Fair Billing - prorated_immediately">
+<Tab title="prorated_immediately">
 Best for: SaaS applications wanting to charge fairly for unused time
 - Calculates exact prorated amount based on remaining cycle time
 - Charges a prorated amount based on unused time remaining in the cycle
 - Provides transparent billing to customers
 </Tab>
 
-<Tab title="Simple Upgrade - difference_immediately">
+<Tab title="difference_immediately">
 Best for: Clear upgrade/downgrade scenarios
 - Upgrade: Charge immediate difference (e.g., $30→$80 = charge $50)
 - Downgrade: Credit remaining value for future renewals
 - Simplifies billing logic and customer communication
 </Tab>
 
-<Tab title="Reset Billing - full_immediately">
+<Tab title="full_immediately">
 Best for: When you want to reset the billing cycle
 - Charges full amount of new plan immediately
 - Ignores remaining time from old plan
@@ -229,7 +229,6 @@ Use the Change Plan API to modify product, quantity, and proration behavior for 
   </Tab>
 </Tabs>
 
-<ResponseExample>
 ```json Success
 {
   "status": "processing",
@@ -239,7 +238,6 @@ Use the Change Plan API to modify product, quantity, and proration behavior for 
   "proration_billing_mode": "prorated_immediately"
 }
 ```
-</ResponseExample>
 <Note>
 Fields like <code>invoice_id</code> and <code>payment_id</code> are returned only when an immediate charge and/or invoice is created during the plan change. Always rely on webhook events (e.g., <code>payment.succeeded</code>, <code>subscription.plan_changed</code>) to confirm outcomes.
 </Note>
