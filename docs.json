@@ -157,7 +157,15 @@
             "group": "Cookbooks",
             "tag": "New",
             "pages": [
-              "developer-resources/usage-based-billing-build-ai-image-generator"
+              "developer-resources/usage-based-billing-build-ai-image-generator",
+              "developer-resources/seat-based-pricing"
+            ]
+          },
+          {
+            "group": "Ingestion Blueprints",
+            "tag": "New",
+            "pages": [
+              "developer-resources/ingestion-blueprints/llm"
             ]
           },
           {
