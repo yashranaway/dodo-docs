@@ -544,7 +544,8 @@ const session = await client.checkoutSessions.create({
     }
   ],
   customer: {
-    email: 'customer@example.com'
+    email: 'customer@example.com',
+    name: 'John Doe'
   },
   return_url: 'https://yoursite.com/success'
 });
