@@ -1,50 +1,90 @@
 ---
-title: "Quick Start Guide"
-description: "Get up and running with Dodo Payments in under 10 minutes. Follow our step-by-step guide to set up your account and start processing payments."
+title: "Welcome to Dodo Payments"
+sidebarTitle: "Introduction"
+description: "The complete payments & billing platform for SaaS, AI, and digital products. Accept payments globally, set up flexible billing models, and monetize your product in minutes - all without building your own infrastructure."
 icon: "rocket"
 ---
+
 <Frame>
-  <iframe 
-      className="w-full aspect-video rounded-md" 
-      src="https://www.youtube.com/embed/zE6jtNeWdG4"
-      title="Setup Your Account | Dodo Payments"
-      frameBorder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-  ></iframe>
+  <img src="/images/intro_cover.png" alt="Dodo Payments - Complete payments and billing platform for modern digital products" height="50%"/>
 </Frame>
 
 ## What is Dodo Payments?
 
-Welcome to Dodo Payments, your comprehensive solution for managing all aspects of global payment processing. We are a Merchant of Record handling end to end global payments for digital products. Whether you're selling one-time payment products or offering subscription products, Dodo Payments provides a seamless platform to help you handle manage products, handle transactions and ensure compliance—all from one easy-to-use dashboard.
+Dodo Payments is the **all-in-one engine** to launch, scale, and monetize worldwide. Designed for the new generation of digital SaaS and AI products, we handle everything from **payments to billing to distribution** - all without extra engineering.
 
-## Quick Start
+<Info>
+**Built for SaaS and AI Products**: Handle one-time payments, subscriptions, credits, seats, tokens, or any usage metric with our optimized billing infrastructure.
+</Info>
 
-Want to get started off using Dodo Payments right away ? Our guide below will take you through the most essential steps to get started.
+### Why Choose Dodo Payments?
 
-### Follow these steps
+<CardGroup cols={2}>
+<Card title="All-in-One Platform" icon="box">
+  One solution for payments, billing, and distribution—no more piecing tools together
+</Card>
 
-<AccordionGroup>
-  <Accordion title="Step 1 : Login to your account">
-    Log in using your email and password, or sign in with Google. If you don't have an account yet, you can create one at [https://app.dodopayments.com/signup](https://app.dodopayments.com/signup).
+<Card title="Global Merchant of Record" icon="globe">
+  Go global without complexity: built-in coverage in 150+ countries, 80+ currencies, and 30+ payment methods
+</Card>
 
-  </Accordion>
+<Card title="Developer-First & No-Code" icon="code">
+  Seamless APIs and SDKs for fast integration, plus <a href="https://sentra.dev" target="_blank" rel="noopener">Sentra</a> for no-code/low-code workflows
+</Card>
 
-  <Accordion title="Step 2: Add Your First Product">
-    **How It Works**
+<Card title="Faster Monetization" icon="bolt">
+  Start collecting revenue in minutes, not weeks
+</Card>
 
-    The step by step guides below will help you understand how to add One Time Payment products and Subscription products
+<Card title="Flexible Billing Models" icon="repeat">
+  Usage-based, subscriptions with addons, or one-time payments are built in
+</Card>
 
-    <Card title="Add One Time Payment Product" horizontal icon="box" href="/features/one-time-payment-products">Process to add a one-time payment product</Card>
+<Card title="Optimized for AI Products" icon="brain">
+  Handle credits, seats, tokens, or any usage metric
+</Card>
+</CardGroup>
 
-    <Card title="Add Subscription Product" horizontal icon="repeat" href="/features/subscription">Process to add a subscription product</Card>
+## Quick Start Guide
 
-  </Accordion>
+Get up and running with Dodo Payments in just a few steps:
 
+<Steps>
+<Step title="Create Your Account">
+  Sign up at [app.dodopayments.com](https://app.dodopayments.com/signup) using your email.
 
-  <Accordion title="Step 3: Create a payment link">
+  <Check>
+  You'll receive a confirmation email to verify your account.
+  </Check>
+</Step>
 
-    Follow these steps to create a payment link:
+<Step title="Add Your First Product">
+  Choose your billing model and add your product to start accepting payments.
+
+  <CardGroup cols={3}>
+  <Card title="One-Time Payment" icon="box" href="/features/one-time-payment-products">
+    Perfect for digital downloads, courses, or single purchases
+  </Card>
+  
+  <Card title="Subscription Product" icon="repeat" href="/features/subscription">
+    Ideal for SaaS, memberships, or recurring services
+  </Card>
+  <Card title="Usage-Based Billing" icon="chart-bar" href="/features/usage-based-billing">
+    Bill customers for API calls, credits, tokens, or any usage metric—ideal for AI and SaaS
+  </Card>
+  </CardGroup>
+</Step>
+
+<Step title="Choose Your Integration Method">
+  Select the integration approach that best fits your needs and technical requirements.
+
+  <Tabs>
+  <Tab title="No-Code (Fastest)">
+    **Perfect for getting started quickly:**
+    
+    - Create **Payment Links** from your dashboard
+    - Share via email, social media, or embed in websites
+    - Start accepting payments immediately
 
     <Frame>
       <iframe 
@@ -55,42 +95,186 @@ Want to get started off using Dodo Payments right away ? Our guide below will ta
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
       ></iframe>
-    </Frame>
-  </Accordion>
+  </Frame>
+  </Tab>
 
-  <Accordion title="Step 4 : Identity Verification and Business Verification">
-    **Overview**
+  <Tab title="Overlay Checkout">
+    **Best for seamless, on-brand payments:**
+    
+    - Launch checkout as an overlay on your site or app
+    - Keep users on your page for a frictionless experience
+    - Customize appearance to match your brand
 
-    The **Identity Verification** and **Business Verification** processes are critical steps for ensuring compliance with legal and regulatory standards. These verifications confirm the identity of the merchant and the legitimacy of their business. Merchants must complete both steps to unlock full access to the Dodo Payments platform, including payment processing and payouts.
+    <Card title="Overlay Integration" icon="layer-group" href="/developer-resources/overlay-checkout">
+      Add our overlay checkout with a single line of code
+    </Card>
+  </Tab>
 
-    * **Identity Verification**: Verifies the individual managing the merchant account by requiring personal identification documents.
+  <Tab title="Full SDK Integration">
+    **Best for advanced, fully customized solutions:**
 
-    * **Business Verification**: Confirms the legitimacy of the business entity, requiring submission of business registration and related documents.
+    - Use our TypeScript/Python/Go/Java/Kotlin/C#/Ruby SDK for seamless integration
+    - Programmatic access to all payment, subscription, and customer portal APIs
+    - Deep integration with your backend, workflows, and data models
+    - Full support for webhooks, advanced features, and automation
 
-    **Key Highlights**
+    <Tip>
+      <strong>Let Sentra write your integration code for you.</strong><br />
+      Use our AI assistant in VS Code, Cursor, or Windsurf to generate SDK/API code, webhooks, and more - just by describing what you want.  
+      <a href="https://dodopayments.com/sentra" target="_blank" rel="noopener noreferrer" >
+        Try Sentra: AI-Powered Integration &rarr;
+      </a>
+    </Tip>
 
-    1. **Secure Document Submission**
-       Merchants can securely submit personal and business documents, which are reviewed manually for compliance.
+    <Card title="SDK Quickstart" icon="code" href="/developer-resources/integration-guide">
+      Learn how to install and use our official SDK
+    </Card>
+    <Card title="API Reference" icon="server" href="/api-reference/introduction">
+      Explore the full API and SDK documentation
+    </Card>
+  </Tab>
+  </Tabs>
+</Step>
 
-    2. **Multiple Businesses**
-       Merchants can add and verify multiple businesses under a single account, allowing seamless switching between verified businesses.
+<Step title="Complete Verification">
+  Complete identity and business verification to unlock full platform access.
 
-    For More details about the Verification process visit [verification process page](/miscellaneous/verification-process)
-  </Accordion>
+  <Card title="Verification Process" icon="shield-check" href="/miscellaneous/verification-process">
+    Learn about required documents and verification steps
+  </Card>
+</Step>
 
-  <Accordion title="Step 5: Payout Setup">
-    **How It Works**
+<Step title="Set Up Payouts">
+  Link your bank account and complete payout compliance to receive your earnings.
 
-    The step by step guides below will help you understand the process of linking your bank account and completing payout compliances
-
-    <Card title="Link your bank account" horizontal icon="building-columns" href="features/payouts/link-bank-account">Process to link your bank account</Card>
-
-    <Card title="Payout Compliance" horizontal icon="files" href="/features/payouts/compliance">Process to complete payout compliance</Card>
-  </Accordion>
-</AccordionGroup>
+  <CardGroup cols={2}>
+  <Card title="Link Bank Account" icon="building-columns" href="/features/payouts/link-bank-account">
+    Connect your bank account for payouts
+  </Card>
+  
+  <Card title="Payout Compliance" icon="files" href="/features/payouts/compliance">
+    Complete required compliance steps
+  </Card>
+  </CardGroup>
+</Step>
+</Steps>
 
 ## Developer Integration
 
-<Card title="Developer Integration" icon="code" href="/developer-resources/introduction">
-  Get started with technical integration. Explore comprehensive guides on integrating our APIs with your system.
+<Tip>
+  <strong>Let Sentra write your integration code for you.</strong><br/>
+  Use our AI assistant in VS Code, Cursor, or Windsurf to generate SDK/API code, webhooks, and more - just by describing what you want.  
+  <a href="https://dodopayments.com/sentra" target="_blank" rel="noopener noreferrer" >
+    Try Sentra: AI-Powered Integration &rarr;
+  </a>
+</Tip>
+
+### Framework Adapters
+
+<CardGroup cols={2}>
+<Card title="Adapters" icon="plug" href="/developer-resources/introduction">
+  Integrate in under 10 lines of code with adapters for BetterAuth, Convex, Next.js, Nuxt, SvelteKit, Astro, Remix, TanStack, Hono, Express, and Fastify
 </Card>
+
+<Card title="Powerful SDKs" icon="code" href="/developer-resources/dodo-payments-sdks">
+  Speed up development with SDKs for TypeScript, Python, Go, PHP, Java, Kotlin, C#, and Ruby
+</Card>
+
+<Card title="Mobile Integration" icon="smartphone" href="/developer-resources/mobile-integration">
+  Build rich in-app payment experiences with our React Native SDKs for iOS and Android
+</Card>
+
+<Card title="MCP Server" icon="server" href="/developer-resources/mcp-server">
+  Connect AI models to Dodo Payments with our MCP Server for instant setup
+</Card>
+</CardGroup>
+
+### Quick Integration Examples
+
+<CodeGroup>
+```typescript TypeScript
+import { DodoPayments } from '@dodopayments/sdk';
+
+const dodo = new DodoPayments({
+  apiKey: process.env.DODO_API_KEY,
+  environment: 'sandbox'
+});
+
+// Create a payment link
+const paymentLink = await dodo.paymentLinks.create({
+  productId: 'prod_123',
+  amount: 2999,
+  currency: 'USD'
+});
+```
+
+```python Python
+from dodopayments import DodoPayments
+
+dodo = DodoPayments(api_key="your_api_key")
+
+# Create a payment link
+payment_link = dodo.payment_links.create(
+    product_id="prod_123",
+    amount=2999,
+    currency="USD"
+)
+```
+
+```bash cURL
+curl -X POST 'https://api.dodopayments.com/v1/payment-links' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "product_id": "prod_123",
+    "amount": 2999,
+    "currency": "USD"
+  }'
+```
+</CodeGroup>
+
+## Global Reach
+
+Your AI product, instantly compliant and monetization ready everywhere your customers are.
+
+<CardGroup cols={3}>
+<Card title="150+ Countries" icon="globe">
+  Accept payments from customers worldwide
+</Card>
+
+<Card title="30+ Payment Methods" icon="credit-card">
+  Support for local payment methods in each region
+</Card>
+
+<Card title="14+ Languages" icon="translate">
+  Checkout experience in multiple languages
+</Card>
+</CardGroup>
+
+<Check>
+**100% safe and secure** • PCI DSS Compliant
+</Check>
+
+## Need Help?
+
+<CardGroup cols={2}>
+<Card title="Documentation" icon="book" href="/developer-resources/introduction">
+  Explore comprehensive guides and API references
+</Card>
+
+<Card title="Community Support" icon="users" href="https://discord.gg/dodopayments">
+  Join our Discord community for help and discussions
+</Card>
+
+<Card title="Contact Support" icon="headphones" href="mailto:support@dodopayments.com">
+  Get direct help from our support team
+</Card>
+
+<Card title="Status Page" icon="activity" href="https://status.dodopayments.com">
+  Check platform status and uptime
+</Card>
+</CardGroup>
+
+<Tip>
+**Pro Tip**: Start with our [Integration Guide](/developer-resources/integration-guide) for a step-by-step walkthrough of setting up your first integration.
+</Tip>
