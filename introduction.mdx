@@ -171,110 +171,147 @@ Get up and running with Dodo Payments in just a few steps:
 
 ### Framework Adapters
 
+Integrate in under 10 lines of code with our framework adapters. Choose from our recommended frameworks or explore all supported options.
+
+#### Recommended Frameworks
+
 <CardGroup cols={2}>
-<Card title="Adapters" icon="plug" href="/developer-resources/introduction">
-  Integrate in under 10 lines of code with adapters for BetterAuth, Convex, Next.js, Nuxt, SvelteKit, Astro, Remix, TanStack, Hono, Express, and Fastify
+<Card title="Next.js" icon="atom" href="/developer-resources/nextjs-adaptor">
+  React-based full-stack framework with App Router support
 </Card>
 
-<Card title="Powerful SDKs" icon="code" href="/developer-resources/dodo-payments-sdks">
-  Speed up development with SDKs for TypeScript, Python, Go, PHP, Java, Kotlin, C#, and Ruby
+<Card title="Better Auth" icon="shield" href="/developer-resources/better-auth-adaptor">
+  Authentication framework with built-in integrations
 </Card>
 
-<Card title="Mobile Integration" icon="smartphone" href="/developer-resources/mobile-integration">
-  Build rich in-app payment experiences with our React Native SDKs for iOS and Android
+<Card title="Convex" icon="database" href="/developer-resources/convex-component">
+  Backend-as-a-Service with real-time capabilities
 </Card>
 
-<Card title="MCP Server" icon="server" href="/developer-resources/mcp-server">
-  Connect AI models to Dodo Payments with our MCP Server for instant setup
-</Card>
-</CardGroup>
-
-### Quick Integration Examples
-
-<CodeGroup>
-```typescript TypeScript
-import { DodoPayments } from '@dodopayments/sdk';
-
-const dodo = new DodoPayments({
-  apiKey: process.env.DODO_API_KEY,
-  environment: 'sandbox'
-});
-
-// Create a payment link
-const paymentLink = await dodo.paymentLinks.create({
-  productId: 'prod_123',
-  amount: 2999,
-  currency: 'USD'
-});
-```
-
-```python Python
-from dodopayments import DodoPayments
-
-dodo = DodoPayments(api_key="your_api_key")
-
-# Create a payment link
-payment_link = dodo.payment_links.create(
-    product_id="prod_123",
-    amount=2999,
-    currency="USD"
-)
-```
-
-```bash cURL
-curl -X POST 'https://api.dodopayments.com/v1/payment-links' \
-  -H 'Authorization: Bearer YOUR_API_KEY' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "product_id": "prod_123",
-    "amount": 2999,
-    "currency": "USD"
-  }'
-```
-</CodeGroup>
-
-## Global Reach
-
-Your AI product, instantly compliant and monetization ready everywhere your customers are.
-
-<CardGroup cols={3}>
-<Card title="150+ Countries" icon="globe">
-  Accept payments from customers worldwide
-</Card>
-
-<Card title="30+ Payment Methods" icon="credit-card">
-  Support for local payment methods in each region
-</Card>
-
-<Card title="14+ Languages" icon="translate">
-  Checkout experience in multiple languages
+<Card title="SvelteKit" icon="js" href="/developer-resources/sveltekit-adaptor">
+  Svelte-based full-stack framework with TypeScript support
 </Card>
 </CardGroup>
 
-<Check>
-**100% safe and secure** • PCI DSS Compliant
-</Check>
+<AccordionGroup>
+<Accordion title="Show All 10 Supported Frameworks">
+  <CardGroup cols={4}>
+  <Card title="Nuxt" icon="vuejs" href="/developer-resources/nuxt-adaptor">
+    Vue.js framework
+  </Card>
+
+  <Card title="Remix" icon="react" href="/developer-resources/remix-adaptor">
+    React framework
+  </Card>
+
+  <Card title="Express" icon="js" href="/developer-resources/express-adaptor">
+    Minimal and flexible Node.js web application framework
+  </Card>
+
+  <Card title="Fastify" icon="bolt" href="/developer-resources/fastify-adaptor">
+    Fast Node.js framework
+  </Card>
+
+  <Card title="Hono" icon="cloud" href="/developer-resources/hono-adaptor">
+    Cloudflare Workers framework
+  </Card>
+
+  <Card title="Astro" icon="star" href="/developer-resources/astro-adaptor">
+    Static site generator
+  </Card>
+
+  <Card title="TanStack Start" icon="chart-line" href="/developer-resources/tanstack-adaptor">
+    Full-stack TypeScript framework
+  </Card>
+  </CardGroup>
+</Accordion>
+</AccordionGroup>
+
+### Powerful SDKs
+
+Speed up development with our official SDKs. Choose from our recommended languages or explore all supported options.
+
+<CardGroup cols={4}>
+  <Card title="TypeScript" icon="code-simple" href="/developer-resources/dodo-payments-sdks">
+    Full-featured TypeScript SDK with complete type safety
+  </Card>
+  
+  <Card title="Python" icon="python" href="/developer-resources/dodo-payments-sdks">
+    Python SDK for backend services and data science
+  </Card>
+  
+  <Card title="Go" icon="golang" href="/developer-resources/dodo-payments-sdks">
+    High-performance Go SDK for microservices
+  </Card>
+  
+  <Card title="PHP" icon="php" href="/developer-resources/dodo-payments-sdks">
+    PHP SDK for web applications
+  </Card>
+  <Card title="Java" icon="java" href="/developer-resources/dodo-payments-sdks">
+    Java SDK for enterprise applications
+  </Card>
+
+  <Card title="Kotlin" icon="android" href="/developer-resources/dodo-payments-sdks">
+    Kotlin SDK for Android development
+  </Card>
+
+  <Card title="C#" icon="hashtag" href="/developer-resources/dodo-payments-sdks">
+    C# SDK for .NET applications
+  </Card>
+
+  <Card title="Ruby" icon="gem" href="/developer-resources/dodo-payments-sdks">
+    Ruby SDK for web applications
+  </Card>
+</CardGroup>
+
+### Billing SDK
+
+Stop reinventing the wheel. Use production-ready, accessible billing components, from pricing cards to subscription dashboards, built for React and ShadCN.
+
+<Card
+  title="Billing Components"
+  icon="credit-card"
+  href="https://billingsdk.com"
+  target="_blank"
+>
+  Beautiful, customizable billing components, pricing tables, subscription management, and usage meters - save development time with production-ready UI for billing and payments.
+</Card>
+
+<Info>
+**Open Source & Free**: BillingSDK is completely free to use and modify for personal and commercial projects. Built by the Dodo Payments team for developers.
+</Info>
+
+### In-App Purchases for Android and iOS
+
+Build rich in-app payment experiences with our lightweight payment links and secure React Native SDKs optimized for iOS and Android.
+
+<CardGroup cols={2}>
+<Card title="Mobile Integration Guide" icon="book" href="/developer-resources/mobile-integration">
+  Complete guide for integrating payments in mobile applications
+</Card>
+
+<Card title="React Native SDK" icon="mobile" href="/developer-resources/react-native-integration">
+  Native mobile SDK for iOS and Android with seamless payment flows
+</Card>
+</CardGroup>
 
 ## Need Help?
 
 <CardGroup cols={2}>
-<Card title="Documentation" icon="book" href="/developer-resources/introduction">
+<Card title="Developer Documentation" icon="book" href="/developer-resources/introduction">
   Explore comprehensive guides and API references
 </Card>
 
-<Card title="Community Support" icon="users" href="https://discord.gg/dodopayments">
+<Card title="API Reference" icon="terminal" href="/api-reference/introduction">
+  Full OpenAPI reference, endpoints, parameters, and example requests for all Dodo Payments APIs
+</Card>
+
+
+<Card title="Community Support" icon="users" href="https://discord.gg/bYqAp4ayYh">
   Join our Discord community for help and discussions
 </Card>
 
 <Card title="Contact Support" icon="headphones" href="mailto:support@dodopayments.com">
   Get direct help from our support team
 </Card>
-
-<Card title="Status Page" icon="activity" href="https://status.dodopayments.com">
-  Check platform status and uptime
-</Card>
 </CardGroup>
-
-<Tip>
-**Pro Tip**: Start with our [Integration Guide](/developer-resources/integration-guide) for a step-by-step walkthrough of setting up your first integration.
-</Tip>
