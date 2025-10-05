@@ -5,13 +5,14 @@
   "colors": {
     "primary": "#81B700",
     "light": "#C6FE1E",
-    "dark": "#0D0D0D"
+    "dark": "#81B700"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
         "tab": "Setup & Features",
+        "icon": "rocket",
         "groups": [
           {
             "group": "Getting Started",
@@ -113,6 +114,7 @@
       },
       {
         "tab": "Developer Resources",
+        "icon": "code",
         "groups": [
           {
             "group": "Developer Resources",
@@ -212,6 +214,7 @@
       },
       {
         "tab": "API Reference",
+        "icon": "brackets-curly",
         "groups": [
           {
             "group": "API Reference",
@@ -387,6 +390,7 @@
       },
       {
         "tab": "External Integrations",
+        "icon": "plug",
         "groups": [
           {
             "group": "External Integrations",
@@ -440,6 +444,7 @@
       },
       {
         "tab": "Changelog",
+        "icon": "cash-register",
         "groups": [
           {
             "group": "Changelog",
@@ -546,6 +551,7 @@
       },
       {
         "tab": "Community Projects",
+        "icon": "users",
         "groups": [
           {
             "group": "Community Projects",
