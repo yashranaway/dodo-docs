@@ -17,27 +17,7 @@
           {
             "group": "Getting Started",
             "pages": [
-              "introduction",
-              {
-                "group": "Verification",
-                "icon": "id-card",
-                "pages": [
-                  "miscellaneous/verification-process",
-                  "features/payouts/compliance",
-                  "miscellaneous/tax-forms",
-                  "features/payouts/link-bank-account"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Important Links",
-            "pages": [
-              "miscellaneous/pricing-and-fee-structure",
-              "features/payment-methods",
-              "/features/payouts/payout-structure",
-              "features/mor-vs-pg",
-              "miscellaneous/list-of-countries-we-accept-payments-from"
+              "introduction"
             ]
           },
           {
@@ -78,6 +58,28 @@
             ]
           },
           {
+            "group": "Merchant of Record",
+            "pages": [
+              {
+                "group": "Verification",
+                "icon": "id-card",
+                "pages": [
+                  "miscellaneous/verification-process",
+                  "features/payouts/compliance",
+                  "miscellaneous/tax-forms",
+                  "features/payouts/link-bank-account"
+                ]
+              },
+              "/features/payouts/payout-structure",
+              "miscellaneous/pricing-and-fee-structure",
+              "features/payment-methods",
+              "features/mor-vs-pg",
+              "miscellaneous/list-of-countries-we-accept-payments-from",
+              "miscellaneous/merchant-acceptance",
+              "miscellaneous/review-monitoring-policy"
+            ]
+          },
+          {
             "group": "Miscellaneous",
             "pages": [
               {
@@ -99,14 +101,7 @@
                   "miscellaneous/gtm-tools/feature-prioritization-tool"
                 ]
               },
-              "miscellaneous/faq"
-            ]
-          },
-          {
-            "group": "Security & Compliance",
-            "pages": [
-              "miscellaneous/merchant-acceptance",
-              "miscellaneous/review-monitoring-policy",
+              "miscellaneous/faq",
               "miscellaneous/security-policy"
             ]
           }
