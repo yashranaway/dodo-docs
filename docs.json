@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "maple",
   "name": "Dodo Payments Documentation",
   "colors": {
     "primary": "#81B700",
@@ -12,7 +12,6 @@
     "tabs": [
       {
         "tab": "Setup & Features",
-        "icon": "rocket",
         "groups": [
           {
             "group": "Getting Started",
@@ -110,7 +109,6 @@
       },
       {
         "tab": "Developer Resources",
-        "icon": "code",
         "groups": [
           {
             "group": "Developer Resources",
@@ -210,7 +208,6 @@
       },
       {
         "tab": "API Reference",
-        "icon": "brackets-curly",
         "groups": [
           {
             "group": "API Reference",
@@ -386,7 +383,6 @@
       },
       {
         "tab": "External Integrations",
-        "icon": "plug",
         "groups": [
           {
             "group": "External Integrations",
@@ -440,7 +436,6 @@
       },
       {
         "tab": "Changelog",
-        "icon": "cash-register",
         "groups": [
           {
             "group": "Changelog",
@@ -547,7 +542,6 @@
       },
       {
         "tab": "Community Projects",
-        "icon": "users",
         "groups": [
           {
             "group": "Community Projects",
@@ -583,13 +577,13 @@
         "label": "Community",
         "icon": "discord",
         "href": "https://discord.gg/bYqAp4ayYh"
+      },
+      {
+        "icon": "house",
+        "label": "Dashboard",
+        "href": "https://app.dodopayments.com/"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Get Started",
-      "href": "https://app.dodopayments.com/"
-    }
+    ]
   },
   "footer": {
     "socials": {
