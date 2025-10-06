@@ -12,6 +12,7 @@
     "tabs": [
       {
         "tab": "Setup & Features",
+        "icon": "rocket",
         "groups": [
           {
             "group": "Getting Started",
@@ -109,6 +110,7 @@
       },
       {
         "tab": "Developer Resources",
+        "icon": "code",
         "groups": [
           {
             "group": "Developer Resources",
@@ -208,6 +210,7 @@
       },
       {
         "tab": "API Reference",
+        "icon": "brackets-curly",
         "groups": [
           {
             "group": "API Reference",
@@ -383,6 +386,7 @@
       },
       {
         "tab": "External Integrations",
+        "icon": "plug",
         "groups": [
           {
             "group": "External Integrations",
@@ -436,6 +440,7 @@
       },
       {
         "tab": "Changelog",
+        "icon": "cash-register",
         "groups": [
           {
             "group": "Changelog",
@@ -542,6 +547,7 @@
       },
       {
         "tab": "Community Projects",
+        "icon": "users",
         "groups": [
           {
             "group": "Community Projects",
