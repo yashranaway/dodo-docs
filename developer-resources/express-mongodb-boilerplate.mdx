@@ -55,6 +55,21 @@ npm install -D typescript ts-node @types/express @types/node @types/cors
 npx tsc --init
 ```
 
+<Tip>
+TypeScript default imports (e.g., `import express from 'express'`) require enabling interop flags. After running `npx tsc --init`, update `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
+```
+
+This guide uses default imports and assumes these flags are enabled.
+</Tip>
+
 `.env`:
 
 ```bash
@@ -139,6 +154,30 @@ async function bootstrap() {
 
 bootstrap();
 ```
+
+<Note>
+Alternative (no tsconfig changes): If you prefer not to enable `esModuleInterop`, switch to namespace/compat imports and Router construction:
+
+```ts
+// src/app.ts (no esModuleInterop)
+import * as express from 'express';
+import * as cors from 'cors';
+
+const app = express();
+app.use(cors());
+```
+
+```ts
+// src/routes/payments.ts (no esModuleInterop)
+import * as express from 'express';
+import DodoPayments from 'dodopayments';
+
+const client = new DodoPayments({ bearerToken: process.env.DODO_PAYMENTS_API_KEY });
+const router = express.Router();
+```
+
+Both approaches are valid; the rest of this guide uses default imports with `esModuleInterop` enabled.
+</Note>
 
 ## Payments Route
 
