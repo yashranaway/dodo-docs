@@ -123,6 +123,7 @@
             "pages": [
               "developer-resources/checkout-session",
               "developer-resources/usage-based-billing-guide",
+              "developer-resources/express-mongodb-boilerplate",
               "developer-resources/integration-guide",
               "developer-resources/subscription-integration-guide",
               "developer-resources/subscription-upgrade-downgrade",
